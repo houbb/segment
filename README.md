@@ -111,5 +111,3 @@ Assert.assertEquals("[这, 是, 一个, 伸手不见五指, 的, 黑夜, 。, �
 # 创作感谢
 
 感谢 [jieba](https://github.com/fxsjy/jieba) 分词提供的词库，以及 [jieba-analysis](https://github.com/huaban/jieba-analysis) 的相关实现。
-
-
