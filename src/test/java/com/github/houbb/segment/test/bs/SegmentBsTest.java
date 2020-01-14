@@ -39,4 +39,21 @@ public class SegmentBsTest {
                 resultList.toString());
     }
 
+    /**
+     * 分词类型测试
+     * @since 0.0.2
+     */
+    @Test
+    public void segmentWordTypeTest() {
+        final String string = "我爱学习";
+
+        List<ISegmentResult> resultList = SegmentBs
+                .newInstance()
+                .wordType(true)
+                .segment(string);
+
+        Assert.assertEquals("[我[0,1)/r, 爱[1,2)/v, 学习[2,4)/v]",
+                resultList.toString());
+    }
+
 }

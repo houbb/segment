@@ -1,5 +1,6 @@
 package com.github.houbb.segment.support.segment;
 
+import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.segment.api.ISegmentResult;
 
 import java.util.Objects;
@@ -28,6 +29,23 @@ public class SegmentResult implements ISegmentResult {
      * @since 0.0.1
      */
     private int endIndex;
+
+    @Override
+    public String type() {
+        return type;
+    }
+
+    @Override
+    public SegmentResult type(String type) {
+        this.type = type;
+        return this;
+    }
+
+    /**
+     * 词性
+     * @since 0.0.2
+     */
+    private String type;
 
     /**
      * 新建对象实例
@@ -99,7 +117,11 @@ public class SegmentResult implements ISegmentResult {
 
     @Override
     public String toString() {
-        return word+"["+startIndex+","+endIndex+")";
+        if(StringUtil.isEmpty(type)) {
+            return word+"["+startIndex+","+endIndex+")";
+        }
+
+        return word+"["+startIndex+","+endIndex+")/"+type;
     }
 
 }

@@ -27,6 +27,12 @@ public final class SegmentBs {
     private ISegment segment = Instances.singleton(Segment.class);
 
     /**
+     * 上下文
+     * @since 0.0.2
+     */
+    private ISegmentContext segmentContext;
+
+    /**
      * 引导类
      * @since 0.0.1
      */
@@ -38,7 +44,20 @@ public final class SegmentBs {
      * @since 0.0.1
      */
     public static SegmentBs newInstance() {
-        return new SegmentBs();
+        SegmentBs segmentBs = new SegmentBs();
+        segmentBs.segmentContext = SegmentContext.newInstance();
+        return segmentBs;
+    }
+
+    /**
+     * 指定启用词性
+     * @param wordType 指定启用词性
+     * @return this
+     * @since 0.0.2
+     */
+    public SegmentBs wordType(final boolean wordType) {
+        segmentContext.wordType(wordType);
+        return this;
     }
 
     /**
@@ -48,7 +67,6 @@ public final class SegmentBs {
      * @since 0.0.1
      */
     public List<ISegmentResult> segment(final String string) {
-        ISegmentContext segmentContext = buildContext();
         return segment.segment(string, segmentContext);
     }
 
@@ -68,16 +86,6 @@ public final class SegmentBs {
                 return iSegmentResult.word();
             }
         });
-    }
-
-    /**
-     * 构建上下文
-     * @return 上下文
-     * @since 0.0.1
-     */
-    private ISegmentContext buildContext() {
-        ISegmentContext context = SegmentContext.newInstance();
-        return context;
     }
 
 }

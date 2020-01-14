@@ -17,4 +17,20 @@ package com.github.houbb.segment.api;
  * @since 0.0.1
  */
 public interface ISegmentContext {
+
+    /**
+     * 是否启用词性
+     * @return 词性
+     * @since 0.0.2
+     */
+    boolean wordType();
+
+    /**
+     * 是否启用词性
+     * @param wordType 是否启用词性
+     * @return 词性
+     * @since 0.0.2
+     */
+    ISegmentContext wordType(final boolean wordType);
+
 }

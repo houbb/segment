@@ -30,6 +30,10 @@
 
 - 允许用户自定义词库
 
+- 支持返回词性
+
+默认关闭，惰性加载，不对性能和内存有影响。
+
 # 快速入门
 
 ## 准备
@@ -71,6 +75,72 @@ final String string = "这是一个伸手不见五指的黑夜。我叫孙悟空
 List<String> resultList = SegmentBs.newInstance().segmentWords(string);
 Assert.assertEquals("[这, 是, 一个, 伸手不见五指, 的, 黑夜, 。, 我, 叫, 孙悟空, ，, 我, 爱, 北京, ，, 我, 爱, 学习, 。]", resultList.toString());
 ```
+
+# 返回词性
+
+## 使用示例
+
+直接指定 `wordType` 属性为真即可。
+
+```java
+final String string = "我爱学习";
+
+List<ISegmentResult> resultList = SegmentBs
+                .newInstance()
+                .wordType(true)
+                .segment(string);
+
+Assert.assertEquals("[我[0,1)/r, 爱[1,2)/v, 学习[2,4)/v]", resultList.toString());
+```
+
+## 词性说明
+
+r/v 就是词性，每一个代表的含义详情如下。
+
+| 编码 | 描述 |
+|:---|:---|
+| Ag | 形语素 |
+| a | 形容词 |
+| ad | 副形词 |
+| an | 名形词 |
+| b | 区别词 |
+| c | 连词 |
+| dg | 副语素 |
+| d | 副词 |
+| e | 叹词 |
+| f | 方位词 |
+| g | 语素 |
+| h | 前接成分 |
+| i | 成语 |
+| j | 简称略语 |
+| k | 后接成分 |
+| l | 习用语 |
+| m | 数词 |
+| Ng | 名语素 |
+| n | 名词 |
+| nr | 人名 |
+| ns | 地名 |
+| nt | 机构团体 |
+| nz | 其他专名 |
+| o | 拟声词 |
+| p | 介词 |
+| q | 量词 |
+| r | 代词 |
+| s | 处所词 |
+| tg | 时语素 |
+| t | 时间词 |
+| u | 助词 |
+| vg | 动语素 |
+| v | 动词 |
+| vd | 副动词 |
+| vn | 名动词 |
+| w | 标点符号 |
+| x | 非语素字 |
+| y | 语气词 |
+| z | 状态词 |
+| un | 未知词 |
+
+可以参见对应的枚举类 [WordTypeEnum](https://github.com/houbb/segment/blob/master/src/main/java/com/github/houbb/segment/constant/enums/WordTypeEnum.java)
 
 # Benchmark 性能对比
 

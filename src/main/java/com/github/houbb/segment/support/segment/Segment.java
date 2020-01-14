@@ -8,6 +8,7 @@ import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.support.segment.result.impl.GreedySegmentResultSelector;
 import com.github.houbb.segment.support.segment.strategy.impl.SegmentStrategyChain;
+import com.github.houbb.segment.support.type.impl.DictWordType;
 
 import java.util.List;
 
@@ -40,12 +41,28 @@ public class Segment implements ISegment {
                     .select(string, startIndex, segmentResultList);
             segmentList.add(segmentResult);
 
+            // 结果的词性启用
+            if(context.wordType()) {
+                fillWordType(segmentResult);
+            }
+
             // 更新 i 的信息
             i = segmentResult.endIndex()-1;
         }
 
 
         return segmentList;
+    }
+
+    /**
+     * 填充结果信息
+     * @param segmentResult 分词结果
+     * @since 0.0.2
+     */
+    private void fillWordType(ISegmentResult segmentResult) {
+        String word = segmentResult.word();
+        String type = Instances.singleton(DictWordType.class).getWordType(word);
+        segmentResult.type(type);
     }
 
 }

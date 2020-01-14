@@ -47,7 +47,7 @@ public class SegmentTrieTree implements ISegmentTrieTree {
     private static void initInnerWordMap() {
         // 加载字典
         List<WordEntry> wordEntries = Instances.singleton(SegmentData.class)
-                .getData();
+                .getWordData();
 
         for (WordEntry wordEntry : wordEntries) {
             final String key = wordEntry.word();

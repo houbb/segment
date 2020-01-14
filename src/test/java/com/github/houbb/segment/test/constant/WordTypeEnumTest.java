@@ -2,6 +2,7 @@ package com.github.houbb.segment.test.constant;
 
 import com.github.houbb.heaven.util.io.StreamUtil;
 import com.github.houbb.heaven.util.lang.StringUtil;
+import com.github.houbb.segment.constant.enums.WordTypeEnum;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -33,6 +34,14 @@ public class WordTypeEnumTest {
 
             String result = String.format(format, remark, enumName, code, desc);
             System.out.println(result);
+        }
+    }
+
+    @Test
+    public void genMdTest() {
+        WordTypeEnum[] wordTypeEnums = WordTypeEnum.values();
+        for(WordTypeEnum wordTypeEnum : wordTypeEnums) {
+            System.out.println(String.format("| %s | %s |", wordTypeEnum.code(), wordTypeEnum.desc()));
         }
     }
 

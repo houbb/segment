@@ -37,6 +37,7 @@ public class SegmentStrategyChain implements ISegmentStrategy {
         // 排序且去重
         CollectionUtil.distinct(resultList);
         Collections.sort(resultList);
+
         return resultList;
     }
 

@@ -28,4 +28,19 @@ public interface ISegmentResult extends Comparable<ISegmentResult> {
      */
     int endIndex();
 
+    /**
+     * 词性
+     * @return 词性
+     * @since 0.0.2
+     */
+    String type();
+
+    /**
+     * 设置词性
+     * @param type 词性
+     * @return this
+     * @since 0.0.2
+     */
+    ISegmentResult type(final String type);
+
 }

@@ -3,12 +3,15 @@ package com.github.houbb.segment.support.data.impl;
 import com.github.houbb.heaven.annotation.ThreadSafe;
 import com.github.houbb.heaven.util.guava.Guavas;
 import com.github.houbb.heaven.util.io.StreamUtil;
+import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.segment.constant.SegmentConst;
 import com.github.houbb.segment.model.WordEntry;
+import com.github.houbb.segment.model.WordProperty;
 import com.github.houbb.segment.support.data.ISegmentData;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 分词数据实现
@@ -25,6 +28,12 @@ public class SegmentData implements ISegmentData {
      * @since 0.0.1
      */
     private static final List<WordEntry> WORD_ENTRY_LIST;
+
+    /**
+     * 词对应的 map
+     * @since 0.0.2
+     */
+    private static volatile Map<String, WordProperty> wordMap;
 
     static {
         synchronized (SegmentData.class) {
@@ -79,8 +88,28 @@ public class SegmentData implements ISegmentData {
     }
 
     @Override
-    public List<WordEntry> getData() {
+    public List<WordEntry> getWordData() {
         return WORD_ENTRY_LIST;
+    }
+
+    @Override
+    public Map<String, WordProperty> getWordMap() {
+        if(ObjectUtil.isNotNull(wordMap)) {
+            return wordMap;
+        }
+
+        synchronized (SegmentData.class) {
+            if(ObjectUtil.isNull(wordMap)) {
+                wordMap = Guavas.newHashMap(WORD_ENTRY_LIST.size());
+                for(WordEntry wordEntry : WORD_ENTRY_LIST) {
+                    // 这里是为了后期的词频处理
+                    WordProperty property = WordProperty.of(wordEntry.count(), wordEntry.type());
+                    wordMap.put(wordEntry.word(), property);
+                }
+            }
+        }
+
+        return wordMap;
     }
 
 }
