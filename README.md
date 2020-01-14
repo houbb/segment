@@ -1,6 +1,6 @@
 # Segment
 
-更加简单，灵活的分词实现。
+基于结巴分词词库实现的更加灵活，高性能的 java 分词实现。
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.houbb/segment/badge.svg)](http://mvnrepository.com/artifact/com.github.houbb/segment)
 [![Coverage Status](https://coveralls.io/repos/github/houbb/segment/badge.svg)](https://coveralls.io/github/houbb/segment)
@@ -25,8 +25,6 @@
 - 基于 DFA 实现的高性能分词
 
 - 允许用户自定义词库
-
-- 更加简单灵活的实现
 
 # 快速入门
 
@@ -86,16 +84,18 @@ Assert.assertEquals("[这, 是, 一个, 伸手不见五指, 的, 黑夜, 。, �
 
 相同长文本，循环 1W 次。
 
-![benchmark]()
+![benchmark](https://github.com/houbb/segment/blob/master/benchmark.png)
 
 # 后期 Road-Map
 
-- 增加词频处理修正字典误差
+- 增加词频修正
 
 - 增加 HMM 算法实现新词预测
 
 - 繁简体处理
 
 # 创作感谢
+
+感谢 [jieba](https://github.com/fxsjy/jieba) 分词提供的词库，以及 [jieba-analysis](https://github.com/huaban/jieba-analysis) 的相关实现。
 
 
