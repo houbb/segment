@@ -28,7 +28,7 @@
 
         <!--============================== JAR START ==============================-->
         <!--inter-->
-        <heaven.version>0.1.70</heaven.version>
+        <heaven.version>0.1.71</heaven.version>
 
         <!--other-->
         <junit.version>4.12</junit.version>
@@ -49,6 +49,13 @@
             <version>${junit.version}</version>
             <optional>true</optional>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.huaban</groupId>
+            <artifactId>jieba-analysis</artifactId>
+            <optional>true</optional>
+            <version>1.0.2</version>
         </dependency>
     </dependencies>
 

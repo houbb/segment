@@ -5,7 +5,7 @@ package com.github.houbb.segment.api;
  * @author binbin.hou
  * @since 0.0.1
  */
-public interface ISegmentResult {
+public interface ISegmentResult extends Comparable<ISegmentResult> {
 
     /**
      * 单个词
@@ -27,12 +27,5 @@ public interface ISegmentResult {
      * @since 0.0.1
      */
     int endIndex();
-
-    /**
-     * 词性类型
-     * @return 词性
-     * @since 0.0.1
-     */
-    String type();
 
 }
