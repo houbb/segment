@@ -35,7 +35,6 @@ public class SegmentBsTest {
         final String string = "这是一个伸手不见五指的黑夜。我叫孙悟空，我爱北京，我爱学习。";
 
         List<String> resultList = SegmentBs.newInstance().segmentWords(string);
-
         Assert.assertEquals("[这, 是, 一个, 伸手不见五指, 的, 黑夜, 。, 我, 叫, 孙悟空, ，, 我, 爱, 北京, ，, 我, 爱, 学习, 。]",
                 resultList.toString());
     }

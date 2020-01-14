@@ -48,19 +48,49 @@ maven 3.x+
 
 ## 使用示例
 
+相关代码参见 [SegmentBsTest.java](https://github.com/houbb/segment/blob/master/src/test/java/com/github/houbb/segment/test/bs/SegmentBsTest.java)
 
+### 获取分词，下标等信息
+
+暂时没有实现词性标注，准备下个版本实现。
 
 ```java
+final String string = "这是一个伸手不见五指的黑夜。我叫孙悟空，我爱北京，我爱学习。";
 
+List<ISegmentResult> resultList = SegmentBs.newInstance().segment(string);
+Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14), 我[14,15), 叫[15,16), 孙悟空[16,19), ，[19,20), 我[20,21), 爱[21,22), 北京[22,24), ，[24,25), 我[25,26), 爱[26,27), 学习[27,29), 。[29,30)]", resultList.toString());
 ```
 
+### 只获取分词信息
+
+```java
+final String string = "这是一个伸手不见五指的黑夜。我叫孙悟空，我爱北京，我爱学习。";
+
+List<String> resultList = SegmentBs.newInstance().segmentWords(string);
+Assert.assertEquals("[这, 是, 一个, 伸手不见五指, 的, 黑夜, 。, 我, 叫, 孙悟空, ，, 我, 爱, 北京, ，, 我, 爱, 学习, 。]", resultList.toString());
+```
 
 # Benchmark 性能对比
 
+## 性能对比
+
+性能对比基于 jieba 1.0.2 版本，测试条件保持一致，保证二者都做好预热，然后统一处理。
+
+验证下来，分词的**性能是 jieba 的两倍左右**。
+
+原因也很简单，暂时没有引入词频和 HMM。
+
+代码参见 [BenchmarkTest.java](https://github.com/houbb/segment/blob/master/src/test/java/com/github/houbb/segment/test/benchmark/BenchmarkTest.java)
+
+## 性能对比图
+
+相同长文本，循环 1W 次。
+
+![benchmark]()
 
 # 后期 Road-Map
 
-- 增加分治算法处理词频
+- 增加词频处理修正字典误差
 
 - 增加 HMM 算法实现新词预测
 
