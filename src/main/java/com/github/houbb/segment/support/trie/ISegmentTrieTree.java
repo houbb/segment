@@ -1,4 +1,4 @@
-package com.github.houbb.segment.support.tire;
+package com.github.houbb.segment.support.trie;
 
 import java.util.Map;
 
@@ -7,7 +7,7 @@ import java.util.Map;
  * @author binbin.hou
  * @since 0.0.1
  */
-public interface ISegmentTireTree {
+public interface ISegmentTrieTree {
 
     /**
      * 获取对应的词信息
@@ -18,6 +18,6 @@ public interface ISegmentTireTree {
      * @return 词信息列表
      * @since 0.0.1
      */
-    Map getTireTree();
+    Map getTrieTree();
 
 }

@@ -6,7 +6,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/houbb/segment/badge.svg)](https://coveralls.io/github/houbb/segment)
 [![](https://img.shields.io/badge/license-Apache2-FF0080.svg)](https://github.com/houbb/segment/blob/master/LICENSE.txt)
 
-> [变更日志](CHANGELOG.md)
+> [变更日志](https://github.com/houbb/segment/blob/master/CHANGELOG.md)
 
 ## 创作目的
 

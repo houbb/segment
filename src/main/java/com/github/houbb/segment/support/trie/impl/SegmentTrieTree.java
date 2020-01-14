@@ -1,4 +1,4 @@
-package com.github.houbb.segment.support.tire.impl;
+package com.github.houbb.segment.support.trie.impl;
 
 import com.github.houbb.heaven.annotation.ThreadSafe;
 import com.github.houbb.heaven.support.instance.impl.Instances;
@@ -7,7 +7,7 @@ import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.segment.constant.SegmentConst;
 import com.github.houbb.segment.model.WordEntry;
 import com.github.houbb.segment.support.data.impl.SegmentData;
-import com.github.houbb.segment.support.tire.ISegmentTireTree;
+import com.github.houbb.segment.support.trie.ISegmentTrieTree;
 import com.github.houbb.segment.support.segment.Segment;
 
 import java.util.HashMap;
@@ -20,7 +20,7 @@ import java.util.Map;
  * @since 0.0.1
  */
 @ThreadSafe
-public class SegmentTireTree implements ISegmentTireTree {
+public class SegmentTrieTree implements ISegmentTrieTree {
 
     /**
      * 内部单词 map
@@ -89,7 +89,7 @@ public class SegmentTireTree implements ISegmentTireTree {
     }
 
     @Override
-    public Map getTireTree() {
+    public Map getTrieTree() {
         return INNER_WORD_MAP;
     }
 

@@ -8,7 +8,7 @@ import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.support.segment.SegmentResult;
 import com.github.houbb.segment.support.segment.strategy.ISegmentStrategy;
-import com.github.houbb.segment.support.tire.impl.SegmentTireTree;
+import com.github.houbb.segment.support.trie.impl.SegmentTrieTree;
 
 import java.util.List;
 import java.util.Map;
@@ -27,7 +27,7 @@ public class TireTreeSegmentStrategy implements ISegmentStrategy {
 
     @Override
     public List<ISegmentResult> segment(String string, int startIndex, ISegmentContext context) {
-        Map nowMap = Instances.singleton(SegmentTireTree.class).getTireTree();
+        Map nowMap = Instances.singleton(SegmentTrieTree.class).getTrieTree();
 
         List<ISegmentResult> resultList = Guavas.newArrayList();
 
@@ -37,7 +37,7 @@ public class TireTreeSegmentStrategy implements ISegmentStrategy {
 
             if (ObjectUtil.isNotNull(nowMap)) {
                 // 判断是否是敏感词的结尾字，如果是结尾字则判断是否继续检测
-                boolean isEnd = SegmentTireTree.isEnd(nowMap);
+                boolean isEnd = SegmentTrieTree.isEnd(nowMap);
                 if (isEnd) {
                     // 这里存放所有的匹配词，便于后期选择使用。
                     int endIndex = i+1;
