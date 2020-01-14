@@ -3,6 +3,7 @@ package com.github.houbb.segment.test.benchmark;
 import com.github.houbb.heaven.util.io.StreamUtil;
 import com.github.houbb.segment.bs.SegmentBs;
 import com.huaban.analysis.jieba.JiebaSegmenter;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
  * @author binbin.hou
  * @since 0.0.1
  */
+@Ignore
 public class BenchmarkTest {
 
     /**
