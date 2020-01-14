@@ -1,6 +1,6 @@
 # Segment
 
-基于结巴分词词库实现的更加灵活，高性能的 java 分词实现。
+[Segment](https://github.com/houbb/segment ) 是基于结巴分词词库实现的更加灵活，高性能的 java 分词实现。
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.houbb/segment/badge.svg)](http://mvnrepository.com/artifact/com.github.houbb/segment)
 [![Coverage Status](https://coveralls.io/repos/github/houbb/segment/badge.svg)](https://coveralls.io/github/houbb/segment)
@@ -156,7 +156,7 @@ r/v 就是词性，每一个代表的含义详情如下。
 
 ## 性能对比图
 
-相同长文本，循环 1W 次。
+相同长文本，循环 1W 次耗时。（Less is Better）
 
 ![benchmark](https://github.com/houbb/segment/blob/master/benchmark.png)
 
