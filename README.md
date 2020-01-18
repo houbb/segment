@@ -28,7 +28,7 @@
 
 - 基于 DFA 实现的高性能分词
 
-- 允许用户自定义词库
+- 允许指定自定义词库
 
 - 支持返回词性
 
@@ -48,7 +48,7 @@ maven 3.x+
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>${最新版本}</version>
+    <version>0.0.3</version>
 </dependency>
 ```
 
@@ -163,6 +163,8 @@ r/v 就是词性，每一个代表的含义详情如下。
 # 后期 Road-Map
 
 ## 核心特性
+
+- 结果返回优化
 
 - 基于词频修正
 

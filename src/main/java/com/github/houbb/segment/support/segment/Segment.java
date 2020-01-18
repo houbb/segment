@@ -43,7 +43,7 @@ public class Segment implements ISegment {
 
             // 结果的词性启用
             if(context.wordType()) {
-                fillWordType(segmentResult);
+                fillWordType(segmentResult, context);
             }
 
             // 更新 i 的信息
@@ -59,9 +59,9 @@ public class Segment implements ISegment {
      * @param segmentResult 分词结果
      * @since 0.0.2
      */
-    private void fillWordType(ISegmentResult segmentResult) {
+    private void fillWordType(ISegmentResult segmentResult, final ISegmentContext context) {
         String word = segmentResult.word();
-        String type = Instances.singleton(DictWordType.class).getWordType(word);
+        String type = Instances.singleton(DictWordType.class).getWordType(word, context);
         segmentResult.type(type);
     }
 

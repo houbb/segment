@@ -2,11 +2,12 @@ package com.github.houbb.segment.bs;
 
 import com.github.houbb.heaven.support.handler.IHandler;
 import com.github.houbb.heaven.support.instance.impl.Instances;
-import com.github.houbb.heaven.util.guava.Guavas;
 import com.github.houbb.heaven.util.util.CollectionUtil;
 import com.github.houbb.segment.api.ISegment;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
+import com.github.houbb.segment.support.data.ISegmentData;
+import com.github.houbb.segment.support.data.impl.SegmentDatas;
 import com.github.houbb.segment.support.segment.Segment;
 import com.github.houbb.segment.support.segment.SegmentContext;
 
@@ -27,10 +28,17 @@ public final class SegmentBs {
     private ISegment segment = Instances.singleton(Segment.class);
 
     /**
-     * 上下文
-     * @since 0.0.2
+     * 分词数据来源
+     * 1. 默认使用系统的字典
+     * @since 0.0.3
      */
-    private ISegmentContext segmentContext;
+    private ISegmentData segmentData = SegmentDatas.system();
+
+    /**
+     * 是否返回词性
+     * @since 0.0.3
+     */
+    private boolean wordType = false;
 
     /**
      * 引导类
@@ -44,9 +52,7 @@ public final class SegmentBs {
      * @since 0.0.1
      */
     public static SegmentBs newInstance() {
-        SegmentBs segmentBs = new SegmentBs();
-        segmentBs.segmentContext = SegmentContext.newInstance();
-        return segmentBs;
+        return new SegmentBs();
     }
 
     /**
@@ -56,7 +62,18 @@ public final class SegmentBs {
      * @since 0.0.2
      */
     public SegmentBs wordType(final boolean wordType) {
-        segmentContext.wordType(wordType);
+        this.wordType = wordType;
+        return this;
+    }
+
+    /**
+     * 指定分词的数据实现
+     * @param segmentData 分词数据
+     * @return this
+     * @since 0.0.3
+     */
+    public SegmentBs segmentData(final ISegmentData segmentData) {
+        this.segmentData = segmentData;
         return this;
     }
 
@@ -67,7 +84,8 @@ public final class SegmentBs {
      * @since 0.0.1
      */
     public List<ISegmentResult> segment(final String string) {
-        return segment.segment(string, segmentContext);
+        final ISegmentContext context = buildContext();
+        return segment.segment(string, context);
     }
 
     /**
@@ -86,6 +104,17 @@ public final class SegmentBs {
                 return iSegmentResult.word();
             }
         });
+    }
+
+    /**
+     * 构建上下文
+     * @return 上下文
+     * @since 0.0.3
+     */
+    private ISegmentContext buildContext() {
+        return SegmentContext.newInstance()
+                .wordType(wordType)
+                .segmentData(segmentData);
     }
 
 }

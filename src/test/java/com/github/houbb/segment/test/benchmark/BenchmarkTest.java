@@ -28,7 +28,7 @@ public class BenchmarkTest {
     private static final int TIMES = 10000;
 
     /**
-     * 耗时：9990
+     * 耗时：28080
      */
     @Test
     public void jiebaAnalysisTest() {
@@ -49,7 +49,7 @@ public class BenchmarkTest {
     }
 
     /**
-     * Segment cost: 5415
+     * Segment cost: 13988
      */
     @Test
     public void segmentTest() {

@@ -1,5 +1,7 @@
 package com.github.houbb.segment.api;
 
+import com.github.houbb.segment.support.data.ISegmentData;
+
 /**
  * 分词接口上下文
  *
@@ -32,5 +34,12 @@ public interface ISegmentContext {
      * @since 0.0.2
      */
     ISegmentContext wordType(final boolean wordType);
+
+    /**
+     * 获取分词字典实现
+     * @return 分词字典数据
+     * @since 0.0.3
+     */
+    ISegmentData segmentData();
 
 }

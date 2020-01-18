@@ -1,6 +1,7 @@
 package com.github.houbb.segment.support.segment;
 
 import com.github.houbb.segment.api.ISegmentContext;
+import com.github.houbb.segment.support.data.ISegmentData;
 
 /**
  * 分词上下文
@@ -14,6 +15,12 @@ public class SegmentContext implements ISegmentContext {
      * @since 0.0.2
      */
     private boolean wordType;
+
+    /**
+     * 分词字典
+     * @since 0.0.3
+     */
+    private ISegmentData segmentData;
 
     /**
      * 创建对象实例
@@ -35,4 +42,13 @@ public class SegmentContext implements ISegmentContext {
         return this;
     }
 
+    @Override
+    public ISegmentData segmentData() {
+        return segmentData;
+    }
+
+    public SegmentContext segmentData(ISegmentData segmentData) {
+        this.segmentData = segmentData;
+        return this;
+    }
 }

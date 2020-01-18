@@ -16,6 +16,12 @@ public final class SegmentConst {
     public static final String SEGMENT_DICT_PATH = "/segment_dict.txt";
 
     /**
+     * 分词的自定义字典路径
+     * @since 0.0.3
+     */
+    public static final String SEGMENT_DEFINE_DICT_PATH = "/segment_define_dict.txt";
+
+    /**
      * 字典分隔类
      * @since 0.0.1
      */

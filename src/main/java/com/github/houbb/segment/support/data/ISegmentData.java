@@ -22,7 +22,7 @@ public interface ISegmentData {
      * @return 词信息列表
      * @since 0.0.1
      */
-    List<WordEntry> getWordData();
+    List<WordEntry> getWordEntryList();
 
     /**
      * 获取词性的 map
@@ -32,6 +32,6 @@ public interface ISegmentData {
      * @return 词性对应的 map
      * @since 0.0.2
      */
-    Map<String, WordProperty> getWordMap();
+    Map<String, WordProperty> getWordTypeMap();
 
 }

@@ -1,14 +1,13 @@
 package com.github.houbb.segment.support.trie.impl;
 
 import com.github.houbb.heaven.annotation.ThreadSafe;
-import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.heaven.util.guava.Guavas;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
+import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.constant.SegmentConst;
 import com.github.houbb.segment.model.WordEntry;
-import com.github.houbb.segment.support.data.impl.SegmentData;
+import com.github.houbb.segment.support.data.ISegmentData;
 import com.github.houbb.segment.support.trie.ISegmentTrieTree;
-import com.github.houbb.segment.support.segment.Segment;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,27 +26,34 @@ public class SegmentTrieTree implements ISegmentTrieTree {
      *
      * @since 0.0.1
      */
-    private static final Map INNER_WORD_MAP;
+    private static volatile Map INNER_WORD_MAP;
 
-    static {
-        synchronized (Segment.class) {
-            // 创建 map
-            INNER_WORD_MAP = Guavas.newHashMap();
-
-            // 初始化 map
-            initInnerWordMap();
+    @Override
+    public Map getTrieTree(final ISegmentContext context) {
+        if(ObjectUtil.isNotNull(INNER_WORD_MAP)) {
+            return INNER_WORD_MAP;
         }
+
+        synchronized(SegmentTrieTree.class) {
+            final ISegmentData segmentData = context.segmentData();
+            initInnerWordMap(segmentData);
+        }
+
+        return INNER_WORD_MAP;
     }
 
     /**
      * 基于前缀树初始化 Map
+     * @param segmentData 分词数据实现
      * @since 0.0.1
      */
     @SuppressWarnings("unchecked")
-    private static void initInnerWordMap() {
+    private void initInnerWordMap(final ISegmentData segmentData) {
+        // 创建 map
+        INNER_WORD_MAP = Guavas.newHashMap();
+
         // 加载字典
-        List<WordEntry> wordEntries = Instances.singleton(SegmentData.class)
-                .getWordData();
+        List<WordEntry> wordEntries = segmentData.getWordEntryList();
 
         for (WordEntry wordEntry : wordEntries) {
             final String key = wordEntry.word();
@@ -86,31 +92,6 @@ public class SegmentTrieTree implements ISegmentTrieTree {
                 }
             }
         }
-    }
-
-    @Override
-    public Map getTrieTree() {
-        return INNER_WORD_MAP;
-    }
-
-    /**
-     * 判断是否结束
-     * BUG-FIX: 避免出现敏感词库中没有的文字。
-     * @param map map 信息
-     * @return 是否结束
-     * @since 0.0.1
-     */
-    public static boolean isEnd(final Map map) {
-        if(ObjectUtil.isNull(map)) {
-            return false;
-        }
-
-        Object value = map.get(SegmentConst.IS_END);
-        if(ObjectUtil.isNull(value)) {
-            return false;
-        }
-
-        return (boolean)value;
     }
 
 }

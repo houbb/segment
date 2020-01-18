@@ -6,6 +6,7 @@ import com.github.houbb.heaven.util.guava.Guavas;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
+import com.github.houbb.segment.constant.SegmentConst;
 import com.github.houbb.segment.support.segment.SegmentResult;
 import com.github.houbb.segment.support.segment.strategy.ISegmentStrategy;
 import com.github.houbb.segment.support.trie.impl.SegmentTrieTree;
@@ -27,7 +28,7 @@ public class TireTreeSegmentStrategy implements ISegmentStrategy {
 
     @Override
     public List<ISegmentResult> segment(String string, int startIndex, ISegmentContext context) {
-        Map nowMap = Instances.singleton(SegmentTrieTree.class).getTrieTree();
+        Map nowMap = Instances.singleton(SegmentTrieTree.class).getTrieTree(context);
 
         List<ISegmentResult> resultList = Guavas.newArrayList();
 
@@ -37,7 +38,7 @@ public class TireTreeSegmentStrategy implements ISegmentStrategy {
 
             if (ObjectUtil.isNotNull(nowMap)) {
                 // 判断是否是敏感词的结尾字，如果是结尾字则判断是否继续检测
-                boolean isEnd = SegmentTrieTree.isEnd(nowMap);
+                boolean isEnd = isEnd(nowMap);
                 if (isEnd) {
                     // 这里存放所有的匹配词，便于后期选择使用。
                     int endIndex = i+1;
@@ -94,6 +95,26 @@ public class TireTreeSegmentStrategy implements ISegmentStrategy {
         // 比如忽略重复词等等。
 
         return currentMap;
+    }
+
+    /**
+     * 判断是否结束
+     * BUG-FIX: 避免出现敏感词库中没有的文字。
+     * @param map map 信息
+     * @return 是否结束
+     * @since 0.0.1
+     */
+    private static boolean isEnd(final Map map) {
+        if(ObjectUtil.isNull(map)) {
+            return false;
+        }
+
+        Object value = map.get(SegmentConst.IS_END);
+        if(ObjectUtil.isNull(value)) {
+            return false;
+        }
+
+        return (boolean)value;
     }
 
 }
