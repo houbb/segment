@@ -3,7 +3,6 @@
 [Segment](https://github.com/houbb/segment ) 是基于结巴分词词库实现的更加灵活，高性能的 java 分词实现。
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.houbb/segment/badge.svg)](http://mvnrepository.com/artifact/com.github.houbb/segment)
-[![Coverage Status](https://coveralls.io/repos/github/houbb/segment/badge.svg)](https://coveralls.io/github/houbb/segment)
 [![](https://img.shields.io/badge/license-Apache2-FF0080.svg)](https://github.com/houbb/segment/blob/master/LICENSE.txt)
 
 > [变更日志](https://github.com/houbb/segment/blob/master/CHANGELOG.md)
