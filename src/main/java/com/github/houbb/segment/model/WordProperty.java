@@ -21,6 +21,8 @@ public class WordProperty {
 
     /**
      * 新建一个实例
+     * @param type 词性
+     * @param count 词频
      * @return 实例
      * @since 0.0.2
      */
