@@ -101,9 +101,9 @@ List<ISegmentResult> resultList = SegmentBs
 Assert.assertEquals("[我[0,1)/r, 爱[1,2)/v, 学习[2,4)/v]", resultList.toString());
 ```
 
-其中 `r`、`v` 就是词性，代表的含义参见[词性说明]()。
+其中 `r`、`v` 就是词性，代表的含义参见[词性说明](https://github.com/houbb/segment/blob/master/doc/user/word_type.md)。
 
-也可以参见对应的枚举类 [WordTypeEnum](https://github.com/houbb/segment/blob/master/src/main/java/com/github/houbb/segment/constant/enums/WordTypeEnum.java)
+或者参考枚举类 [WordTypeEnum](https://github.com/houbb/segment/blob/master/src/main/java/com/github/houbb/segment/constant/enums/WordTypeEnum.java)
 
 # 分词模式
 
@@ -162,7 +162,7 @@ Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手[4,6), 伸手不见
 
 - HMM 算法实现新词预测
 
-- 常见的分词模式
+- 搜索引擎分词模式 
 
 - 停顿词/人名/地名/机构名/数字... 各种常见的词性标注
 
