@@ -25,6 +25,8 @@
 
 ## Features 特点
 
+- 极单的 api 设计，基于 fluent-api 让调用更加优雅
+
 - 基于 DFA 实现的高性能分词
 
 - 允许指定自定义词库
@@ -47,7 +49,7 @@ maven 3.x+
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
 </dependency>
 ```
 
@@ -71,9 +73,16 @@ Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手不见五指[4,10),
 ```java
 final String string = "这是一个伸手不见五指的黑夜。我叫孙悟空，我爱北京，我爱学习。";
 
-List<String> resultList = SegmentBs.newInstance().segmentWords(string);
+List<String> resultList = SegmentBs.newInstance().segment(string, SegmentResultHandlers.word());
 Assert.assertEquals("[这, 是, 一个, 伸手不见五指, 的, 黑夜, 。, 我, 叫, 孙悟空, ，, 我, 爱, 北京, ，, 我, 爱, 学习, 。]", resultList.toString());
 ```
+
+其中 `SegmentResultHandlers` 用来指定对于分词结果的处理实现，便于保证 api 的统一性。
+
+| 方法 | 实现 | 说明 |
+|:---|:---|:---|
+| common() | SegmentResultHandler | 默认实现，返回 ISegmentResult 列表 |
+| word() | SegmentResultWordHandler | 只返回分词字符串列表 |
 
 # 返回词性
 

@@ -10,6 +10,8 @@ import com.github.houbb.segment.support.data.ISegmentData;
 import com.github.houbb.segment.support.data.impl.SegmentDatas;
 import com.github.houbb.segment.support.segment.Segment;
 import com.github.houbb.segment.support.segment.SegmentContext;
+import com.github.houbb.segment.support.segment.result.ISegmentResultHandler;
+import com.github.houbb.segment.support.segment.result.impl.SegmentResultHandlers;
 
 import java.util.List;
 
@@ -84,17 +86,35 @@ public final class SegmentBs {
      * @since 0.0.1
      */
     public List<ISegmentResult> segment(final String string) {
+        return segment(string, SegmentResultHandlers.common());
+    }
+
+    /**
+     * 分词处理
+     * @param string 原始字符串
+     * @param handler 处理类
+     * @param <R> 泛型
+     * @return 处理后的结果
+     * @since 0.0.4
+     */
+    public <R> R segment(final String string, final ISegmentResultHandler<R> handler) {
         final ISegmentContext context = buildContext();
-        return segment.segment(string, context);
+        List<ISegmentResult> segmentResults = segment.segment(string, context);
+        return handler.handler(segmentResults);
     }
 
     /**
      * 分词
+     *
+     * 缺陷：无法保证接口的统一性，不便于以后拓展。
+     *
+     * 这个最多是放在 {@link com.github.houbb.segment.util.SegmentHelper} 层的一个方法。
      * @param string 字符串
      * @return 分词后的词信息
      * @since 0.0.1
      * @see #segment(String) 分词
      */
+    @Deprecated
     public List<String> segmentWords(final String string) {
         List<ISegmentResult> segmentResultList = segment(string);
 

@@ -6,7 +6,7 @@ import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.segment.api.ISegment;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
-import com.github.houbb.segment.support.segment.result.impl.GreedySegmentResultSelector;
+import com.github.houbb.segment.support.segment.selector.impl.GreedySegmentResultSelector;
 import com.github.houbb.segment.support.segment.strategy.impl.SegmentStrategyChain;
 import com.github.houbb.segment.support.type.impl.DictWordType;
 

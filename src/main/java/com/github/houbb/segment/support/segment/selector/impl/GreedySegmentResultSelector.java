@@ -1,4 +1,4 @@
-package com.github.houbb.segment.support.segment.result.impl;
+package com.github.houbb.segment.support.segment.selector.impl;
 
 import com.github.houbb.segment.api.ISegmentResult;
 

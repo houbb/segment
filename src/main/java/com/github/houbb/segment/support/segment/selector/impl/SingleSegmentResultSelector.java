@@ -1,9 +1,9 @@
-package com.github.houbb.segment.support.segment.result.impl;
+package com.github.houbb.segment.support.segment.selector.impl;
 
 import com.github.houbb.heaven.annotation.ThreadSafe;
 import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.support.segment.SegmentResult;
-import com.github.houbb.segment.support.segment.result.ISegmentResultSelector;
+import com.github.houbb.segment.support.segment.selector.ISegmentResultSelector;
 
 import java.util.List;
 
