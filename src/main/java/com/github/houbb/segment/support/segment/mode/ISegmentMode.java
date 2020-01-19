@@ -1,11 +1,12 @@
-package com.github.houbb.segment.support.segment.selector;
+package com.github.houbb.segment.support.segment.mode;
 
 import com.github.houbb.segment.api.ISegmentResult;
 
 import java.util.List;
 
 /**
- * 分词结果选择
+ * 分词模式接口
+ *
  * （1）如果为空，直接返回单个结果
  * （2）不为空主要有两种策略：
  *
@@ -17,17 +18,17 @@ import java.util.List;
  * @author binbin.hou
  * @since 0.0.1
  */
-public interface ISegmentResultSelector {
+public interface ISegmentMode {
 
     /**
      * 选择最佳的匹配结果
      * @param string 当前字符串
      * @param startIndex 开始下标
      * @param resultList 结果列表
-     * @return 最佳匹配结果
+     * @return 匹配结果列表
      * @since 0.0.1
      */
-    ISegmentResult select(final String string,
+    List<ISegmentResult> select(final String string,
                          final int startIndex,
                          final List<ISegmentResult> resultList);
 

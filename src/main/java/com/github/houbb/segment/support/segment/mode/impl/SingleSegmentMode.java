@@ -1,10 +1,12 @@
-package com.github.houbb.segment.support.segment.selector.impl;
+package com.github.houbb.segment.support.segment.mode.impl;
 
 import com.github.houbb.heaven.annotation.ThreadSafe;
 import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.support.segment.SegmentResult;
-import com.github.houbb.segment.support.segment.selector.ISegmentResultSelector;
+import com.github.houbb.segment.support.segment.mode.ISegmentMode;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,10 +21,10 @@ import java.util.List;
  * @since 0.0.1
  */
 @ThreadSafe
-public class SingleSegmentResultSelector implements ISegmentResultSelector {
+public class SingleSegmentMode implements ISegmentMode {
 
     /**
-     * 直接
+     * 直接构建结果列表
      * @param string 当前字符串
      * @param startIndex 开始下标
      * @param resultList 结果列表
@@ -30,15 +32,16 @@ public class SingleSegmentResultSelector implements ISegmentResultSelector {
      * @since 0.0.1
      */
     @Override
-    public ISegmentResult select(final String string,
+    public List<ISegmentResult> select(final String string,
                                 final int startIndex,
                                 final List<ISegmentResult> resultList) {
         String word = string.substring(startIndex, startIndex+1);
-        return SegmentResult.newInstance()
+        ISegmentResult segmentResult = SegmentResult.newInstance()
                 .word(word)
                 .startIndex(startIndex)
-                .endIndex(startIndex+1)
-                ;
+                .endIndex(startIndex+1);
+
+        return Collections.singletonList(segmentResult);
     }
 
 }

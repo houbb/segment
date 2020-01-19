@@ -1,9 +1,9 @@
-package com.github.houbb.segment.support.segment.selector.impl;
+package com.github.houbb.segment.support.segment.mode.impl;
 
 import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.heaven.util.util.CollectionUtil;
 import com.github.houbb.segment.api.ISegmentResult;
-import com.github.houbb.segment.support.segment.selector.ISegmentResultSelector;
+import com.github.houbb.segment.support.segment.mode.ISegmentMode;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * @author binbin.hou
  * @since 0.0.1
  */
-public abstract class AbstractSegmentResultSelector implements ISegmentResultSelector {
+public abstract class AbstractSegmentMode implements ISegmentMode {
 
     /**
      * 列表为空，则强制使用单个字选择器。
@@ -27,12 +27,12 @@ public abstract class AbstractSegmentResultSelector implements ISegmentResultSel
      * @since 0.0.1
      */
     @Override
-    public ISegmentResult select(final String string,
+    public List<ISegmentResult> select(final String string,
                                 final int startIndex,
                                 final List<ISegmentResult> resultList) {
 
         if(CollectionUtil.isEmpty(resultList)) {
-            return Instances.singleton(SingleSegmentResultSelector.class)
+            return SegmentModes.single()
                     .select(string, startIndex, resultList);
         }
 
@@ -45,10 +45,10 @@ public abstract class AbstractSegmentResultSelector implements ISegmentResultSel
      * @param string 字符串
      * @param startIndex 开始下标
      * @param resultList 结果列表
-     * @return 结果
+     * @return 结果列表
      * @since 0.0.1
      */
-    protected abstract ISegmentResult doSelect(final String string,
+    protected abstract List<ISegmentResult> doSelect(final String string,
                                       final int startIndex,
                                       final List<ISegmentResult> resultList);
 

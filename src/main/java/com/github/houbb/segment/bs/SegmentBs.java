@@ -10,6 +10,8 @@ import com.github.houbb.segment.support.data.ISegmentData;
 import com.github.houbb.segment.support.data.impl.SegmentDatas;
 import com.github.houbb.segment.support.segment.Segment;
 import com.github.houbb.segment.support.segment.SegmentContext;
+import com.github.houbb.segment.support.segment.mode.ISegmentMode;
+import com.github.houbb.segment.support.segment.mode.impl.SegmentModes;
 import com.github.houbb.segment.support.segment.result.ISegmentResultHandler;
 import com.github.houbb.segment.support.segment.result.impl.SegmentResultHandlers;
 
@@ -35,6 +37,15 @@ public final class SegmentBs {
      * @since 0.0.3
      */
     private ISegmentData segmentData = SegmentDatas.system();
+
+    /**
+     * 分词模式
+     *
+     * 1. 默认使用贪婪模式
+     *
+     * @since 0.0.5
+     */
+    private ISegmentMode segmentMode = SegmentModes.greedy();
 
     /**
      * 是否返回词性
@@ -76,6 +87,17 @@ public final class SegmentBs {
      */
     public SegmentBs segmentData(final ISegmentData segmentData) {
         this.segmentData = segmentData;
+        return this;
+    }
+
+    /**
+     * 设置分词模式
+     * @param segmentMode 分词模式
+     * @return this
+     * @since 0.0.5
+     */
+    public SegmentBs segmentMode(ISegmentMode segmentMode) {
+        this.segmentMode = segmentMode;
         return this;
     }
 
@@ -134,7 +156,8 @@ public final class SegmentBs {
     private ISegmentContext buildContext() {
         return SegmentContext.newInstance()
                 .wordType(wordType)
-                .segmentData(segmentData);
+                .segmentData(segmentData)
+                .segmentMode(segmentMode);
     }
 
 }

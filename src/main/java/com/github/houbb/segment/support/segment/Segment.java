@@ -6,8 +6,8 @@ import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.segment.api.ISegment;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
-import com.github.houbb.segment.support.segment.selector.impl.GreedySegmentResultSelector;
 import com.github.houbb.segment.support.segment.strategy.impl.SegmentStrategyChain;
+import com.github.houbb.segment.support.type.IWordType;
 import com.github.houbb.segment.support.type.impl.DictWordType;
 
 import java.util.List;
@@ -33,21 +33,23 @@ public class Segment implements ISegment {
             // 防御编程，避免具体策略影响 i 的值。
             int startIndex = i;
 
+            // 这里的结果已经排序过了。
             List<ISegmentResult> segmentResultList = Instances.singleton(SegmentStrategyChain.class).segment(string, startIndex, context);
 
             // 选择结果处理最佳的策略
             // 这里选择贪心匹配策略
-            ISegmentResult segmentResult = Instances.singleton(GreedySegmentResultSelector.class)
-                    .select(string, startIndex, segmentResultList);
-            segmentList.add(segmentResult);
+            List<ISegmentResult> selectList = context.segmentMode().select(string, startIndex, segmentResultList);
+            segmentList.addAll(selectList);
 
             // 结果的词性启用
             if(context.wordType()) {
-                fillWordType(segmentResult, context);
+                fillWordType(selectList, context);
             }
 
             // 更新 i 的信息
-            i = segmentResult.endIndex()-1;
+            // 按照最后一个 index 来
+            ISegmentResult lastSegmentResult = selectList.get(selectList.size()-1);
+            i = lastSegmentResult.endIndex()-1;
         }
 
 
@@ -56,13 +58,18 @@ public class Segment implements ISegment {
 
     /**
      * 填充结果信息
-     * @param segmentResult 分词结果
+     * @param selectList 分词结果列表
+     * @param context 上下文
      * @since 0.0.2
      */
-    private void fillWordType(ISegmentResult segmentResult, final ISegmentContext context) {
-        String word = segmentResult.word();
-        String type = Instances.singleton(DictWordType.class).getWordType(word, context);
-        segmentResult.type(type);
+    private void fillWordType(List<ISegmentResult> selectList, final ISegmentContext context) {
+        final IWordType wordType = Instances.singleton(DictWordType.class);
+
+        for(ISegmentResult segmentResult : selectList) {
+            String word = segmentResult.word();
+            String type = wordType.getWordType(word, context);
+            segmentResult.type(type);
+        }
     }
 
 }

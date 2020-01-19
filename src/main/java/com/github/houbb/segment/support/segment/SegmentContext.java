@@ -2,6 +2,7 @@ package com.github.houbb.segment.support.segment;
 
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.support.data.ISegmentData;
+import com.github.houbb.segment.support.segment.mode.ISegmentMode;
 
 /**
  * 分词上下文
@@ -21,6 +22,12 @@ public class SegmentContext implements ISegmentContext {
      * @since 0.0.3
      */
     private ISegmentData segmentData;
+
+    /**
+     * 分词模式
+     * @since 0.0.5
+     */
+    private ISegmentMode segmentMode;
 
     /**
      * 创建对象实例
@@ -51,4 +58,15 @@ public class SegmentContext implements ISegmentContext {
         this.segmentData = segmentData;
         return this;
     }
+
+    @Override
+    public ISegmentMode segmentMode() {
+        return segmentMode;
+    }
+
+    public SegmentContext segmentMode(ISegmentMode segmentMode) {
+        this.segmentMode = segmentMode;
+        return this;
+    }
+
 }

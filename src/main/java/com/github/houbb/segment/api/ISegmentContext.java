@@ -1,6 +1,7 @@
 package com.github.houbb.segment.api;
 
 import com.github.houbb.segment.support.data.ISegmentData;
+import com.github.houbb.segment.support.segment.mode.ISegmentMode;
 
 /**
  * 分词接口上下文
@@ -41,5 +42,12 @@ public interface ISegmentContext {
      * @since 0.0.3
      */
     ISegmentData segmentData();
+
+    /**
+     * 获取分词模式
+     * @return 分词模式
+     * @since 0.0.5
+     */
+    ISegmentMode segmentMode();
 
 }

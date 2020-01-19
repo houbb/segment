@@ -35,6 +35,8 @@
 
 默认关闭，惰性加载，不对性能和内存有影响。
 
+- 支持不同的分词模式
+
 # 快速入门
 
 ## 准备
@@ -49,15 +51,15 @@ maven 3.x+
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
 </dependency>
 ```
 
-## 使用示例
+# 快速开始
 
 相关代码参见 [SegmentBsTest.java](https://github.com/houbb/segment/blob/master/src/test/java/com/github/houbb/segment/test/bs/SegmentBsTest.java)
 
-### 获取分词，下标等信息
+## 获取分词，下标等信息
 
 暂时没有实现词性标注，准备下个版本实现。
 
@@ -68,7 +70,7 @@ List<ISegmentResult> resultList = SegmentBs.newInstance().segment(string);
 Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14), 我[14,15), 叫[15,16), 孙悟空[16,19), ，[19,20), 我[20,21), 爱[21,22), 北京[22,24), ，[24,25), 我[25,26), 爱[26,27), 学习[27,29), 。[29,30)]", resultList.toString());
 ```
 
-### 只获取分词信息
+## 只获取分词信息
 
 ```java
 final String string = "这是一个伸手不见五指的黑夜。我叫孙悟空，我爱北京，我爱学习。";
@@ -84,9 +86,7 @@ Assert.assertEquals("[这, 是, 一个, 伸手不见五指, 的, 黑夜, 。, �
 | common() | SegmentResultHandler | 默认实现，返回 ISegmentResult 列表 |
 | word() | SegmentResultWordHandler | 只返回分词字符串列表 |
 
-# 返回词性
-
-## 使用示例
+## 返回词性
 
 直接指定 `wordType` 属性为真即可。
 
@@ -101,54 +101,40 @@ List<ISegmentResult> resultList = SegmentBs
 Assert.assertEquals("[我[0,1)/r, 爱[1,2)/v, 学习[2,4)/v]", resultList.toString());
 ```
 
-## 词性说明
+其中 `r`、`v` 就是词性，代表的含义参见[词性说明]()。
 
-r/v 就是词性，每一个代表的含义详情如下。
+也可以参见对应的枚举类 [WordTypeEnum](https://github.com/houbb/segment/blob/master/src/main/java/com/github/houbb/segment/constant/enums/WordTypeEnum.java)
 
-| 编码 | 描述 |
+# 分词模式
+
+## 分词模式说明
+
+| 分词模式 | 指定方式 | 说明 |
 |:---|:---|
-| Ag | 形语素 |
-| a | 形容词 |
-| ad | 副形词 |
-| an | 名形词 |
-| b | 区别词 |
-| c | 连词 |
-| dg | 副语素 |
-| d | 副词 |
-| e | 叹词 |
-| f | 方位词 |
-| g | 语素 |
-| h | 前接成分 |
-| i | 成语 |
-| j | 简称略语 |
-| k | 后接成分 |
-| l | 习用语 |
-| m | 数词 |
-| Ng | 名语素 |
-| n | 名词 |
-| nr | 人名 |
-| ns | 地名 |
-| nt | 机构团体 |
-| nz | 其他专名 |
-| o | 拟声词 |
-| p | 介词 |
-| q | 量词 |
-| r | 代词 |
-| s | 处所词 |
-| tg | 时语素 |
-| t | 时间词 |
-| u | 助词 |
-| vg | 动语素 |
-| v | 动词 |
-| vd | 副动词 |
-| vn | 名动词 |
-| w | 标点符号 |
-| x | 非语素字 |
-| y | 语气词 |
-| z | 状态词 |
-| un | 未知词 |
+| 贪婪模式 | `SegmentModes.greedy()` | 返回贪婪匹配的结果 |
+| 全分词模式 | `SegmentModes.all()` | 返回所有的分词列表 |
 
-可以参见对应的枚举类 [WordTypeEnum](https://github.com/houbb/segment/blob/master/src/main/java/com/github/houbb/segment/constant/enums/WordTypeEnum.java)
+## 贪婪模式
+
+```java
+final String string = "这是一个伸手不见五指的黑夜。";
+
+List<ISegmentResult> resultList = SegmentBs.newInstance()
+                .segmentMode(SegmentModes.greedy())
+                .segment(string);
+Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
+```
+
+## 全分词模式
+
+```java
+final String string = "这是一个伸手不见五指的黑夜。";
+
+List<ISegmentResult> resultList = SegmentBs.newInstance()
+                .segmentMode(SegmentModes.all())
+                .segment(string);
+Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手[4,6), 伸手不见[4,8), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
+```
 
 # Benchmark 性能对比
 
