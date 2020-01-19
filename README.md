@@ -55,8 +55,6 @@ maven 3.x+
 </dependency>
 ```
 
-# 快速开始
-
 相关代码参见 [SegmentBsTest.java](https://github.com/houbb/segment/blob/master/src/test/java/com/github/houbb/segment/test/bs/SegmentBsTest.java)
 
 ## 获取分词，下标等信息
@@ -83,8 +81,8 @@ Assert.assertEquals("[这, 是, 一个, 伸手不见五指, 的, 黑夜, 。, �
 
 | 方法 | 实现 | 说明 |
 |:---|:---|:---|
-| common() | SegmentResultHandler | 默认实现，返回 ISegmentResult 列表 |
-| word() | SegmentResultWordHandler | 只返回分词字符串列表 |
+| `common()` | SegmentResultHandler | 默认实现，返回 ISegmentResult 列表 |
+| `word()` | SegmentResultWordHandler | 只返回分词字符串列表 |
 
 ## 返回词性
 
@@ -109,10 +107,12 @@ Assert.assertEquals("[我[0,1)/r, 爱[1,2)/v, 学习[2,4)/v]", resultList.toStri
 
 ## 分词模式说明
 
+通过 `SegmentModes` 静态方法，获取对应的分词模式。
+
 | 分词模式 | 指定方式 | 说明 |
-|:---|:---|
-| 贪婪模式 | `SegmentModes.greedy()` | 返回贪婪匹配的结果 |
-| 全分词模式 | `SegmentModes.all()` | 返回所有的分词列表 |
+|:---|:---|:---|
+| 贪婪模式 | `greedy()` | 返回贪婪匹配的结果 |
+| 全分词模式 | `all()` | 返回所有的分词列表 |
 
 ## 贪婪模式
 
