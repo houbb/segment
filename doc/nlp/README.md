@@ -14,13 +14,21 @@ POS-Tagging
 
 ### 关键词
 
+keyword
+
 ### 相似性
+
+Similarity
 
 ### 自动生成摘要
 
 ## 拼音
 
 pinyin
+
+## 形近字
+
+similar-char
 
 ## 繁简体转换
 
