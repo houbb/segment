@@ -12,15 +12,19 @@ POS-Tagging
 
 暂时保留，实体标注全部抽离出去。
 
+### 关键词
+
+### 相似性
+
+### 自动生成摘要
+
 ## 拼音
 
-pinyin Done
-
-Done
+pinyin
 
 ## 繁简体转换
 
-Done
+opencc4j
 
 ## 实体标注
 
@@ -30,9 +34,19 @@ Done
 
 ## 同义词
 
+https://github.com/houbb/synonyms
+
 ## 敏感词
 
+sensitive-word
+
 ## 拼写纠正
+
+### 英文
+
+word-checker
+
+### 中文
 
 这个很想要的功能。。。
 
