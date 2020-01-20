@@ -71,6 +71,7 @@ public final class SegmentHelper {
      * 分词处理
      * @param string 原始字符串
      * @param wordType 是否返回词性
+     * @param modeEnum 分词模式
      * @param handler 处理类
      * @param <R> 泛型
      * @return 处理后的结果

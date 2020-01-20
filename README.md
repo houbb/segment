@@ -123,12 +123,12 @@ Assert.assertEquals("[这[0,1)/r, 是[1,2)/v, 一个[2,4)/m, 伸手不见五指[
 
 ### 分词模式说明
 
-通过 `SegmentModes` 静态方法，可以指定对应的分词模式。
+通过 [SegmentModeEnum](https://github.com/houbb/segment/blob/master/src/main/java/com/github/houbb/segment/constant/enums/SegmentModeEnum.java) 分词模式枚举类，可以指定对应的分词模式。
 
 | 分词模式 | 指定方式 | 说明 |
 |:---|:---|:---|
-| 贪婪模式 | `greedy()` | 返回贪婪匹配的结果，暂时的默认模式 |
-| 全分词模式 | `all()` | 返回所有的分词列表 |
+| 贪婪模式 | `GREEDY` | 返回贪婪匹配的结果，暂时的默认模式 |
+| 全分词模式 | `ALL` | 返回所有的分词列表 |
 
 此处只演示全分词模式。
 
