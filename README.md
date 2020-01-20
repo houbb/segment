@@ -2,6 +2,8 @@
 
 [Segment](https://github.com/houbb/segment ) 是基于结巴分词词库实现的更加灵活，高性能的 java 分词实现。
 
+愿景：成为 java 最好用的分词工具。
+
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.houbb/segment/badge.svg)](http://mvnrepository.com/artifact/com.github.houbb/segment)
 [![](https://img.shields.io/badge/license-Apache2-FF0080.svg)](https://github.com/houbb/segment/blob/master/LICENSE.txt)
 
@@ -28,6 +30,8 @@
 - 面向用户的极简静态 api 设计
 
 - 面向开发者 fluent-api 设计，让配置更加优雅灵活
+
+- 详细的中文代码注释，便于源码学习
 
 - 基于 DFA 实现的高性能分词
 
