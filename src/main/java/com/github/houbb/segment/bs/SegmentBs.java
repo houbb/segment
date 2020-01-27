@@ -1,8 +1,6 @@
 package com.github.houbb.segment.bs;
 
-import com.github.houbb.heaven.support.handler.IHandler;
 import com.github.houbb.heaven.support.instance.impl.Instances;
-import com.github.houbb.heaven.util.util.CollectionUtil;
 import com.github.houbb.segment.api.ISegment;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
@@ -14,6 +12,8 @@ import com.github.houbb.segment.support.segment.mode.ISegmentMode;
 import com.github.houbb.segment.support.segment.mode.impl.SegmentModes;
 import com.github.houbb.segment.support.segment.result.ISegmentResultHandler;
 import com.github.houbb.segment.support.segment.result.impl.SegmentResultHandlers;
+import com.github.houbb.segment.support.type.IWordType;
+import com.github.houbb.segment.support.type.impl.WordTypes;
 
 import java.util.List;
 
@@ -45,13 +45,13 @@ public final class SegmentBs {
      *
      * @since 0.0.5
      */
-    private ISegmentMode segmentMode = SegmentModes.greedy();
+    private ISegmentMode segmentMode = SegmentModes.maxRate();
 
     /**
-     * 是否返回词性
-     * @since 0.0.3
+     * 词性信息实现
+     * @since 0.0.7
      */
-    private boolean wordType = false;
+    private IWordType wordType = WordTypes.none();
 
     /**
      * 引导类
@@ -72,9 +72,9 @@ public final class SegmentBs {
      * 指定启用词性
      * @param wordType 指定启用词性
      * @return this
-     * @since 0.0.2
+     * @since 0.0.7
      */
-    public SegmentBs wordType(final boolean wordType) {
+    public SegmentBs wordType(final IWordType wordType) {
         this.wordType = wordType;
         return this;
     }
@@ -123,29 +123,6 @@ public final class SegmentBs {
         final ISegmentContext context = buildContext();
         List<ISegmentResult> segmentResults = segment.segment(string, context);
         return handler.handler(segmentResults);
-    }
-
-    /**
-     * 分词
-     *
-     * 缺陷：无法保证接口的统一性，不便于以后拓展。
-     *
-     * 这个最多是放在 {@link com.github.houbb.segment.util.SegmentHelper} 层的一个方法。
-     * @param string 字符串
-     * @return 分词后的词信息
-     * @since 0.0.1
-     * @see #segment(String) 分词
-     */
-    @Deprecated
-    public List<String> segmentWords(final String string) {
-        List<ISegmentResult> segmentResultList = segment(string);
-
-        return CollectionUtil.toList(segmentResultList, new IHandler<ISegmentResult, String>() {
-            @Override
-            public String handle(ISegmentResult iSegmentResult) {
-                return iSegmentResult.word();
-            }
-        });
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.github.houbb.segment.support.segment.mode;
 
+import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
 
 import java.util.List;
@@ -22,14 +23,10 @@ public interface ISegmentMode {
 
     /**
      * 选择最佳的匹配结果
-     * @param string 当前字符串
-     * @param startIndex 开始下标
-     * @param resultList 结果列表
+     * @param segmentModeContext 分词模式上下文
      * @return 匹配结果列表
      * @since 0.0.1
      */
-    List<ISegmentResult> select(final String string,
-                         final int startIndex,
-                         final List<ISegmentResult> resultList);
+    List<ISegmentResult> select(final SegmentModeContext segmentModeContext);
 
 }

@@ -1,7 +1,9 @@
 package com.github.houbb.segment.support.data.impl;
 
 import com.github.houbb.heaven.annotation.ThreadSafe;
+import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.heaven.util.io.StreamUtil;
+import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.heaven.util.util.CollectionUtil;
 import com.github.houbb.heaven.util.util.MapUtil;
@@ -9,6 +11,9 @@ import com.github.houbb.segment.constant.SegmentConst;
 import com.github.houbb.segment.model.WordEntry;
 import com.github.houbb.segment.model.WordProperty;
 import com.github.houbb.segment.support.data.ISegmentData;
+import com.github.houbb.segment.support.normalization.INormalization;
+import com.github.houbb.segment.support.normalization.NormalizationResult;
+import com.github.houbb.segment.support.normalization.impl.LogNormalization;
 
 import java.util.List;
 import java.util.Map;
@@ -36,6 +41,12 @@ public abstract class AbstractSegmentData implements ISegmentData {
      * @since 0.0.3
      */
     protected abstract Map<String, WordProperty> getStaticVolatileWordTypeMap();
+
+    /**
+     * 静态异变的 NormalizationResult 结果
+     * @since 0.0.7
+     */
+    private static volatile NormalizationResult normalizationResult;
 
     /**
      * 获取字典路径
@@ -75,6 +86,60 @@ public abstract class AbstractSegmentData implements ISegmentData {
         }
 
         return wordMap;
+    }
+
+    @Override
+    public Double getFreq(String word) {
+        NormalizationResult normalizationResult = normalization();
+
+        Double freq = normalizationResult.freqMap().get(word);
+
+        // 如果为空，则默认返回最小的频率即可。
+        if(ObjectUtil.isNull(freq)) {
+            freq = normalizationResult.minFreq();
+        }
+
+        return freq;
+    }
+
+    @Override
+    public double getMinFreq() {
+        NormalizationResult normalizationResult = normalization();
+
+        return normalizationResult.minFreq();
+    }
+
+    /**
+     * 标准化的结果
+     * @return 标准化
+     * @since 0.0.7
+     */
+    private NormalizationResult normalization() {
+        if(ObjectUtil.isNotNull(normalizationResult)) {
+            return normalizationResult;
+        }
+
+        synchronized (NormalizationResult.class) {
+            if(ObjectUtil.isNull(normalizationResult)) {
+                initNormalizationResult();
+            }
+        }
+        return normalizationResult;
+    }
+
+    /**
+     * 初始化标准化结果
+     * @since 0.0.7
+     */
+    private void initNormalizationResult() {
+        final long startTime = System.currentTimeMillis();
+
+        List<WordEntry> wordEntries = getWordEntryList();
+        INormalization normalization = Instances.singleton(LogNormalization.class);
+        normalizationResult = normalization.normalization(wordEntries);
+
+        final long costTime = System.currentTimeMillis()-startTime;
+        System.out.println("Normalization init finished, cost time : " + costTime + " ms!");
     }
 
     /**

@@ -1,10 +1,10 @@
 package com.github.houbb.segment.support.segment.mode.impl;
 
 import com.github.houbb.heaven.annotation.ThreadSafe;
-import com.github.houbb.heaven.support.condition.ICondition;
 import com.github.houbb.heaven.util.guava.Guavas;
-import com.github.houbb.heaven.util.util.CollectionUtil;
+import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
+import com.github.houbb.segment.support.segment.mode.SegmentModeContext;
 
 import java.util.List;
 
@@ -21,14 +21,9 @@ import java.util.List;
 public class AllSegmentMode extends AbstractSegmentMode {
 
     @Override
-    protected List<ISegmentResult> doSelect(String string, int startIndex, List<ISegmentResult> segmentList) {
-        int size = segmentList.size();
-        if(1 == size) {
-            return segmentList;
-        }
-
+    protected List<ISegmentResult> doSelect(SegmentModeContext segmentModeContext) {
         List<ISegmentResult> resultList = Guavas.newArrayList();
-        for(ISegmentResult segmentResult : segmentList) {
+        for(ISegmentResult segmentResult : segmentModeContext.resultList()) {
             String word = segmentResult.word();
 
             // 剔除掉长度为1的分词

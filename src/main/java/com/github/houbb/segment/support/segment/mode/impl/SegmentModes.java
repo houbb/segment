@@ -24,12 +24,21 @@ public final class SegmentModes {
     }
 
     /**
-     * 贪婪分词模式
+     * 贪心模式-最大长度匹配模式
      * @return 分词实现
      * @since 0.0.5
      */
-    public static ISegmentMode greedy() {
-        return Instances.singleton(GreedySegmentMode.class);
+    public static ISegmentMode maxLength() {
+        return Instances.singleton(MaxLengthMode.class);
+    }
+
+    /**
+     * 最大概率匹配模式
+     * @return 分词实现
+     * @since 0.0.7
+     */
+    public static ISegmentMode maxRate() {
+        return Instances.singleton(MaxRateMode.class);
     }
 
     /**

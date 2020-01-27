@@ -2,6 +2,7 @@ package com.github.houbb.segment.test.bs;
 
 import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.bs.SegmentBs;
+import com.github.houbb.segment.support.type.impl.WordTypes;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -27,19 +28,6 @@ public class SegmentBsTest {
     }
 
     /**
-     * 分词测试
-     * @since 0.0.1
-     */
-    @Test
-    public void segmentWordsTest() {
-        final String string = "这是一个伸手不见五指的黑夜。我叫孙悟空，我爱北京，我爱学习。";
-
-        List<String> resultList = SegmentBs.newInstance().segmentWords(string);
-        Assert.assertEquals("[这, 是, 一个, 伸手不见五指, 的, 黑夜, 。, 我, 叫, 孙悟空, ，, 我, 爱, 北京, ，, 我, 爱, 学习, 。]",
-                resultList.toString());
-    }
-
-    /**
      * 分词类型测试
      * @since 0.0.2
      */
@@ -49,7 +37,7 @@ public class SegmentBsTest {
 
         List<ISegmentResult> resultList = SegmentBs
                 .newInstance()
-                .wordType(true)
+                .wordType(WordTypes.first())
                 .segment(string);
 
         Assert.assertEquals("[我[0,1)/r, 爱[1,2)/v, 学习[2,4)/v]",

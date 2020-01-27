@@ -2,7 +2,6 @@ package com.github.houbb.segment.test.bs;
 
 import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.bs.SegmentBs;
-import com.github.houbb.segment.support.data.impl.SegmentDatas;
 import com.github.houbb.segment.support.segment.mode.impl.SegmentModes;
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -27,7 +26,7 @@ public class SegmentBsModeTest {
         final String string = "这是一个伸手不见五指的黑夜。";
 
         List<ISegmentResult> resultList = SegmentBs.newInstance()
-                .segmentMode(SegmentModes.greedy())
+                .segmentMode(SegmentModes.maxLength())
                 .segment(string);
         Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
     }

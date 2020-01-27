@@ -1,15 +1,16 @@
 package com.github.houbb.segment.support.segment.mode.impl;
 
-import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.heaven.util.util.CollectionUtil;
+import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
+import com.github.houbb.segment.support.segment.mode.SegmentModeContext;
 
 import java.util.List;
 
 /**
  * 抽象实现类
- *
+ * <p>
  * 1. 如果结果集合为空，则默认返回单个字的选择策略。
  *
  * @author binbin.hou
@@ -20,36 +21,36 @@ public abstract class AbstractSegmentMode implements ISegmentMode {
     /**
      * 列表为空，则强制使用单个字选择器。
      *
-     * @param string 当前字符串
-     * @param startIndex 开始下标
-     * @param resultList 结果列表
+     * @param segmentModeContext 分词模式上下文
      * @return 最佳匹配结果
      * @since 0.0.1
      */
     @Override
-    public List<ISegmentResult> select(final String string,
-                                final int startIndex,
-                                final List<ISegmentResult> resultList) {
+    public List<ISegmentResult> select(final SegmentModeContext segmentModeContext) {
+        final List<ISegmentResult> resultList = segmentModeContext.resultList();
 
-        if(CollectionUtil.isEmpty(resultList)) {
+        if (CollectionUtil.isEmpty(resultList)) {
             return SegmentModes.single()
-                    .select(string, startIndex, resultList);
+                    .select(segmentModeContext);
+        }
+
+        // 单个的处理
+        int size = resultList.size();
+        if(1 == size) {
+            return resultList;
         }
 
         // 具体的实现
-        return doSelect(string, startIndex, resultList);
+        return doSelect(segmentModeContext);
     }
 
     /**
      * 执行选择
-     * @param string 字符串
-     * @param startIndex 开始下标
-     * @param resultList 结果列表
+     *
+     * @param segmentModeContext 分词模式上下文
      * @return 结果列表
      * @since 0.0.1
      */
-    protected abstract List<ISegmentResult> doSelect(final String string,
-                                      final int startIndex,
-                                      final List<ISegmentResult> resultList);
+    protected abstract List<ISegmentResult> doSelect(final SegmentModeContext segmentModeContext);
 
 }

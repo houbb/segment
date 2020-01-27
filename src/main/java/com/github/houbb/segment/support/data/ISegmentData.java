@@ -2,6 +2,7 @@ package com.github.houbb.segment.support.data;
 
 import com.github.houbb.segment.model.WordEntry;
 import com.github.houbb.segment.model.WordProperty;
+import com.github.houbb.segment.support.normalization.NormalizationResult;
 
 import java.util.List;
 import java.util.Map;
@@ -33,5 +34,23 @@ public interface ISegmentData {
      * @since 0.0.2
      */
     Map<String, WordProperty> getWordTypeMap();
+
+    /**
+     * 获取频率
+     *
+     * （1）默认返回最低频率 {@link NormalizationResult#minFreq()}
+     *
+     * @param word 单词
+     * @return 频率
+     * @since 0.0.7
+     */
+    Double getFreq(final String word);
+
+    /**
+     * 获取最小的 freq
+     * @return 最小的频率
+     * @since 0.0.7
+     */
+    double getMinFreq();
 
 }

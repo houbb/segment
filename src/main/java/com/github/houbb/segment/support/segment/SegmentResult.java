@@ -61,6 +61,7 @@ public class SegmentResult implements ISegmentResult {
         return word;
     }
 
+    @Override
     public SegmentResult word(String word) {
         this.word = word;
         return this;
@@ -71,6 +72,7 @@ public class SegmentResult implements ISegmentResult {
         return startIndex;
     }
 
+    @Override
     public SegmentResult startIndex(int startIndex) {
         this.startIndex = startIndex;
         return this;
@@ -81,6 +83,7 @@ public class SegmentResult implements ISegmentResult {
         return endIndex;
     }
 
+    @Override
     public SegmentResult endIndex(int endIndex) {
         this.endIndex = endIndex;
         return this;

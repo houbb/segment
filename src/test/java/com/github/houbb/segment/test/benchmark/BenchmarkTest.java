@@ -2,6 +2,7 @@ package com.github.houbb.segment.test.benchmark;
 
 import com.github.houbb.heaven.util.io.StreamUtil;
 import com.github.houbb.segment.bs.SegmentBs;
+import com.github.houbb.segment.support.segment.result.impl.SegmentResultHandlers;
 import com.huaban.analysis.jieba.JiebaSegmenter;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -57,12 +58,12 @@ public class BenchmarkTest {
         SegmentBs segmenter = SegmentBs.newInstance();
 
         // 预热
-        List<String> wordList = segmenter.segmentWords(text);
+        List<String> wordList = segmenter.segment(text, SegmentResultHandlers.word());
 
         // 开始验证
         long startTime = System.currentTimeMillis();
         for(int i = 0; i < TIMES; i++) {
-            segmenter.segmentWords(text);
+            segmenter.segment(text, SegmentResultHandlers.word());
         }
         long endTime = System.currentTimeMillis();
 

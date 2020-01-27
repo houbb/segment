@@ -2,6 +2,7 @@ package com.github.houbb.segment.api;
 
 import com.github.houbb.segment.support.data.ISegmentData;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
+import com.github.houbb.segment.support.type.IWordType;
 
 /**
  * 分词接口上下文
@@ -24,9 +25,9 @@ public interface ISegmentContext {
     /**
      * 是否启用词性
      * @return 词性
-     * @since 0.0.2
+     * @since 0.0.7
      */
-    boolean wordType();
+    IWordType wordType();
 
     /**
      * 是否启用词性
@@ -34,7 +35,7 @@ public interface ISegmentContext {
      * @return 词性
      * @since 0.0.2
      */
-    ISegmentContext wordType(final boolean wordType);
+    ISegmentContext wordType(final IWordType wordType);
 
     /**
      * 获取分词字典实现

@@ -1,23 +1,22 @@
 package com.github.houbb.segment.support.type.impl;
 
 import com.github.houbb.heaven.annotation.ThreadSafe;
-import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.constant.enums.WordTypeEnum;
 import com.github.houbb.segment.model.WordProperty;
-import com.github.houbb.segment.support.data.impl.SegmentSystemData;
 import com.github.houbb.segment.support.type.IWordType;
 
 import java.util.Map;
 
 /**
  * 基于分词字典获取词性
+ * 1. 默认选取第一个分词词性
  * @author binbin.hou
  * @since 0.0.2
  */
 @ThreadSafe
-public class DictWordType implements IWordType {
+public class FirstWordType implements IWordType {
 
     /**
      * 获取对应的词性

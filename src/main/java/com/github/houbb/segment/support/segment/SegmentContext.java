@@ -3,6 +3,7 @@ package com.github.houbb.segment.support.segment;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.support.data.ISegmentData;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
+import com.github.houbb.segment.support.type.IWordType;
 
 /**
  * 分词上下文
@@ -15,7 +16,7 @@ public class SegmentContext implements ISegmentContext {
      * 词性
      * @since 0.0.2
      */
-    private boolean wordType;
+    private IWordType wordType;
 
     /**
      * 分词字典
@@ -39,12 +40,12 @@ public class SegmentContext implements ISegmentContext {
     }
 
     @Override
-    public boolean wordType() {
+    public IWordType wordType() {
         return wordType;
     }
 
     @Override
-    public SegmentContext wordType(boolean wordType) {
+    public SegmentContext wordType(IWordType wordType) {
         this.wordType = wordType;
         return this;
     }
