@@ -1,6 +1,5 @@
 package com.github.houbb.segment.support.segment.mode.impl;
 
-import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.support.segment.mode.SegmentModeContext;
 
@@ -17,13 +16,14 @@ import java.util.List;
  * @author binbin.hou
  * @since 0.0.1
  */
-public class MaxLengthMode extends AbstractSegmentMode {
+public class GreedyLengthSegmentMode extends AbstractSegmentMode {
 
     @Override
     protected List<ISegmentResult> doSelect(final SegmentModeContext context) {
         final List<ISegmentResult> resultList = context.resultList();
 
         // 直接选择最后一个
+        // TODO: 排序应该放在这里。
         ISegmentResult lastResult = resultList.get(resultList.size()-1);
         return Collections.singletonList(lastResult);
     }

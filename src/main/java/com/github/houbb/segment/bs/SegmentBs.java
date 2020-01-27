@@ -45,7 +45,7 @@ public final class SegmentBs {
      *
      * @since 0.0.5
      */
-    private ISegmentMode segmentMode = SegmentModes.maxRate();
+    private ISegmentMode segmentMode = SegmentModes.defaults();
 
     /**
      * 词性信息实现

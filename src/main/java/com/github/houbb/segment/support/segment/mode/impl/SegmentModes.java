@@ -28,8 +28,8 @@ public final class SegmentModes {
      * @return 分词实现
      * @since 0.0.5
      */
-    public static ISegmentMode maxLength() {
-        return Instances.singleton(MaxLengthMode.class);
+    public static ISegmentMode greedyLength() {
+        return Instances.singleton(GreedyLengthSegmentMode.class);
     }
 
     /**
@@ -37,8 +37,8 @@ public final class SegmentModes {
      * @return 分词实现
      * @since 0.0.7
      */
-    public static ISegmentMode maxRate() {
-        return Instances.singleton(MaxRateMode.class);
+    public static ISegmentMode defaults() {
+        return Instances.singleton(DefaultSegmentMode.class);
     }
 
     /**

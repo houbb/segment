@@ -21,7 +21,7 @@ import java.util.Map;
  * @since 0.0.1
  */
 @ThreadSafe
-public class MaxRateMode extends AbstractSegmentMode {
+public class DefaultSegmentMode extends AbstractSegmentMode {
 
     @Override
     protected List<ISegmentResult> doSelect(final SegmentModeContext segmentModeContext) {
@@ -48,6 +48,8 @@ public class MaxRateMode extends AbstractSegmentMode {
 
             // 获取当前字母的频率（动态规划）
             // 当前词的字典频率 + 当前词前一个的频率
+            // TODO: 修正这段逻辑。
+            // TODO：结果将 routeMap 首先处理完成。
             double routeFreq = getRouteFreq(routeMap, endIndex-1, minFreq);
             double freq = segmentData.getFreq(word) + routeFreq;
 
