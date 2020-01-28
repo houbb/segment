@@ -19,7 +19,7 @@ public final class SegmentModes {
      * 备注：这里仅用于没有结果的处理情况，仅供内部使用。
      * @return 实例
      */
-    static ISegmentMode single() {
+    public static ISegmentMode single() {
         return Instances.singleton(SingleSegmentMode.class);
     }
 
@@ -33,10 +33,20 @@ public final class SegmentModes {
     }
 
     /**
-     * 最大概率匹配模式
+     * 贪心模式-最大频率匹配模式
      * @return 分词实现
      * @since 0.0.7
      */
+    public static ISegmentMode greedyFrequency() {
+        return Instances.singleton(GreedyFrequencySegmentMode.class);
+    }
+
+    /**
+     * 默认-全局最大概率匹配模式
+     * @return 分词实现
+     * @since 0.0.7
+     */
+    @Deprecated
     public static ISegmentMode defaults() {
         return Instances.singleton(DefaultSegmentMode.class);
     }
@@ -49,5 +59,15 @@ public final class SegmentModes {
     public static ISegmentMode all() {
         return Instances.singleton(AllSegmentMode.class);
     }
+
+    /**
+     * 全词组模式分词
+     * @return 分词模式实现
+     * @since 0.0.7
+     */
+    public static ISegmentMode allPhrase() {
+        return Instances.singleton(AllPhraseSegmentMode.class);
+    }
+
 
 }

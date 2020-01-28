@@ -18,11 +18,25 @@ import java.util.List;
 public class SegmentBsModeTest {
 
     /**
+     * 贪婪频率模式测试
+     * @since 0.0.7
+     */
+    @Test
+    public void greedyFrequencyModeTest() {
+        final String string = "这是一个伸手不见五指的黑夜。";
+
+        List<ISegmentResult> resultList = SegmentBs.newInstance()
+                .segmentMode(SegmentModes.greedyFrequency())
+                .segment(string);
+        Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手[4,6), 不见[6,8), 五指[8,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
+    }
+
+    /**
      * 贪婪匹配模式测试
      * @since 0.0.5
      */
     @Test
-    public void greedyModeTest() {
+    public void greedyLengthModeTest() {
         final String string = "这是一个伸手不见五指的黑夜。";
 
         List<ISegmentResult> resultList = SegmentBs.newInstance()

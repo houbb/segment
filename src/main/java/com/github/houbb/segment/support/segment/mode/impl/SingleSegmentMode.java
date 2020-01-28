@@ -2,7 +2,7 @@ package com.github.houbb.segment.support.segment.mode.impl;
 
 import com.github.houbb.heaven.annotation.ThreadSafe;
 import com.github.houbb.segment.api.ISegmentResult;
-import com.github.houbb.segment.support.segment.SegmentResult;
+import com.github.houbb.segment.support.segment.impl.SegmentResult;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
 import com.github.houbb.segment.support.segment.mode.SegmentModeContext;
 
@@ -42,6 +42,11 @@ public class SingleSegmentMode implements ISegmentMode {
                 .endIndex(startIndex + 1);
 
         return Collections.singletonList(segmentResult);
+    }
+
+    @Override
+    public boolean isFastMode() {
+        return true;
     }
 
 }

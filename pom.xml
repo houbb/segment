@@ -28,7 +28,7 @@
 
         <!--============================== JAR START ==============================-->
         <!--inter-->
-        <heaven.version>0.1.74</heaven.version>
+        <heaven.version>0.1.76-SNAPSHOT</heaven.version>
 
         <!--other-->
         <junit.version>4.12</junit.version>

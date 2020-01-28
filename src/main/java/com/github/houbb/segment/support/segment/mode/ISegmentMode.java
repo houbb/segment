@@ -29,4 +29,11 @@ public interface ISegmentMode {
      */
     List<ISegmentResult> select(final SegmentModeContext segmentModeContext);
 
+    /**
+     * 是否为快速模式
+     * @return 是否为快速模式
+     * @since 0.0.7
+     */
+    boolean isFastMode();
+
 }

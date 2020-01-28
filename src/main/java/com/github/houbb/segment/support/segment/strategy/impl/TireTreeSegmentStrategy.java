@@ -7,8 +7,7 @@ import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.constant.SegmentConst;
-import com.github.houbb.segment.support.segment.SegmentResult;
-import com.github.houbb.segment.support.segment.strategy.ISegmentStrategy;
+import com.github.houbb.segment.support.segment.impl.SegmentResult;
 import com.github.houbb.segment.support.trie.impl.SegmentTrieTree;
 
 import java.util.List;
@@ -24,10 +23,10 @@ import java.util.Map;
  * @since 0.0.1
  */
 @ThreadSafe
-public class TireTreeSegmentStrategy implements ISegmentStrategy {
+public class TireTreeSegmentStrategy extends AbstractSegmentStrategy {
 
     @Override
-    public List<ISegmentResult> segment(String string, int startIndex, ISegmentContext context) {
+    public List<ISegmentResult> doSegment(String string, int startIndex, ISegmentContext context) {
         Map nowMap = Instances.singleton(SegmentTrieTree.class).getTrieTree(context);
 
         List<ISegmentResult> resultList = Guavas.newArrayList();
@@ -44,7 +43,6 @@ public class TireTreeSegmentStrategy implements ISegmentStrategy {
                     int endIndex = i+1;
                     String word = string.substring(startIndex, endIndex);
 
-                    //TODO: 这里需要添加对应的词性处理。
                     ISegmentResult result = SegmentResult.newInstance()
                             .startIndex(startIndex)
                             .endIndex(endIndex)

@@ -1,6 +1,6 @@
 # Segment
 
-[Segment](https://github.com/houbb/segment ) 是基于结巴分词词库实现的更加灵活，高性能的 java 分词实现。
+[Segment](https://github.com/houbb/segment) 是基于结巴分词词库实现的更加灵活，高性能的 java 分词实现。
 
 愿景：成为 java 最好用的分词工具。
 
@@ -58,7 +58,7 @@ maven 3.x+
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>0.0.6</version>
+    <version>0.0.7</version>
 </dependency>
 ```
 

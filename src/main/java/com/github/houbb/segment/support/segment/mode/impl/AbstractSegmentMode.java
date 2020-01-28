@@ -1,7 +1,6 @@
 package com.github.houbb.segment.support.segment.mode.impl;
 
 import com.github.houbb.heaven.util.util.CollectionUtil;
-import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
 import com.github.houbb.segment.support.segment.mode.SegmentModeContext;
@@ -52,5 +51,10 @@ public abstract class AbstractSegmentMode implements ISegmentMode {
      * @since 0.0.1
      */
     protected abstract List<ISegmentResult> doSelect(final SegmentModeContext segmentModeContext);
+
+    @Override
+    public boolean isFastMode() {
+        return true;
+    }
 
 }

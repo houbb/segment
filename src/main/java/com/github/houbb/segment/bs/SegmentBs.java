@@ -1,13 +1,12 @@
 package com.github.houbb.segment.bs;
 
-import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.segment.api.ISegment;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.support.data.ISegmentData;
 import com.github.houbb.segment.support.data.impl.SegmentDatas;
-import com.github.houbb.segment.support.segment.Segment;
-import com.github.houbb.segment.support.segment.SegmentContext;
+import com.github.houbb.segment.support.segment.impl.SegmentContext;
+import com.github.houbb.segment.support.segment.impl.Segments;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
 import com.github.houbb.segment.support.segment.mode.impl.SegmentModes;
 import com.github.houbb.segment.support.segment.result.ISegmentResultHandler;
@@ -29,7 +28,7 @@ public final class SegmentBs {
      * 分词实现
      * @since 0.0.1
      */
-    private ISegment segment = Instances.singleton(Segment.class);
+    private ISegment segment = Segments.defaults();
 
     /**
      * 分词数据来源

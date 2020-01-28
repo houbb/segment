@@ -1,4 +1,4 @@
-package com.github.houbb.segment.support.segment;
+package com.github.houbb.segment.support.segment.impl;
 
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.support.data.ISegmentData;

@@ -1,4 +1,4 @@
-package com.github.houbb.segment.support.segment;
+package com.github.houbb.segment.support.segment.impl;
 
 import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.segment.api.ISegmentResult;
@@ -87,11 +87,6 @@ public class SegmentResult implements ISegmentResult {
     public SegmentResult endIndex(int endIndex) {
         this.endIndex = endIndex;
         return this;
-    }
-
-    @Override
-    public int compareTo(ISegmentResult o) {
-        return endIndex - o.endIndex();
     }
 
     /**

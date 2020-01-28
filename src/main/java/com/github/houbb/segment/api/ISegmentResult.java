@@ -5,7 +5,7 @@ package com.github.houbb.segment.api;
  * @author binbin.hou
  * @since 0.0.1
  */
-public interface ISegmentResult extends Comparable<ISegmentResult> {
+public interface ISegmentResult {
 
     /**
      * 单个词
