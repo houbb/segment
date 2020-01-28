@@ -13,6 +13,7 @@ public interface INormalization {
 
     /**
      * 标准化
+     * @param wordEntries 单词明细
      * @return 标准化的结果
      * @since 0.0.7
      */

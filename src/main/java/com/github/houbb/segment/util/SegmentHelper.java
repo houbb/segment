@@ -32,6 +32,7 @@ public final class SegmentHelper {
      * @param handler 结果的处理方式
      * @return 分词结果
      * @since 0.0.7
+     * @param <R> 结果
      */
     public static <R> R segment(final String string, final ISegmentResultHandler<R> handler) {
         return SegmentBs.newInstance()
