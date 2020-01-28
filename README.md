@@ -62,7 +62,7 @@ maven 3.x+
 </dependency>
 ```
 
-相关代码参见 [SegmentBsTest.java](https://github.com/houbb/segment/blob/master/src/test/java/com/github/houbb/segment/test/util/SegmentHelperTest.java)
+相关代码参见 [SegmentHelperTest.java](https://github.com/houbb/segment/blob/master/src/test/java/com/github/houbb/segment/test/util/SegmentHelperTest.java)
 
 ## 默认分词示例
 
@@ -101,45 +101,6 @@ final String string = "这是一个伸手不见五指的黑夜。我叫孙悟空
 
 List<String> resultList = SegmentHelper.segment(string, SegmentResultHandlers.word());
 Assert.assertEquals("[这, 是, 一个, 伸手不见五指, 的, 黑夜, 。, 我, 叫, 孙悟空, ，, 我, 爱, 北京, ，, 我, 爱, 学习, 。]", resultList.toString());
-```
-
-## 指定词性标注
-
-词性标注默认是不开启的，使用惰性加载，保证不影响性能和内存。
-
-如果想返回词性标注，直接指定 `wordType` 属性为真即可。
-
-```java
-final String string = "这是一个伸手不见五指的黑夜。我叫孙悟空，我爱北京，我爱学习。";
-
-List<ISegmentResult> resultList = SegmentHelper.segment(string, true);
-Assert.assertEquals("[这[0,1)/r, 是[1,2)/v, 一个[2,4)/m, 伸手不见五指[4,10)/i, 的[10,11)/uj, 黑夜[11,13)/n, 。[13,14)/un, 我[14,15)/r, 叫[15,16)/v, 孙悟空[16,19)/nr, ，[19,20)/un, 我[20,21)/r, 爱[21,22)/v, 北京[22,24)/ns, ，[24,25)/un, 我[25,26)/r, 爱[26,27)/v, 学习[27,29)/v, 。[29,30)/un]", resultList.toString());
-```
-
-其中 `r`、`v` 就是词性，代表的含义参见[词性说明](https://github.com/houbb/segment/blob/master/doc/user/word_type.md)。
-
-或者参考枚举类 [WordTypeEnum](https://github.com/houbb/segment/blob/master/src/main/java/com/github/houbb/segment/constant/enums/WordTypeEnum.java)
-
-## 分词模式
-
-### 分词模式说明
-
-通过 [SegmentModeEnum](https://github.com/houbb/segment/blob/master/src/main/java/com/github/houbb/segment/constant/enums/SegmentModeEnum.java) 分词模式枚举类，可以指定对应的分词模式。
-
-| 分词模式 | 指定方式 | 说明 |
-|:---|:---|:---|
-| 贪婪模式 | `GREEDY` | 返回贪婪匹配的结果，暂时的默认模式 |
-| 全分词模式 | `ALL` | 返回所有的分词列表 |
-
-此处只演示全分词模式。
-
-### 全分词模式
-
-```java
-final String string = "这是一个伸手不见五指的黑夜。";
-
-List<ISegmentResult> resultList = SegmentHelper.segment(string, SegmentModeEnum.ALL);
-Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手[4,6), 伸手不见[4,8), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
 ```
 
 # Benchmark 性能对比

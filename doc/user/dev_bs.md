@@ -8,7 +8,6 @@
 
 为了适应后期的特性，引导类相对可能会变化。
 
-
 相关代码参见 [SegmentBsTest.java](https://github.com/houbb/segment/blob/master/src/test/java/com/github/houbb/segment/test/bs/SegmentBsTest.java)
 
 ## 获取分词，下标等信息
@@ -47,7 +46,7 @@ final String string = "我爱学习";
 
 List<ISegmentResult> resultList = SegmentBs
                 .newInstance()
-                .wordType(true)
+                .wordType(WordTypes.first())
                 .segment(string);
 
 Assert.assertEquals("[我[0,1)/r, 爱[1,2)/v, 学习[2,4)/v]", resultList.toString());
@@ -56,36 +55,3 @@ Assert.assertEquals("[我[0,1)/r, 爱[1,2)/v, 学习[2,4)/v]", resultList.toStri
 其中 `r`、`v` 就是词性，代表的含义参见[词性说明](https://github.com/houbb/segment/blob/master/doc/user/word_type.md)。
 
 或者参考枚举类 [WordTypeEnum](https://github.com/houbb/segment/blob/master/src/main/java/com/github/houbb/segment/constant/enums/WordTypeEnum.java)
-
-# 分词模式
-
-## 分词模式说明
-
-通过 `SegmentModes` 静态方法，获取对应的分词模式。
-
-| 分词模式 | 指定方式 | 说明 |
-|:---|:---|:---|
-| 贪婪模式 | `greedy()` | 返回贪婪匹配的结果 |
-| 全分词模式 | `all()` | 返回所有的分词列表 |
-
-## 贪婪模式
-
-```java
-final String string = "这是一个伸手不见五指的黑夜。";
-
-List<ISegmentResult> resultList = SegmentBs.newInstance()
-                .segmentMode(SegmentModes.greedy())
-                .segment(string);
-Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
-```
-
-## 全分词模式
-
-```java
-final String string = "这是一个伸手不见五指的黑夜。";
-
-List<ISegmentResult> resultList = SegmentBs.newInstance()
-                .segmentMode(SegmentModes.all())
-                .segment(string);
-Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手[4,6), 伸手不见[4,8), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
-```

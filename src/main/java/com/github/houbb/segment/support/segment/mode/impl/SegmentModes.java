@@ -15,6 +15,15 @@ public final class SegmentModes {
     private SegmentModes(){}
 
     /**
+     * 默认-全局最大概率匹配模式
+     * @return 分词实现
+     * @since 0.0.7
+     */
+    public static ISegmentMode search() {
+        return Instances.singleton(SearchSegmentMode.class);
+    }
+
+    /**
      * 单个结果处理
      * 备注：这里仅用于没有结果的处理情况，仅供内部使用。
      * @return 实例
@@ -41,15 +50,7 @@ public final class SegmentModes {
         return Instances.singleton(GreedyFrequencySegmentMode.class);
     }
 
-    /**
-     * 默认-全局最大概率匹配模式
-     * @return 分词实现
-     * @since 0.0.7
-     */
-    @Deprecated
-    public static ISegmentMode defaults() {
-        return Instances.singleton(DefaultSegmentMode.class);
-    }
+
 
     /**
      * 全模式分词

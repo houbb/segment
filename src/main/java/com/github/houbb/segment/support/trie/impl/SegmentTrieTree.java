@@ -26,12 +26,12 @@ public class SegmentTrieTree implements ISegmentTrieTree {
      *
      * @since 0.0.1
      */
-    private static volatile Map INNER_WORD_MAP;
+    private static volatile Map innerWordMap;
 
     @Override
     public Map getTrieTree(final ISegmentContext context) {
-        if(ObjectUtil.isNotNull(INNER_WORD_MAP)) {
-            return INNER_WORD_MAP;
+        if(ObjectUtil.isNotNull(innerWordMap)) {
+            return innerWordMap;
         }
 
         synchronized(SegmentTrieTree.class) {
@@ -39,7 +39,7 @@ public class SegmentTrieTree implements ISegmentTrieTree {
             initInnerWordMap(segmentData);
         }
 
-        return INNER_WORD_MAP;
+        return innerWordMap;
     }
 
     /**
@@ -50,7 +50,7 @@ public class SegmentTrieTree implements ISegmentTrieTree {
     @SuppressWarnings("unchecked")
     private void initInnerWordMap(final ISegmentData segmentData) {
         // 创建 map
-        INNER_WORD_MAP = Guavas.newHashMap();
+        innerWordMap = Guavas.newHashMap();
 
         // 加载字典
         List<WordEntry> wordEntries = segmentData.getWordEntryList();
@@ -62,7 +62,7 @@ public class SegmentTrieTree implements ISegmentTrieTree {
             final int size = chars.length;
 
             // 每一个新词的循环，直接将结果设置为当前 map，所有变化都会体现在结果的 map 中
-            Map currentMap = INNER_WORD_MAP;
+            Map currentMap = innerWordMap;
 
             for (int i = 0; i < size; i++) {
                 // 截取敏感词当中的字，在敏感词库中字为HashMap对象的Key键值
