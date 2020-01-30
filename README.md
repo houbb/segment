@@ -58,7 +58,7 @@ maven 3.x+
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>0.0.7</version>
+    <version>0.0.8</version>
 </dependency>
 ```
 
@@ -114,12 +114,51 @@ Assert.assertEquals("[这, 是, 一个, 伸手不见五指, 的, 黑夜, 。, �
 | 2 | index() | 一般 | 高 | 尽可能多的返回词组信息，提高召回率 |
 | 3 | greedyLength() | 一般 | 高 | 贪心最大长度匹配，对准确度要求不高时可采用。 |
 
+## 使用方式
+
+针对灵活的配置，引入了 `SegmentBs` 作为引导类，解决工具类方法配置参数过多的问题。
+
+测试代码参见 [SegmentModeTest.java](https://github.com/houbb/segment/blob/master/src/test/java/com/github/houbb/segment/test/bs/SegmentBsModeTest.java)
+
 ## search 模式
 
-```java
+`segmentMode()` 指定分词模式，不指定时默认就是 `SegmentModes.search()`。
 
+```java
+final String string = "这是一个伸手不见五指的黑夜。";
+
+List<ISegmentResult> resultList = SegmentBs.newInstance()
+       .segmentMode(SegmentModes.search())
+       .segment(string);
+
+Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
 ```
 
+## Index 模式
+
+这里主要的区别就是会返回 `伸手`、`伸手不见` 等其他词组。
+
+```java
+final String string = "这是一个伸手不见五指的黑夜。";
+
+List<ISegmentResult> resultList = SegmentBs.newInstance()
+        .segmentMode(SegmentModes.index())
+        .segment(string);
+Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手[4,6), 伸手不见[4,8), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
+```
+
+## GreedyLength 模式
+
+这里使用贪心算法实现，准确率一般，性能较好。
+
+```java
+final String string = "这是一个伸手不见五指的黑夜。";
+
+List<ISegmentResult> resultList = SegmentBs.newInstance()
+        .segmentMode(SegmentModes.greedyLength())
+        .segment(string);
+Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
+```
 
 # Benchmark 性能对比
 
@@ -127,9 +166,15 @@ Assert.assertEquals("[这, 是, 一个, 伸手不见五指, 的, 黑夜, 。, �
 
 性能对比基于 jieba 1.0.2 版本，测试条件保持一致，保证二者都做好预热，然后统一处理。
 
-验证下来，分词的**性能是 jieba 的两倍左右**。
+验证下来，默认模式性能略优于 jieba 分词，贪心模式是其性能 3 倍左右。
 
-原因也很简单，暂时没有引入词频和 HMM。
+备注：
+
+（1）默认模式暂时尚未引入 HMM，故性能好了一点。
+
+后期引入 HMM 也可以配置是否开启。
+
+（2）后期将引入多线程提升性能。
 
 代码参见 [BenchmarkTest.java](https://github.com/houbb/segment/blob/master/src/test/java/com/github/houbb/segment/test/benchmark/BenchmarkTest.java)
 

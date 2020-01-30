@@ -2,6 +2,7 @@ package com.github.houbb.segment.test.benchmark;
 
 import com.github.houbb.heaven.util.io.StreamUtil;
 import com.github.houbb.segment.bs.SegmentBs;
+import com.github.houbb.segment.support.segment.mode.impl.SegmentModes;
 import com.github.houbb.segment.support.segment.result.impl.SegmentResultHandlers;
 import com.huaban.analysis.jieba.JiebaSegmenter;
 import org.junit.Ignore;
@@ -29,7 +30,7 @@ public class BenchmarkTest {
     private static final int TIMES = 10000;
 
     /**
-     * 耗时：28080
+     * 耗时：8809
      */
     @Test
     public void jiebaAnalysisTest() {
@@ -50,7 +51,7 @@ public class BenchmarkTest {
     }
 
     /**
-     * Segment cost: 13988
+     * Segment cost: 7435
      */
     @Test
     public void segmentTest() {
@@ -58,18 +59,39 @@ public class BenchmarkTest {
         SegmentBs segmenter = SegmentBs.newInstance();
 
         // 预热
-        List<String> wordList = segmenter.segment(text, SegmentResultHandlers.word());
+        segmenter.segment(text);
 
         // 开始验证
         long startTime = System.currentTimeMillis();
         for(int i = 0; i < TIMES; i++) {
-            segmenter.segment(text, SegmentResultHandlers.word());
+            segmenter.segment(text);
         }
         long endTime = System.currentTimeMillis();
 
         System.out.println("Segment cost: " + (endTime-startTime));
     }
 
+    /**
+     * Segment cost: 3050
+     */
+    @Test
+    public void segmentGreedyLengthTest() {
+        String text = getText();
+        SegmentBs segmenter = SegmentBs.newInstance()
+                .segmentMode(SegmentModes.greedyLength());
+
+        // 预热
+        segmenter.segment(text);
+
+        // 开始验证
+        long startTime = System.currentTimeMillis();
+        for(int i = 0; i < TIMES; i++) {
+            segmenter.segment(text);
+        }
+        long endTime = System.currentTimeMillis();
+
+        System.out.println("Segment cost: " + (endTime-startTime));
+    }
 
     /**
      * 获取文本内容
