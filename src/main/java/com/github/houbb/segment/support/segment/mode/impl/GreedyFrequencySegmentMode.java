@@ -24,7 +24,7 @@ public class GreedyFrequencySegmentMode extends AbstractSegmentMode {
     protected List<ISegmentResult> doSelect(final SegmentModeContext context) {
         final ISegmentData segmentData = context.segmentContext().segmentData();
 
-        ISegmentMode allSegmentMode = SegmentModes.allPhrase();
+        ISegmentMode allSegmentMode = SegmentModes.index();
         final List<ISegmentResult> resultList = allSegmentMode.select(context);
 
         // 按照概率再次排序

@@ -24,12 +24,12 @@ public final class SegmentModes {
     }
 
     /**
-     * 单个结果处理
-     * 备注：这里仅用于没有结果的处理情况，仅供内部使用。
-     * @return 实例
+     * 全词组模式分词
+     * @return 分词模式实现
+     * @since 0.0.7
      */
-    public static ISegmentMode single() {
-        return Instances.singleton(SingleSegmentMode.class);
+    public static ISegmentMode index() {
+        return Instances.singleton(IndexSegmentMode.class);
     }
 
     /**
@@ -50,7 +50,14 @@ public final class SegmentModes {
         return Instances.singleton(GreedyFrequencySegmentMode.class);
     }
 
-
+    /**
+     * 单个结果处理
+     * 备注：这里仅用于没有结果的处理情况，仅供内部使用。
+     * @return 实例
+     */
+    public static ISegmentMode single() {
+        return Instances.singleton(SingleSegmentMode.class);
+    }
 
     /**
      * 全模式分词
@@ -60,15 +67,5 @@ public final class SegmentModes {
     public static ISegmentMode all() {
         return Instances.singleton(AllSegmentMode.class);
     }
-
-    /**
-     * 全词组模式分词
-     * @return 分词模式实现
-     * @since 0.0.7
-     */
-    public static ISegmentMode allPhrase() {
-        return Instances.singleton(AllPhraseSegmentMode.class);
-    }
-
 
 }

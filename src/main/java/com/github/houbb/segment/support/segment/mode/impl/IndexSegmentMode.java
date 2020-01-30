@@ -16,7 +16,7 @@ import java.util.List;
  * @since 0.0.7
  */
 @ThreadSafe
-public class AllPhraseSegmentMode extends AbstractSegmentMode {
+public class IndexSegmentMode extends AbstractSegmentMode {
 
     @Override
     protected List<ISegmentResult> doSelect(SegmentModeContext segmentModeContext) {
