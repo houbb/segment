@@ -81,7 +81,10 @@ public class TireTreeSegmentStrategy extends AbstractSegmentStrategy {
                               final String txt,
                               final int index,
                               final ISegmentContext context) {
-        char mappingChar = txt.charAt(index);
+        char charAt = txt.charAt(index);
+
+        // 格式化
+        char mappingChar = context.format().format(charAt, context);
 
         // 这里做一次重复词的处理
         Map currentMap = (Map) nowMap.get(mappingChar);

@@ -51,6 +51,21 @@ public class BenchmarkTest {
     }
 
     /**
+     * TODO: 这里有一个问题，jieba 默认是没有繁体支持的。
+     *
+     * 应该是处于字典大小的考量。
+     */
+    @Test
+    public void openccTest() {
+        String text = "我会盡力而爲";
+        String text2 = "我会尽力而为";
+
+        JiebaSegmenter segmenter = new JiebaSegmenter();
+        System.out.println(segmenter.sentenceProcess(text));
+        System.out.println(segmenter.sentenceProcess(text2));
+    }
+
+    /**
      * Segment cost: 7435
      */
     @Test

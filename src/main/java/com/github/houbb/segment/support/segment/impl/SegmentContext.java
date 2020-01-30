@@ -2,8 +2,9 @@ package com.github.houbb.segment.support.segment.impl;
 
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.support.data.ISegmentData;
+import com.github.houbb.segment.support.format.ISegmentFormat;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
-import com.github.houbb.segment.support.type.IWordType;
+import com.github.houbb.segment.support.type.ISegmentWordType;
 
 /**
  * 分词上下文
@@ -16,19 +17,25 @@ public class SegmentContext implements ISegmentContext {
      * 词性
      * @since 0.0.2
      */
-    private IWordType wordType;
+    private ISegmentWordType wordType;
 
     /**
      * 分词字典
      * @since 0.0.3
      */
-    private ISegmentData segmentData;
+    private ISegmentData data;
 
     /**
      * 分词模式
      * @since 0.0.5
      */
-    private ISegmentMode segmentMode;
+    private ISegmentMode mode;
+
+    /**
+     * 格式化
+     * @since 0.0.9
+     */
+    private ISegmentFormat format;
 
     /**
      * 创建对象实例
@@ -40,34 +47,43 @@ public class SegmentContext implements ISegmentContext {
     }
 
     @Override
-    public IWordType wordType() {
+    public ISegmentWordType wordType() {
         return wordType;
     }
 
     @Override
-    public SegmentContext wordType(IWordType wordType) {
+    public SegmentContext wordType(ISegmentWordType wordType) {
         this.wordType = wordType;
         return this;
     }
 
     @Override
-    public ISegmentData segmentData() {
-        return segmentData;
+    public ISegmentData data() {
+        return data;
     }
 
-    public SegmentContext segmentData(ISegmentData segmentData) {
-        this.segmentData = segmentData;
+    public SegmentContext data(ISegmentData data) {
+        this.data = data;
         return this;
     }
 
     @Override
-    public ISegmentMode segmentMode() {
-        return segmentMode;
+    public ISegmentMode mode() {
+        return mode;
     }
 
-    public SegmentContext segmentMode(ISegmentMode segmentMode) {
-        this.segmentMode = segmentMode;
+    public SegmentContext mode(ISegmentMode mode) {
+        this.mode = mode;
         return this;
     }
 
+    @Override
+    public ISegmentFormat format() {
+        return format;
+    }
+
+    public SegmentContext format(ISegmentFormat format) {
+        this.format = format;
+        return this;
+    }
 }

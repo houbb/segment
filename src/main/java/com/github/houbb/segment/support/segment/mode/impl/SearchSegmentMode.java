@@ -93,7 +93,7 @@ public class SearchSegmentMode extends AbstractPreciseSegmentMode {
      */
     private Map<Integer, Pair<Integer, Double>> calcRouteMap(final Map<Integer, List<ISegmentResult>> segmentMap, final ISegmentContext context) {
         // 基本信息
-        final ISegmentData segmentData = context.segmentData();
+        final ISegmentData segmentData = context.data();
         final double minFreq = segmentData.getMinFreq();
 
         // 初始化

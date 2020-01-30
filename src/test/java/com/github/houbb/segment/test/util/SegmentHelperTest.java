@@ -1,6 +1,7 @@
 package com.github.houbb.segment.test.util;
 
 import com.github.houbb.segment.api.ISegmentResult;
+import com.github.houbb.segment.bs.SegmentBs;
 import com.github.houbb.segment.support.segment.result.impl.SegmentResultHandlers;
 import com.github.houbb.segment.util.SegmentHelper;
 import org.junit.Assert;
@@ -48,6 +49,20 @@ public class SegmentHelperTest {
         final String string = "学。习我的最爱";
         List<ISegmentResult> resultList = SegmentHelper.segment(string);
         Assert.assertEquals("[学[0,1), 。[1,2), 习[2,3), 我[3,4), 的[4,5), 最爱[5,7)]", resultList.toString());
+    }
+
+    /**
+     * 默认的格式化处理
+     * （1）支持大小写
+     * （2）支持全角半角
+     * @since 0.0.9
+     */
+    @Test
+    public void defaultsFormatTest() {
+        String text = "阿Ｑ精神";
+        List<ISegmentResult> segmentResults = SegmentHelper.segment(text);
+
+        Assert.assertEquals("[阿Ｑ[0,2), 精神[2,4)]", segmentResults.toString());
     }
 
 }

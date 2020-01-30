@@ -35,7 +35,7 @@ public class SegmentTrieTree implements ISegmentTrieTree {
         }
 
         synchronized(SegmentTrieTree.class) {
-            final ISegmentData segmentData = context.segmentData();
+            final ISegmentData segmentData = context.data();
             initInnerWordMap(segmentData);
         }
 

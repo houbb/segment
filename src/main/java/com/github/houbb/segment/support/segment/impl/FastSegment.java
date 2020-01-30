@@ -55,7 +55,7 @@ public class FastSegment implements ISegment {
 
             // 结果处理
             List<ISegmentResult> selectList = context
-                    .segmentMode()
+                    .mode()
                     .select(segmentModeContext);
             segmentList.addAll(selectList);
 

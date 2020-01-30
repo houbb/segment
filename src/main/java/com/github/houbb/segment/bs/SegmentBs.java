@@ -5,13 +5,15 @@ import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.support.data.ISegmentData;
 import com.github.houbb.segment.support.data.impl.SegmentDatas;
+import com.github.houbb.segment.support.format.ISegmentFormat;
+import com.github.houbb.segment.support.format.impl.SegmentFormats;
 import com.github.houbb.segment.support.segment.impl.SegmentContext;
 import com.github.houbb.segment.support.segment.impl.Segments;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
 import com.github.houbb.segment.support.segment.mode.impl.SegmentModes;
 import com.github.houbb.segment.support.segment.result.ISegmentResultHandler;
 import com.github.houbb.segment.support.segment.result.impl.SegmentResultHandlers;
-import com.github.houbb.segment.support.type.IWordType;
+import com.github.houbb.segment.support.type.ISegmentWordType;
 import com.github.houbb.segment.support.type.impl.WordTypes;
 
 import java.util.List;
@@ -35,7 +37,7 @@ public final class SegmentBs {
      * 1. 默认使用系统的字典
      * @since 0.0.3
      */
-    private ISegmentData segmentData = SegmentDatas.system();
+    private ISegmentData data = SegmentDatas.system();
 
     /**
      * 分词模式
@@ -44,13 +46,19 @@ public final class SegmentBs {
      *
      * @since 0.0.5
      */
-    private ISegmentMode segmentMode = SegmentModes.search();
+    private ISegmentMode mode = SegmentModes.search();
 
     /**
      * 词性信息实现
      * @since 0.0.7
      */
-    private IWordType wordType = WordTypes.none();
+    private ISegmentWordType wordType = WordTypes.none();
+
+    /**
+     * 格式化信息
+     * @since 0.0.9
+     */
+    private ISegmentFormat format = SegmentFormats.defaults();
 
     /**
      * 引导类
@@ -73,7 +81,7 @@ public final class SegmentBs {
      * @return this
      * @since 0.0.7
      */
-    public SegmentBs wordType(final IWordType wordType) {
+    public SegmentBs wordType(final ISegmentWordType wordType) {
         this.wordType = wordType;
         return this;
     }
@@ -85,7 +93,7 @@ public final class SegmentBs {
      * @since 0.0.3
      */
     public SegmentBs segmentData(final ISegmentData segmentData) {
-        this.segmentData = segmentData;
+        this.data = segmentData;
         return this;
     }
 
@@ -96,7 +104,7 @@ public final class SegmentBs {
      * @since 0.0.5
      */
     public SegmentBs segmentMode(ISegmentMode segmentMode) {
-        this.segmentMode = segmentMode;
+        this.mode = segmentMode;
         return this;
     }
 
@@ -132,8 +140,9 @@ public final class SegmentBs {
     private ISegmentContext buildContext() {
         return SegmentContext.newInstance()
                 .wordType(wordType)
-                .segmentData(segmentData)
-                .segmentMode(segmentMode);
+                .data(data)
+                .mode(mode)
+                .format(format);
     }
 
 }

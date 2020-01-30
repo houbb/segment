@@ -6,8 +6,8 @@ import com.github.houbb.segment.api.ISegment;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
-import com.github.houbb.segment.support.type.IWordType;
-import com.github.houbb.segment.support.type.impl.NoneWordType;
+import com.github.houbb.segment.support.type.ISegmentWordType;
+import com.github.houbb.segment.support.type.impl.NoneSegmentWordType;
 
 import java.util.List;
 
@@ -46,7 +46,7 @@ public class Segment implements ISegment {
      * @since 0.0.7
      */
     private ISegment getSegment(final ISegmentContext context) {
-        final ISegmentMode segmentMode = context.segmentMode();
+        final ISegmentMode segmentMode = context.mode();
 
         // 这里后续建议优化掉，直接将当前类作为实现。
         if(segmentMode.isFastMode()) {
@@ -64,10 +64,10 @@ public class Segment implements ISegment {
      * @since 0.0.2
      */
     private void fillWordType(List<ISegmentResult> selectList, final ISegmentContext context) {
-        final IWordType wordType = context.wordType();
+        final ISegmentWordType wordType = context.wordType();
 
         // 如果是 none，直接返回
-        if(NoneWordType.class.equals(wordType.getClass())) {
+        if(NoneSegmentWordType.class.equals(wordType.getClass())) {
             return;
         }
 

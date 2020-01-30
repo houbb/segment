@@ -22,7 +22,7 @@ public class GreedyFrequencySegmentMode extends AbstractSegmentMode {
 
     @Override
     protected List<ISegmentResult> doSelect(final SegmentModeContext context) {
-        final ISegmentData segmentData = context.segmentContext().segmentData();
+        final ISegmentData segmentData = context.segmentContext().data();
 
         ISegmentMode allSegmentMode = SegmentModes.index();
         final List<ISegmentResult> resultList = allSegmentMode.select(context);

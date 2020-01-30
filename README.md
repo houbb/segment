@@ -45,6 +45,8 @@
 
 - 支持不同的分词模式
 
+- 支持全角半角/英文大小写格式处理
+
 # 快速入门
 
 ## 准备
@@ -59,7 +61,7 @@ maven 3.x+
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>0.0.8</version>
+    <version>0.0.9</version>
 </dependency>
 ```
 
@@ -162,6 +164,19 @@ List<ISegmentResult> resultList = SegmentBs.newInstance()
 Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
 ```
 
+# 格式处理
+
+## 全角半角+英文大小写
+
+这里的 `Ｑ` 为全角大写，默认会被转换处理。
+
+```java
+String text = "阿Ｑ精神";
+List<ISegmentResult> segmentResults = SegmentHelper.segment(text);
+
+Assert.assertEquals("[阿Ｑ[0,2), 精神[2,4)]", segmentResults.toString());
+```
+
 # Benchmark 性能对比
 
 ## 性能对比
@@ -190,7 +205,7 @@ Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手不见五指[4,10),
 
 ## 核心特性
 
-- 格式化的处理
+- 中文繁简体格式化
 
 - HMM 算法实现新词预测特性
 

@@ -49,7 +49,6 @@ public class PreciseSegment implements ISegment {
         StringBuilder stringBuilder = new StringBuilder();
 
         for (int i = 0; i < length; i++) {
-            // TODO: 这里需要一个字符的格式化
             char c = string.charAt(i);
             if (CharUtils.isConsequent(c)) {
                 // 如果是连续的，则加入
@@ -94,7 +93,7 @@ public class PreciseSegment implements ISegment {
                                                       final ISegmentContext segmentContext) {
         //1. 所有的 dict 分词结果
         final String text = stringBuilder.toString();
-        final ISegmentMode segmentMode = segmentContext.segmentMode();
+        final ISegmentMode segmentMode = segmentContext.mode();
 
         //2. 上下文
         SegmentModeContext modeContext = SegmentModeContext.newInstance()

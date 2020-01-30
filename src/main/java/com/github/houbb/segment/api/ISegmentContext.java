@@ -1,8 +1,9 @@
 package com.github.houbb.segment.api;
 
 import com.github.houbb.segment.support.data.ISegmentData;
+import com.github.houbb.segment.support.format.ISegmentFormat;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
-import com.github.houbb.segment.support.type.IWordType;
+import com.github.houbb.segment.support.type.ISegmentWordType;
 
 /**
  * 分词接口上下文
@@ -27,7 +28,7 @@ public interface ISegmentContext {
      * @return 词性
      * @since 0.0.7
      */
-    IWordType wordType();
+    ISegmentWordType wordType();
 
     /**
      * 是否启用词性
@@ -35,20 +36,27 @@ public interface ISegmentContext {
      * @return 词性
      * @since 0.0.2
      */
-    ISegmentContext wordType(final IWordType wordType);
+    ISegmentContext wordType(final ISegmentWordType wordType);
 
     /**
      * 获取分词字典实现
      * @return 分词字典数据
      * @since 0.0.3
      */
-    ISegmentData segmentData();
+    ISegmentData data();
 
     /**
      * 获取分词模式
      * @return 分词模式
      * @since 0.0.5
      */
-    ISegmentMode segmentMode();
+    ISegmentMode mode();
+
+    /**
+     * 格式化信息
+     * @return 格式化信息
+     * @since 0.0.9
+     */
+    ISegmentFormat format();
 
 }
