@@ -82,6 +82,7 @@ public class PreciseSegment implements ISegment {
 
     /**
      * 获取分词的结果列表
+     * （1）这里是循环 i，然后构建所有可能的结果。
      * @param stringBuilder 字符串
      * @param startIndex 开始下标
      * @param segmentContext 上下文

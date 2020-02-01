@@ -26,10 +26,10 @@ import java.util.Map;
 public class TireTreeSegmentStrategy extends AbstractSegmentStrategy {
 
     @Override
-    public List<ISegmentResult> doSegment(String string, int startIndex, ISegmentContext context) {
+    public List<Integer> doSegment(String string, int startIndex, ISegmentContext context) {
         Map nowMap = Instances.singleton(SegmentTrieTree.class).getTrieTree(context);
 
-        List<ISegmentResult> resultList = Guavas.newArrayList();
+        List<Integer> resultList = Guavas.newArrayList();
 
         for (int i = startIndex; i < string.length(); i++) {
             // 获取当前的 map 信息
@@ -41,13 +41,7 @@ public class TireTreeSegmentStrategy extends AbstractSegmentStrategy {
                 if (isEnd) {
                     // 这里存放所有的匹配词，便于后期选择使用。
                     int endIndex = i+1;
-                    String word = string.substring(startIndex, endIndex);
-
-                    ISegmentResult result = SegmentResult.newInstance()
-                            .startIndex(startIndex)
-                            .endIndex(endIndex)
-                            .word(word);
-                    resultList.add(result);
+                    resultList.add(endIndex);
                 }
             } else {
                 // 直接跳出循环
