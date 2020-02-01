@@ -2,6 +2,7 @@ package com.github.houbb.segment.support.segment.strategy.impl;
 
 import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.segment.support.segment.strategy.ISegmentStrategy;
+import com.github.houbb.segment.support.segment.strategy.impl.hmm.HmmSegmentStrategy;
 
 /**
  * 分词策略
@@ -20,6 +21,15 @@ public final class SegmentStrategies {
      */
     public static ISegmentStrategy tireTree() {
         return Instances.singleton(TireTreeSegmentStrategy.class);
+    }
+
+    /**
+     * HMM 实现
+     * @return HMM 实现
+     * @since 0.1.0
+     */
+    public static ISegmentStrategy hmm() {
+        return Instances.singleton(HmmSegmentStrategy.class);
     }
 
 }

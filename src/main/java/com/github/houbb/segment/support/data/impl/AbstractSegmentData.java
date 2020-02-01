@@ -135,6 +135,7 @@ public abstract class AbstractSegmentData implements ISegmentData {
         final long startTime = System.currentTimeMillis();
 
         List<WordEntry> wordEntries = getWordEntryList();
+        //TODO: 这里的 wordEntries 使用后应该移除，避免内存占用。
         INormalization normalization = Instances.singleton(LogNormalization.class);
         normalizationResult = normalization.normalization(wordEntries);
 
@@ -161,6 +162,12 @@ public abstract class AbstractSegmentData implements ISegmentData {
 
         final long costTime = System.currentTimeMillis()-startTime;
         System.out.println("[" + dictPath + "] dict init word-type-map finish, cost time : " + costTime + " ms!");
+    }
+
+    @Override
+    public boolean contains(String word) {
+        NormalizationResult normalizationResult = normalization();
+        return normalizationResult.freqMap().containsKey(word);
     }
 
     /**

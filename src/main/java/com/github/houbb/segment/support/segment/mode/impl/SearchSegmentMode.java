@@ -41,21 +41,98 @@ public class SearchSegmentMode extends AbstractPreciseSegmentMode {
         //3. 循环处理
         // 这里需要考虑下对应的下标问题，相对转换为绝对下标即可。
         List<ISegmentResult> resultList = Guavas.newArrayList();
+
+        // 存放临时的字符串
+        StringBuilder stringBuffer = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
-            int routeIndex = getRouteIndex(routeMap, i);
+            final int actualStartIndex = startIndex+i;
+            final int routeIndex = getRouteIndex(routeMap, i);
+
+            // 单词的长度
+            int wordLength = routeIndex - i;
             String word = text.substring(i, routeIndex);
 
-            ISegmentResult result = SegmentResult.newInstance()
-                    .word(word)
-                    .startIndex(startIndex + i)
-                    .endIndex(startIndex + routeIndex);
-            resultList.add(result);
+            if(wordLength == 1) {
+                stringBuffer.append(word);
+            } else {
+                // 处理前面的 buffer
+                bufferToResultList(actualStartIndex, stringBuffer, resultList, context);
+
+                // 如果是词组，则可以直接添加。
+                ISegmentResult result = buildSegmentResult(word, actualStartIndex);
+                resultList.add(result);
+            }
+            // 这里需要引入 HMM 分词
+            //1. 如果 word.length==1，则连接起来。比如 good 这种英文单词。
+            //2. 如果 dict 包含这个词，则直接返回
+            //3. 如果不包含，则进入 HMM 分词处理。
 
             // 更新下标
             i = routeIndex - 1;
         }
 
+        // 最后的 Buffer 处理。
+        if(stringBuffer.length() > 0) {
+            bufferToResultList(text.length(), stringBuffer, resultList, context);
+        }
+
         return resultList;
+    }
+
+    /**
+     * buffer 转换为结果列表
+     * @param startIndex 开始下标
+     * @param stringBuffer buffer
+     * @param resultList 结果列表
+     * @since 0.1.0
+     */
+    private void bufferToResultList(final int startIndex,
+                        final StringBuilder stringBuffer,
+                        final List<ISegmentResult> resultList,
+                        final ISegmentContext segmentContext) {
+        final int bufferLength = stringBuffer.length();
+        if(bufferLength <= 0) {
+            return;
+        }
+
+        String bufferWord = stringBuffer.toString();
+        final int actualStartIndex = startIndex-bufferLength;
+
+        //1. 长度为1，直接添加
+        if(bufferWord.length() == 1) {
+            resultList.add(buildSegmentResult(bufferWord, actualStartIndex));
+        } else {
+            //2. 字典中有，直接添加（会出现这个场景吗？）
+            final ISegmentData segmentData = segmentContext.data();
+            if(segmentData.contains(bufferWord)) {
+                resultList.add(buildSegmentResult(bufferWord, actualStartIndex));
+            } else {
+                //3. 使用 HMM 分词
+                ISegmentStrategy segmentStrategy = SegmentStrategies.hmm();
+                List<ISegmentResult> segmentResults = segmentStrategy.segment(bufferWord,
+                        actualStartIndex, segmentContext);
+                resultList.addAll(segmentResults);
+            }
+        }
+
+        // 清空 buffer
+        stringBuffer.setLength(0);
+    }
+
+    /**
+     * 构建分词结果
+     * @param word 词语信息
+     * @param startIndex 开始下标
+     * @return 结果
+     * @since 0.1.0
+     */
+    private ISegmentResult buildSegmentResult(final String word,
+                                              final int startIndex) {
+
+        return SegmentResult.newInstance()
+                .word(word)
+                .startIndex(startIndex)
+                .endIndex(startIndex + word.length());
     }
 
     /**
@@ -74,7 +151,6 @@ public class SearchSegmentMode extends AbstractPreciseSegmentMode {
         Map<Integer, List<ISegmentResult>> segmentMap = Guavas.newLinkedHashMap(length);
 
         // 理论上倒排，精确度会更加的高，因为汉语的中心一般在后面。
-        // 这里后续可以基于 HMM 进行拓展
         final ISegmentStrategy segmentStrategy = SegmentStrategies.tireTree();
         for (int i = 0; i < length; i++) {
             List<ISegmentResult> segmentResults = segmentStrategy.segment(text, i, context);

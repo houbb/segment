@@ -53,4 +53,12 @@ public interface ISegmentData {
      */
     double getMinFreq();
 
+    /**
+     * 是否包含指定的词
+     * @param word 词语
+     * @return 是否包含
+     * @since 0.1.0
+     */
+    boolean contains(final String word);
+
 }

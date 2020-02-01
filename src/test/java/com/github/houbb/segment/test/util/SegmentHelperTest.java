@@ -25,7 +25,7 @@ public class SegmentHelperTest {
         final String string = "这是一个伸手不见五指的黑夜。我叫孙悟空，我爱北京，我爱学习。";
 
         List<ISegmentResult> resultList = SegmentHelper.segment(string);
-        Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14), 我[14,15), 叫[15,16), 孙悟空[16,19), ，[19,20), 我[20,21), 爱[21,22), 北京[22,24), ，[24,25), 我[25,26), 爱[26,27), 学习[27,29), 。[29,30)]", resultList.toString());
+        Assert.assertEquals("[这是[0,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14), 我[14,15), 叫[15,16), 孙悟空[16,19), ，[19,20), 我爱[20,22), 北京[22,24), ，[24,25), 我爱[25,27), 学习[27,29), 。[29,30)]", resultList.toString());
     }
 
     /**
@@ -37,7 +37,7 @@ public class SegmentHelperTest {
         final String string = "这是一个伸手不见五指的黑夜。我叫孙悟空，我爱北京，我爱学习。";
 
         List<String> resultList = SegmentHelper.segment(string, SegmentResultHandlers.word());
-        Assert.assertEquals("[这, 是, 一个, 伸手不见五指, 的, 黑夜, 。, 我, 叫, 孙悟空, ，, 我, 爱, 北京, ，, 我, 爱, 学习, 。]", resultList.toString());
+        Assert.assertEquals("[这是, 一个, 伸手不见五指, 的, 黑夜, 。, 我, 叫, 孙悟空, ，, 我爱, 北京, ，, 我爱, 学习, 。]", resultList.toString());
     }
 
     /**
@@ -63,6 +63,14 @@ public class SegmentHelperTest {
         List<ISegmentResult> segmentResults = SegmentHelper.segment(text);
 
         Assert.assertEquals("[阿Ｑ[0,2), 精神[2,4)]", segmentResults.toString());
+    }
+
+    @Test
+    public void englishTest() {
+        String text = "good 学生爱学习";
+        List<ISegmentResult> segmentResults = SegmentHelper.segment(text);
+
+        Assert.assertEquals("[good[0,4),  [4,5), 学生[5,7), 爱[7,8), 学习[8,10)]", segmentResults.toString());
     }
 
 }
