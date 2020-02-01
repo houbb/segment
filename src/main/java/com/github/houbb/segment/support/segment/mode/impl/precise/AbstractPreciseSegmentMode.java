@@ -1,4 +1,4 @@
-package com.github.houbb.segment.support.segment.mode.impl;
+package com.github.houbb.segment.support.segment.mode.impl.precise;
 
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
 

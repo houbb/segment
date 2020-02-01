@@ -86,5 +86,33 @@ public class SegmentBsModeTest {
         Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手[4,6), 不见[6,8), 五指[8,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
     }
 
+    /**
+     * 仅仅依赖于字典的实现方式
+     * @since 0.1.1
+     */
+    @Test
+    public void dictModeTest() {
+        final String string = "这是一个伸手不见五指的黑夜。";
+
+        List<ISegmentResult> resultList = SegmentBs.newInstance()
+                .segmentMode(SegmentModes.dict())
+                .segment(string);
+        Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
+    }
+
+    /**
+     * 仅仅依赖于字典的实现方式
+     * @since 0.1.1
+     */
+    @Test
+    public void hmmModeTest() {
+        final String string = "这是一个伸手不见五指的黑夜。";
+
+        List<ISegmentResult> resultList = SegmentBs.newInstance()
+                .segmentMode(SegmentModes.hmm())
+                .segment(string);
+        Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸[4,5), 手不见[5,8), 五[8,9), 指[9,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
+    }
+
 }
 

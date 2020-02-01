@@ -1,4 +1,4 @@
-package com.github.houbb.segment.support.segment.mode.impl;
+package com.github.houbb.segment.support.segment.mode.impl.precise;
 
 import com.github.houbb.heaven.annotation.ThreadSafe;
 import com.github.houbb.heaven.support.tuple.impl.Pair;
@@ -25,7 +25,7 @@ import java.util.Map;
  * @since 0.0.7
  */
 @ThreadSafe
-public class SearchSegmentMode extends AbstractPreciseSegmentMode {
+public class DictSegmentMode extends AbstractPreciseSegmentMode {
 
     /**
      * TODO: 这些下标的转换过于复杂，建议简化掉。
@@ -42,12 +42,10 @@ public class SearchSegmentMode extends AbstractPreciseSegmentMode {
         final int startIndex = segmentModeContext.startIndex();
 
         //2. 概率 routeMap
-        Map<Integer, List<ISegmentResult>> segmentMap = getSegmentMap(text, context);
-        Map<Integer, Pair<Integer, Double>> routeMap = calcRouteMap(segmentMap, context);
+        Map<Integer, Pair<Integer, Double>> routeMap = buildRouteMap(text, context);
 
         //3. 循环处理
         // 这里需要考虑下对应的下标问题，相对转换为绝对下标即可。
-
         List<ISegmentResult> resultList = Guavas.newArrayList();
 
         // 存放临时的字符串
@@ -71,10 +69,6 @@ public class SearchSegmentMode extends AbstractPreciseSegmentMode {
                 ISegmentResult result = buildSegmentResult(word, actualStartIndex);
                 resultList.add(result);
             }
-            // 这里需要引入 HMM 分词
-            //1. 如果 word.length==1，则连接起来。比如 good 这种英文单词。
-            //2. 如果 dict 包含这个词，则直接返回
-            //3. 如果不包含，则进入 HMM 分词处理。
 
             // 更新下标
             i = routeIndex - 1;
@@ -87,6 +81,20 @@ public class SearchSegmentMode extends AbstractPreciseSegmentMode {
         }
 
         return resultList;
+    }
+
+    /**
+     * 构建路由 Map
+     * @param text 文本
+     * @param context 上下文
+     * @return 结果
+     * @since 0.1.1
+     */
+    protected Map<Integer, Pair<Integer, Double>> buildRouteMap(final String text,
+                                                                final ISegmentContext context) {
+        //2. 概率 routeMap
+        Map<Integer, List<ISegmentResult>> segmentMap = getSegmentMap(text, context);
+        return calcRouteMap(segmentMap, context);
     }
 
     /**
@@ -113,20 +121,47 @@ public class SearchSegmentMode extends AbstractPreciseSegmentMode {
             resultList.add(buildSegmentResult(bufferWord, actualStartIndex));
         } else {
             //2. 字典中有，直接添加（会出现这个场景吗？）
-            final ISegmentData segmentData = segmentContext.data();
-            if(segmentData.contains(bufferWord)) {
+            final boolean dictContains = dictContainsWord(bufferWord, segmentContext);
+            if(dictContains) {
                 resultList.add(buildSegmentResult(bufferWord, actualStartIndex));
             } else {
-                //3. 使用 HMM 分词
-                ISegmentStrategy segmentStrategy = SegmentStrategies.hmm();
-                List<ISegmentResult> segmentResults = segmentStrategy.segment(bufferWord,
+                //3. 使用 HMM 分词等进行中文处理。
+                List<ISegmentResult> hmmSegmentResults = buildChineseSegments(bufferWord,
                         actualStartIndex, segmentContext);
-                resultList.addAll(segmentResults);
+                resultList.addAll(hmmSegmentResults);
             }
         }
 
         // 清空 buffer
         stringBuffer.setLength(0);
+    }
+
+    /**
+     * 字典中是否包含对应的单词
+     * @param bufferWord 单词
+     * @param segmentContext 上下文
+     * @return 结果
+     * @since 0.1.1
+     */
+    protected boolean dictContainsWord(final String bufferWord,
+                                       final ISegmentContext segmentContext) {
+        final ISegmentData segmentData = segmentContext.data();
+        return segmentData.contains(bufferWord);
+    }
+
+    /**
+     * 构建中文的分词结果
+     * @param bufferWord 缓冲词信息
+     * @param actualStartIndex 实际的开始下标
+     * @param segmentContext 分词上下文
+     * @return 结果列表
+     * @since 0.1.1
+     */
+    protected List<ISegmentResult> buildChineseSegments(final String bufferWord,
+                                                        final int actualStartIndex,
+                                                        final ISegmentContext segmentContext) {
+        ISegmentStrategy segmentStrategy = SegmentStrategies.simple();
+        return segmentStrategy.segment(bufferWord, actualStartIndex, segmentContext);
     }
 
     /**
@@ -136,9 +171,8 @@ public class SearchSegmentMode extends AbstractPreciseSegmentMode {
      * @return 结果
      * @since 0.1.0
      */
-    private ISegmentResult buildSegmentResult(final String word,
+    protected ISegmentResult buildSegmentResult(final String word,
                                               final int startIndex) {
-
         return SegmentResult.newInstance()
                 .word(word)
                 .startIndex(startIndex)

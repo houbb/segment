@@ -32,4 +32,13 @@ public final class SegmentStrategies {
         return Instances.singleton(HmmSegmentStrategy.class);
     }
 
+    /**
+     * 简单的分词实现
+     * @return 简单的分词实现
+     * @since 0.1.1
+     */
+    public static ISegmentStrategy simple() {
+        return Instances.singleton(SimpleSegmentStrategy.class);
+    }
+
 }

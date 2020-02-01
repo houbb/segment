@@ -79,12 +79,13 @@ public class SegmentHelperTest {
      */
     @Test
     public void englishTest2() {
-        String text = "it's time to sleep.";
+        String text = "iT's time to sleep.";
 
         List<ISegmentResult> segmentResults = SegmentHelper.segment(text);
 
         System.out.println(segmentResults.toString());
-//        Assert.assertEquals("[it's[0,4),  [4,5), time[0,4),  [9,10), to[0,2),  [12,13), sleep.[0,6)]", segmentResults.toString());
+
+        Assert.assertEquals("[iT's[0,4),  [4,5), time[5,9),  [9,10), to[10,12),  [12,13), sleep[13,18), .[18,19)]", segmentResults.toString());
     }
 
 }

@@ -19,9 +19,11 @@
 
 但是随着对分词的了解，发现结巴分词对于一些配置上不够灵活。
 
-有很多功能无法指定关闭，比如 HMM 对于繁简体转换是无用的，因为繁体词是固定的，不需要预测。
+（1）有很多功能无法指定关闭，比如 HMM 对于繁简体转换是无用的，因为繁体词是固定的，不需要预测。
 
-最新版本的词性等功能好像也被移除了，但是这些都是个人非常需要的。
+（2）最新版本的词性等功能好像也被移除了，但是这些都是个人非常需要的。
+
+（3）对于中文繁体分词支持不友好。
 
 所以自己重新实现了一遍，希望实现一套更加灵活，更多特性的分词框架。
 
@@ -37,6 +39,8 @@
 
 - 基于 DFA 实现的高性能分词
 
+- 基于 HMM 的新词预测
+
 - 允许指定自定义词库
 
 - 支持不同的分词模式
@@ -45,9 +49,9 @@
 
 ### 最新变更
 
-- 支持 HMM 新词预测
+- 支持只依赖词库的分词实现
 
-- 优化内存占用
+- 支持只依赖 HMM 算法的分词实现
 
 # 快速入门
 
@@ -63,7 +67,7 @@ maven 3.x+
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 </dependency>
 ```
 
@@ -117,8 +121,9 @@ Assert.assertEquals("[这是, 一个, 伸手不见五指, 的, 黑夜, 。, 我,
 | 序号 | 方法 | 准确度 | 性能 | 备注 |
 |:---|:---|:---|:---|:---|
 | 1 | search() | 高 | 一般 | 结巴分词的默认模式 |
-| 2 | index() | 一般 | 高 | 尽可能多的返回词组信息，提高召回率 |
-| 3 | greedyLength() | 一般 | 高 | 贪心最大长度匹配，对准确度要求不高时可采用。 |
+| 2 | dict() | 较高 | 一般 | 和 search 模式类似，但是缺少 HMM 新词预测 |
+| 3 | index() | 一般 | 高 | 尽可能多的返回词组信息，提高召回率 |
+| 4 | greedyLength() | 一般 | 高 | 贪心最大长度匹配，对准确度要求不高时可采用。 |
 
 ## 使用方式
 
@@ -140,7 +145,20 @@ List<ISegmentResult> resultList = SegmentBs.newInstance()
 Assert.assertEquals("[这是[0,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
 ```
 
-## Index 模式
+## dict 模式
+
+只依赖词库实现分词，没有 HMM 新词预测功能。
+
+```java
+final String string = "这是一个伸手不见五指的黑夜。";
+
+List<ISegmentResult> resultList = SegmentBs.newInstance()
+        .segmentMode(SegmentModes.dict())
+        .segment(string);
+Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
+```
+
+## index 模式
 
 这里主要的区别就是会返回 `伸手`、`伸手不见` 等其他词组。
 

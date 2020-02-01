@@ -48,7 +48,7 @@ public final class CharUtils {
      * @since 0.1.0
      */
     public static boolean isLetterOrConnector(final char ch) {
-        return isConnectorChars(ch) || CharUtil.isEnglish(ch);
+        return ch == '\'' || CharUtil.isEnglish(ch);
     }
 
 }
