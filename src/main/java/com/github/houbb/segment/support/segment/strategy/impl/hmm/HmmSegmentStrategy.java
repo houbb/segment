@@ -23,7 +23,6 @@ public class HmmSegmentStrategy implements ISegmentStrategy {
     public List<ISegmentResult> segment(String string, int startIndex, ISegmentContext context) {
         List<String> wordList = Guavas.newArrayList();
 
-        System.out.println("HMM string and index " + string + ", " + startIndex);
         // TODO: 所有地方 char 的处理，都应该使用统一的 char-mapping 处理。
         // 这里后期其实除了繁简体，没有必要处理符号信息。因为和字典无关。
         StringBuilder chineseBuffer = new StringBuilder();
