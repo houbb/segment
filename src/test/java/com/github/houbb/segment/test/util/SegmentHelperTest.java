@@ -73,4 +73,18 @@ public class SegmentHelperTest {
         Assert.assertEquals("[good[0,4),  [4,5), 学生[5,7), 爱[7,8), 学习[8,10)]", segmentResults.toString());
     }
 
+    /**
+     * 对于连接符号 ' 的测试
+     * @since 0.1.0
+     */
+    @Test
+    public void englishTest2() {
+        String text = "it's time to sleep.";
+
+        List<ISegmentResult> segmentResults = SegmentHelper.segment(text);
+
+        System.out.println(segmentResults.toString());
+//        Assert.assertEquals("[it's[0,4),  [4,5), time[0,4),  [9,10), to[0,2),  [12,13), sleep.[0,6)]", segmentResults.toString());
+    }
+
 }

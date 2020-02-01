@@ -16,7 +16,7 @@ public final class CharUtils {
      * 连接符号
      * @since 0.0.7
      */
-    private static final char[] CONNECTOR_CHARS = "+#&.-_".toCharArray();
+    private static final char[] CONNECTOR_CHARS = "+#&.-_'".toCharArray();
 
     /**
      * 是否为连续的信息
@@ -28,7 +28,27 @@ public final class CharUtils {
         return CharUtil.isChinese(ch)
                 || CharUtil.isDigitOrLetter(ch)
                 || CharUtil.isDigit(ch)
-                || ArrayPrimitiveUtil.contains(CONNECTOR_CHARS, ch);
+                || isConnectorChars(ch);
+    }
+
+    /**
+     * 是否为连接符号
+     * @param ch 字符
+     * @return 结果
+     * @since 0.1.0
+     */
+    public static boolean isConnectorChars(final char ch) {
+        return ArrayPrimitiveUtil.contains(CONNECTOR_CHARS, ch);
+    }
+
+    /**
+     * 是英文或者连接符号
+     * @param ch 字符
+     * @return 是否
+     * @since 0.1.0
+     */
+    public static boolean isLetterOrConnector(final char ch) {
+        return isConnectorChars(ch) || CharUtil.isEnglish(ch);
     }
 
 }

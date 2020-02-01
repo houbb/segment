@@ -7,6 +7,7 @@ import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.support.segment.impl.SegmentResult;
 import com.github.houbb.segment.support.segment.strategy.ISegmentStrategy;
+import com.github.houbb.segment.util.CharUtils;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class HmmSegmentStrategy implements ISegmentStrategy {
     public List<ISegmentResult> segment(String string, int startIndex, ISegmentContext context) {
         List<String> wordList = Guavas.newArrayList();
 
+        System.out.println("HMM string and index " + string + ", " + startIndex);
         // TODO: 所有地方 char 的处理，都应该使用统一的 char-mapping 处理。
         // 这里后期其实除了繁简体，没有必要处理符号信息。因为和字典无关。
         StringBuilder chineseBuffer = new StringBuilder();
@@ -107,7 +109,8 @@ public class HmmSegmentStrategy implements ISegmentStrategy {
 
             for(int i = 0; i < buffer.length(); i++) {
                 char c = buffer.charAt(i);
-                if(CharUtil.isDigitOrLetter(c)) {
+                if(CharUtil.isDigitOrLetter(c)
+                    || CharUtils.isLetterOrConnector(c)) {
                     wordBuffer.append(c);
                 } else {
                     // 如果不是

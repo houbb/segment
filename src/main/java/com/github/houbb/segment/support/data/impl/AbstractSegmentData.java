@@ -17,6 +17,7 @@ import com.github.houbb.segment.support.normalization.impl.LogNormalization;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 分词数据抽象父类实现
@@ -72,6 +73,11 @@ public abstract class AbstractSegmentData implements ISegmentData {
     }
 
     @Override
+    public Set<String> getWordSet() {
+        return getFreqMap().keySet();
+    }
+
+    @Override
     public Map<String, WordProperty> getWordTypeMap() {
         Map<String, WordProperty> wordMap = getStaticVolatileWordTypeMap();
         if(MapUtil.isNotEmpty(wordMap)) {
@@ -90,9 +96,9 @@ public abstract class AbstractSegmentData implements ISegmentData {
 
     @Override
     public Double getFreq(String word) {
-        NormalizationResult normalizationResult = normalization();
+        Map<String, Double> freqMap = getFreqMap();
 
-        Double freq = normalizationResult.freqMap().get(word);
+        Double freq = freqMap.get(word);
 
         // 如果为空，则默认返回最小的频率即可。
         if(ObjectUtil.isNull(freq)) {
@@ -100,6 +106,17 @@ public abstract class AbstractSegmentData implements ISegmentData {
         }
 
         return freq;
+    }
+
+    /**
+     * 获取频率对应的 Map
+     * @return 频率 map
+     * @since 0.1.0
+     */
+    private Map<String, Double> getFreqMap() {
+        NormalizationResult normalizationResult = normalization();
+
+        return normalizationResult.freqMap();
     }
 
     @Override
@@ -135,9 +152,11 @@ public abstract class AbstractSegmentData implements ISegmentData {
         final long startTime = System.currentTimeMillis();
 
         List<WordEntry> wordEntries = getWordEntryList();
-        //TODO: 这里的 wordEntries 使用后应该移除，避免内存占用。
         INormalization normalization = Instances.singleton(LogNormalization.class);
         normalizationResult = normalization.normalization(wordEntries);
+
+        //清空原始列表
+        wordEntries.clear();
 
         final long costTime = System.currentTimeMillis()-startTime;
         System.out.println("Normalization init finished, cost time : " + costTime + " ms!");

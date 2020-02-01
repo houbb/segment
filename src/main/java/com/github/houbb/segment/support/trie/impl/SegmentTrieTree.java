@@ -5,13 +5,12 @@ import com.github.houbb.heaven.util.guava.Guavas;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.constant.SegmentConst;
-import com.github.houbb.segment.model.WordEntry;
 import com.github.houbb.segment.support.data.ISegmentData;
 import com.github.houbb.segment.support.trie.ISegmentTrieTree;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 分词前缀树接口
@@ -53,10 +52,9 @@ public class SegmentTrieTree implements ISegmentTrieTree {
         innerWordMap = Guavas.newHashMap();
 
         // 加载字典
-        List<WordEntry> wordEntries = segmentData.getWordEntryList();
+        Set<String> wordSet = segmentData.getWordSet();
 
-        for (WordEntry wordEntry : wordEntries) {
-            final String key = wordEntry.word();
+        for (String key : wordSet) {
             // 用来按照相应的格式保存敏感词库数据
             char[] chars = key.toCharArray();
             final int size = chars.length;

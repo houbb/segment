@@ -6,6 +6,7 @@ import com.github.houbb.segment.support.normalization.NormalizationResult;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 分词数据接口
@@ -23,7 +24,15 @@ public interface ISegmentData {
      * @return 词信息列表
      * @since 0.0.1
      */
+    @Deprecated
     List<WordEntry> getWordEntryList();
+
+    /**
+     * 获取对应的单词列表
+     * @return 单词列表
+     * @since 0.1.0
+     */
+    Set<String> getWordSet();
 
     /**
      * 获取词性的 map

@@ -43,6 +43,12 @@
 
 - 支持全角半角/英文大小写格式处理
 
+### 最新变更
+
+- 支持 HMM 新词预测
+
+- 优化内存占用
+
 # 快速入门
 
 ## 准备
@@ -57,7 +63,7 @@ maven 3.x+
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>0.0.9</version>
+    <version>0.1.0</version>
 </dependency>
 ```
 
@@ -71,7 +77,7 @@ maven 3.x+
 final String string = "这是一个伸手不见五指的黑夜。我叫孙悟空，我爱北京，我爱学习。";
 
 List<ISegmentResult> resultList = SegmentHelper.segment(string);
-Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14), 我[14,15), 叫[15,16), 孙悟空[16,19), ，[19,20), 我[20,21), 爱[21,22), 北京[22,24), ，[24,25), 我[25,26), 爱[26,27), 学习[27,29), 。[29,30)]", resultList.toString());
+Assert.assertEquals("[这是[0,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14), 我[14,15), 叫[15,16), 孙悟空[16,19), ，[19,20), 我爱[20,22), 北京[22,24), ，[24,25), 我爱[25,27), 学习[27,29), 。[29,30)]", resultList.toString());
 ```
 
 ## 指定返回形式
@@ -99,7 +105,7 @@ List<ISegmentResult> resultList = SegmentHelper.segment(string, SegmentResultHan
 final String string = "这是一个伸手不见五指的黑夜。我叫孙悟空，我爱北京，我爱学习。";
 
 List<String> resultList = SegmentHelper.segment(string, SegmentResultHandlers.word());
-Assert.assertEquals("[这, 是, 一个, 伸手不见五指, 的, 黑夜, 。, 我, 叫, 孙悟空, ，, 我, 爱, 北京, ，, 我, 爱, 学习, 。]", resultList.toString());
+Assert.assertEquals("[这是, 一个, 伸手不见五指, 的, 黑夜, 。, 我, 叫, 孙悟空, ，, 我爱, 北京, ，, 我爱, 学习, 。]", resultList.toString());
 ```
 
 # 分词模式
@@ -131,7 +137,7 @@ List<ISegmentResult> resultList = SegmentBs.newInstance()
        .segmentMode(SegmentModes.search())
        .segment(string);
 
-Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
+Assert.assertEquals("[这是[0,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
 ```
 
 ## Index 模式
@@ -183,9 +189,9 @@ Assert.assertEquals("[阿Ｑ[0,2), 精神[2,4)]", segmentResults.toString());
 
 备注：
 
-（1）默认模式暂时尚未引入 HMM，故性能好了一点。
+（1）默认模式和结巴 Search 模式一致。
 
-后期引入 HMM 也可以配置是否开启。
+后期考虑 HMM 也可以配置是否开启，暂定为默认开启
 
 （2）后期将引入多线程提升性能。
 
@@ -202,8 +208,6 @@ Assert.assertEquals("[阿Ｑ[0,2), 精神[2,4)]", segmentResults.toString());
 ## 核心特性
 
 - 中文繁简体格式化
-
-- HMM 算法实现新词预测特性
 
 - CRF 算法实现
 

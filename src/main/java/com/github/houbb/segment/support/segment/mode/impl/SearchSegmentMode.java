@@ -27,6 +27,13 @@ import java.util.Map;
 @ThreadSafe
 public class SearchSegmentMode extends AbstractPreciseSegmentMode {
 
+    /**
+     * TODO: 这些下标的转换过于复杂，建议简化掉。
+     * （1）all index 模式需要结果
+     * （2）精确模式其实不需要这些属性，可以从后往前递推。
+     * @param segmentModeContext 分词模式上下文
+     * @return
+     */
     @Override
     public List<ISegmentResult> select(final SegmentModeContext segmentModeContext) {
         //1. 基本属性
@@ -40,12 +47,12 @@ public class SearchSegmentMode extends AbstractPreciseSegmentMode {
 
         //3. 循环处理
         // 这里需要考虑下对应的下标问题，相对转换为绝对下标即可。
+
         List<ISegmentResult> resultList = Guavas.newArrayList();
 
         // 存放临时的字符串
         StringBuilder stringBuffer = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
-            final int actualStartIndex = startIndex+i;
             final int routeIndex = getRouteIndex(routeMap, i);
 
             // 单词的长度
@@ -56,9 +63,11 @@ public class SearchSegmentMode extends AbstractPreciseSegmentMode {
                 stringBuffer.append(word);
             } else {
                 // 处理前面的 buffer
-                bufferToResultList(actualStartIndex, stringBuffer, resultList, context);
+                final int actualBufferIndex = startIndex+i;
+                bufferToResultList(actualBufferIndex, stringBuffer, resultList, context);
 
                 // 如果是词组，则可以直接添加。
+                final int actualStartIndex = startIndex+i;
                 ISegmentResult result = buildSegmentResult(word, actualStartIndex);
                 resultList.add(result);
             }
@@ -73,7 +82,8 @@ public class SearchSegmentMode extends AbstractPreciseSegmentMode {
 
         // 最后的 Buffer 处理。
         if(stringBuffer.length() > 0) {
-            bufferToResultList(text.length(), stringBuffer, resultList, context);
+            final int actualIndex = startIndex + text.length();
+            bufferToResultList(actualIndex, stringBuffer, resultList, context);
         }
 
         return resultList;

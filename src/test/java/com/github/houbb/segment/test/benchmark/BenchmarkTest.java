@@ -56,6 +56,7 @@ public class BenchmarkTest {
      * 应该是处于字典大小的考量。
      */
     @Test
+    @Ignore
     public void openccTest() {
         String text = "我会盡力而爲";
         String text2 = "我会尽力而为";

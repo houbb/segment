@@ -69,7 +69,6 @@ public class PreciseSegment implements ISegment {
             }
         }
 
-
         // 最后的结果处理
         int consequentLen = stringBuilder.length();
         if (consequentLen > 0) {

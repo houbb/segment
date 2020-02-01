@@ -14,7 +14,6 @@ import java.util.List;
  * @author binbin.hou
  * @since 0.0.5
  */
-@Ignore
 public class SegmentBsModeTest {
 
     /**
@@ -28,10 +27,10 @@ public class SegmentBsModeTest {
         List<ISegmentResult> resultList = SegmentBs.newInstance()
                 .segmentMode(SegmentModes.search())
                 .segment(string);
-        Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
+        Assert.assertEquals("[这是[0,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
     }
 
-    /**
+    /**kj,m
      * 尽可能多的返回词组
      * @since 0.0.7
      */
