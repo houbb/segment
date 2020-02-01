@@ -81,7 +81,7 @@ public final class SegmentBs {
      * @return this
      * @since 0.0.7
      */
-    public SegmentBs wordType(final ISegmentWordType wordType) {
+    public SegmentBs segmentWordType(final ISegmentWordType wordType) {
         this.wordType = wordType;
         return this;
     }

@@ -37,7 +37,7 @@ public class SegmentBsTest {
 
         List<ISegmentResult> resultList = SegmentBs
                 .newInstance()
-                .wordType(WordTypes.first())
+                .segmentWordType(WordTypes.first())
                 .segment(string);
 
         Assert.assertEquals("[我[0,1)/r, 爱[1,2)/v, 学习[2,4)/v]",
