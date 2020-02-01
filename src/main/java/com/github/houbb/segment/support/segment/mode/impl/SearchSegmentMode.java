@@ -32,7 +32,7 @@ public class SearchSegmentMode extends AbstractPreciseSegmentMode {
      * （1）all index 模式需要结果
      * （2）精确模式其实不需要这些属性，可以从后往前递推。
      * @param segmentModeContext 分词模式上下文
-     * @return
+     * @return 结果列表
      */
     @Override
     public List<ISegmentResult> select(final SegmentModeContext segmentModeContext) {
