@@ -1,5 +1,6 @@
 package com.github.houbb.segment.bs;
 
+import com.github.houbb.heaven.util.common.ArgUtil;
 import com.github.houbb.segment.api.ISegment;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
@@ -77,12 +78,13 @@ public final class SegmentBs {
 
     /**
      * 指定启用词性
-     * @param wordType 指定启用词性
+     * @param segmentWordType 指定词性实现方式
      * @return this
      * @since 0.0.7
      */
-    public SegmentBs segmentWordType(final ISegmentWordType wordType) {
-        this.wordType = wordType;
+    public SegmentBs segmentWordType(final ISegmentWordType segmentWordType) {
+        ArgUtil.notNull(segmentWordType, "segmentWordType");
+        this.wordType = segmentWordType;
         return this;
     }
 
@@ -93,6 +95,7 @@ public final class SegmentBs {
      * @since 0.0.3
      */
     public SegmentBs segmentData(final ISegmentData segmentData) {
+        ArgUtil.notNull(segmentData, "segmentData");
         this.data = segmentData;
         return this;
     }
@@ -104,7 +107,14 @@ public final class SegmentBs {
      * @since 0.0.5
      */
     public SegmentBs segmentMode(ISegmentMode segmentMode) {
+        ArgUtil.notNull(segmentMode, "segmentMode");
         this.mode = segmentMode;
+        return this;
+    }
+
+    public SegmentBs segmentFormat(final ISegmentFormat segmentFormat) {
+        ArgUtil.notNull(segmentFormat, "segmentFormat");
+        this.format = segmentFormat;
         return this;
     }
 

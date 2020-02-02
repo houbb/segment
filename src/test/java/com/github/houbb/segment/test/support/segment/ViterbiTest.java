@@ -16,7 +16,7 @@ public class ViterbiTest {
         //[2, 0, 1, 2, 0, 2, 0]
         final String text = "南京市长江大桥";
 
-        Assert.assertEquals("[南京市, 长, 江大桥]", Viterbi.segment(text).toString());
+        Assert.assertEquals("[南京市, 长, 江大桥]", Viterbi.segment(text, text).toString());
     }
 
 }

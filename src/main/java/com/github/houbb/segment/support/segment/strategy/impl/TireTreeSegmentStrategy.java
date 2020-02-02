@@ -5,9 +5,7 @@ import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.heaven.util.guava.Guavas;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.segment.api.ISegmentContext;
-import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.constant.SegmentConst;
-import com.github.houbb.segment.support.segment.impl.SegmentResult;
 import com.github.houbb.segment.support.trie.impl.SegmentTrieTree;
 
 import java.util.List;

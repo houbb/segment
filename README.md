@@ -41,17 +41,15 @@
 
 - 基于 HMM 的新词预测
 
-- 允许指定自定义词库
-
 - 支持不同的分词模式
 
-- 支持全角半角/英文大小写格式处理
+- 支持全角半角/英文大小写/中文繁简体格式处理
+
+- 允许指定自定义词库
 
 ### 最新变更
 
-- 支持只依赖词库的分词实现
-
-- 支持只依赖 HMM 算法的分词实现
+- 支持中文繁体分词
 
 # 快速入门
 
@@ -67,7 +65,7 @@ maven 3.x+
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
 </dependency>
 ```
 
@@ -184,9 +182,24 @@ List<ISegmentResult> resultList = SegmentBs.newInstance()
 Assert.assertEquals("[这[0,1), 是[1,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14)]", resultList.toString());
 ```
 
-# 格式处理
+# 格式化处理
 
-## 全角半角+英文大小写
+## 格式化接口
+
+可以通过 `SegmentFormats` 工具类获取对应的格式化实现，在分词时指定即可。
+
+| 序号 | 方法 | 名称 | 说明 |
+|:---|:---|:---|:---|:---|
+| 1 | defaults() | 默认格式化 | 等价于小写+半角处理。 |
+| 2 | lowerCase() | 字符小写格式化 | 英文字符处理时统一转换为小写 |
+| 3 | halfWidth() | 字符半角格式化 | 英文字符处理时统一转换为半角 |
+| 4 | chineseSimple() | 中文简体格式化 |  用于支持繁体中文分词 |
+| 5 | none() | 无格式化 |  无任何格式化处理 |
+| 6 | chains(formats) | 格式化责任链 | 你可以针对上述的格式化自由组合，同时允许自定义格式化。 |
+
+## 默认格式化
+
+全角半角+英文大小写格式化处理，默认开启。
 
 这里的 `Ｑ` 为全角大写，默认会被转换处理。
 
@@ -195,6 +208,51 @@ String text = "阿Ｑ精神";
 List<ISegmentResult> segmentResults = SegmentHelper.segment(text);
 
 Assert.assertEquals("[阿Ｑ[0,2), 精神[2,4)]", segmentResults.toString());
+```
+
+## 中文繁体分词
+
+无论是结巴分词还是当前框架，默认对繁体中文的分词都不友好。
+
+### 默认分词示例
+
+显然和简体中文的分词形式不同。
+
+```java
+String text = "這是一個伸手不見五指的黑夜";
+
+List<String> defaultWords = SegmentBs.newInstance()
+        .segment(text, SegmentResultHandlers.word());
+Assert.assertEquals("[這是, 一, 個, 伸手, 不見, 五指, 的, 黑夜]", defaultWords.toString());
+```
+
+### 启用中文繁体分词
+
+指定分词中文格式化，可以得到符合我们预期的分词。
+
+```java
+String text = "這是一個伸手不見五指的黑夜";
+
+List<String> defaultWords = SegmentBs.newInstance()
+        .segmentFormat(SegmentFormats.chineseSimple())
+        .segment(text, SegmentResultHandlers.word());
+Assert.assertEquals("[這是, 一個, 伸手不見五指, 的, 黑夜]", defaultWords.toString());
+```
+
+## 格式化责任链
+
+格式化的形式可以有很多，我们可以根据自己的需求自由组合。
+
+比如我们想同时启用默认格式化+中文简体格式化。
+
+```java
+final String text = "阿Ｑ，這是一個伸手不見五指的黑夜";
+
+List<String> defaultWords = SegmentBs.newInstance()
+        .segmentFormat(SegmentFormats.chains(SegmentFormats.defaults(),
+                SegmentFormats.chineseSimple()))
+        .segment(text, SegmentResultHandlers.word());
+Assert.assertEquals("[阿Ｑ, ，, 這是, 一個, 伸手不見五指, 的, 黑夜]", defaultWords.toString());
 ```
 
 # Benchmark 性能对比
@@ -225,7 +283,9 @@ Assert.assertEquals("[阿Ｑ[0,2), 精神[2,4)]", segmentResults.toString());
 
 ## 核心特性
 
-- 中文繁简体格式化
+- HMM 词性标注
+
+- HMM 实体标注
 
 - CRF 算法实现
 

@@ -6,6 +6,7 @@ import com.github.houbb.heaven.util.lang.CharUtil;
 import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
+import com.github.houbb.segment.support.format.ISegmentFormat;
 import com.github.houbb.segment.support.segment.impl.SegmentResult;
 import com.github.houbb.segment.support.segment.strategy.ISegmentStrategy;
 import com.github.houbb.segment.util.CharUtils;
@@ -23,8 +24,8 @@ public class SimpleSegmentStrategy implements ISegmentStrategy {
     @Override
     public List<ISegmentResult> segment(String string, int startIndex, ISegmentContext context) {
         List<String> wordList = Guavas.newArrayList();
+        final ISegmentFormat segmentFormat = context.format();
 
-        // TODO: 所有地方 char 的处理，都应该使用统一的 char-mapping 处理。
         // 这里后期其实除了繁简体，没有必要处理符号信息。因为和字典无关。
         StringBuilder chineseBuffer = new StringBuilder();
         StringBuilder otherBuffer = new StringBuilder();
@@ -36,11 +37,12 @@ public class SimpleSegmentStrategy implements ISegmentStrategy {
             } else {
                 otherBuffer.append(c);
                 // 处理中文
+                processChineseChars(chineseBuffer, wordList, context);
             }
         }
 
         // 中文
-        processChineseChars(chineseBuffer, wordList);
+        processChineseChars(chineseBuffer, wordList, context);
 
         // 英文
         processOtherChars(otherBuffer, wordList);
@@ -64,17 +66,19 @@ public class SimpleSegmentStrategy implements ISegmentStrategy {
      * 执行处理中文字符信息
      * @param buffer 缓存信息
      * @param wordList 结果列表
+     * @param context 分词处理上下文
      * @since 0.1.0
      */
     private void processChineseChars(final StringBuilder buffer,
-                                     final List<String> wordList) {
+                                     final List<String> wordList,
+                                     final ISegmentContext context) {
         final int length = buffer.length();
         if(length <= 0) {
             return;
         }
 
         String text = buffer.toString();
-        List<String> segments = getChineseSegments(text);
+        List<String> segments = getChineseSegments(text, context);
         wordList.addAll(segments);
 
         // 清空长度
@@ -86,10 +90,12 @@ public class SimpleSegmentStrategy implements ISegmentStrategy {
      *
      * （1）默认直接按照中文拆分。
      * @param text 文本信息
+     * @param context 分词上下文
      * @return 结果列表
      * @since 0.1.1
      */
-    protected List<String> getChineseSegments(final String text) {
+    protected List<String> getChineseSegments(final String text,
+                                              final ISegmentContext context) {
         return StringUtil.toCharStringList(text);
     }
 

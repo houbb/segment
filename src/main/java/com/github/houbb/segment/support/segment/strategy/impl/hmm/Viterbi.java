@@ -4,6 +4,7 @@ import com.github.houbb.heaven.util.guava.Guavas;
 import com.github.houbb.heaven.util.io.StreamUtil;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.heaven.util.lang.StringUtil;
+import com.github.houbb.segment.constant.SegmentConst;
 import com.github.houbb.segment.constant.enums.HmmStateEnum;
 
 import java.util.List;
@@ -85,10 +86,11 @@ public final class Viterbi {
     /**
      * 执行分词
      * @param text 文本
+     * @param formatText 格式化文本
      * @return 分词后的结束下标列表
      * @since 0.1.0
      */
-    public static List<String> segment(final String text) {
+    public static List<String> segment(final String text, final String formatText) {
         List<String> segmentList = Guavas.newArrayList();
 
         //1. fail-return
@@ -98,7 +100,7 @@ public final class Viterbi {
         }
 
         // 观察字符串序列
-        char[] observerChars = text.toCharArray();
+        char[] observerChars = formatText.toCharArray();
         int[] stateIndexArray = compute(observerChars, STATE_INDEX, START_PROB, TRANS_PROB);
 
         // 根据状态，构建最后的结果列表
@@ -147,7 +149,7 @@ public final class Viterbi {
                 emitPropMap.put(2, Guavas.<Character, Double>newHashMap());
                 emitPropMap.put(3, Guavas.<Character, Double>newHashMap());
 
-                List<String> lines = StreamUtil.readAllLines("/segment_emit_prob.txt");
+                List<String> lines = StreamUtil.readAllLines(SegmentConst.SEGMENT_EMIT_PROB_PATH);
 
                 for(String line : lines) {
                     String[] entries = line.split(StringUtil.BLANK);
