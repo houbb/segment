@@ -34,7 +34,7 @@ public class SegmentStopWordsData implements ISegmentStopWordsData {
      */
     @Override
     public boolean contains(final String word) {
-        return false;
+        return LINES.contains(word);
     }
 
 }
