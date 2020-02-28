@@ -57,10 +57,4 @@ public final class SegmentConst {
      */
     public static final String IS_END = "ED";
 
-    /**
-     * 停顿词默认文件路径
-     * @since 0.1.3
-     */
-    public static final String SEGMENT_STOP_WORDS_PATH = "/segment_stop_words.txt";
-
 }
