@@ -16,18 +16,6 @@ import java.util.Set;
 public interface ISegmentData {
 
     /**
-     * 获取对应的词信息
-     *
-     * ps: 即使列表为空，依然可以分词。
-     * 没有 HMM 之前，就相当于与全部为单个字。
-     *
-     * @return 词信息列表
-     * @since 0.0.1
-     */
-    @Deprecated
-    List<WordEntry> getWordEntryList();
-
-    /**
      * 获取对应的单词列表
      * @return 单词列表
      * @since 0.1.0

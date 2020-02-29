@@ -45,11 +45,11 @@
 
 - 支持全角半角/英文大小写/中文繁简体格式处理
 
-- 允许指定自定义词库
+- 允许用户自定义词库
 
-### 最新变更
+### v-0.1.3 最新变更
 
-- 支持中文繁体分词
+- 支持混合模式词库
 
 # 快速入门
 
@@ -65,7 +65,7 @@ maven 3.x+
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>0.1.2</version>
+    <version>0.1.3</version>
 </dependency>
 ```
 
@@ -296,10 +296,6 @@ Assert.assertEquals("[阿Ｑ, ，, 這是, 一個, 伸手不見五指, 的, 黑�
 - 多线程的支持，性能优化
 
 - 双数组 DFA 实现，降低内存消耗
-
-## 辅助特性
-
-- 拓展自定义词库的特性
 
 # 创作感谢
 

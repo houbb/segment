@@ -30,6 +30,12 @@ import java.util.Set;
 public abstract class AbstractSegmentData implements ISegmentData {
 
     /**
+     * 静态异变的 NormalizationResult 结果
+     * @since 0.0.7
+     */
+    private static volatile NormalizationResult normalizationResult;
+
+    /**
      * 获取静态词列表
      * @return 词列表
      * @since 0.0.3
@@ -44,19 +50,22 @@ public abstract class AbstractSegmentData implements ISegmentData {
     protected abstract Map<String, WordProperty> getStaticVolatileWordTypeMap();
 
     /**
-     * 静态异变的 NormalizationResult 结果
-     * @since 0.0.7
+     * 获取行内容
+     * @return 字典行内容
+     * @since 0.1.3
      */
-    private static volatile NormalizationResult normalizationResult;
+    protected abstract List<String> readDictLines();
 
     /**
-     * 获取字典路径
-     * @return 字典路径
+     * 获取对应的词信息
+     *
+     * ps: 即使列表为空，依然可以分词。
+     * 没有 HMM 之前，就相当于与全部为单个字。
+     *
+     * @return 词信息列表
+     * @since 0.0.1
      */
-    protected abstract String getDictPath();
-
-    @Override
-    public List<WordEntry> getWordEntryList() {
+    private List<WordEntry> getWordEntryList() {
         List<WordEntry> wordEntries = getStaticVolatileWordEntryList();
         if(CollectionUtil.isNotEmpty(wordEntries)) {
             return wordEntries;
@@ -170,7 +179,6 @@ public abstract class AbstractSegmentData implements ISegmentData {
     private void initWordTypeMap(final Map<String, WordProperty> wordMap) {
         final long startTime = System.currentTimeMillis();
 
-        final String dictPath = getDictPath();
         List<WordEntry> wordEntryList = getWordEntryList();
 
         for(WordEntry wordEntry : wordEntryList) {
@@ -180,7 +188,7 @@ public abstract class AbstractSegmentData implements ISegmentData {
         }
 
         final long costTime = System.currentTimeMillis()-startTime;
-        System.out.println("[" + dictPath + "] dict init word-type-map finish, cost time : " + costTime + " ms!");
+        System.out.println("[Segment] dict init word-type-map finish, cost time : " + costTime + " ms!");
     }
 
     @Override
@@ -188,6 +196,8 @@ public abstract class AbstractSegmentData implements ISegmentData {
         NormalizationResult normalizationResult = normalization();
         return normalizationResult.freqMap().containsKey(word);
     }
+
+
 
     /**
      * 构建分词列表
@@ -200,8 +210,7 @@ public abstract class AbstractSegmentData implements ISegmentData {
      */
     private void initWordEntryList(final List<WordEntry> wordEntryList) {
         final long startTime = System.currentTimeMillis();
-        final String dictPath = getDictPath();
-        final List<String> allLines = StreamUtil.readAllLines(dictPath);
+        final List<String> allLines = this.readDictLines();
 
         for(String line : allLines) {
             if(StringUtil.isEmptyTrim(line)) {
@@ -228,7 +237,7 @@ public abstract class AbstractSegmentData implements ISegmentData {
         }
 
         final long costTime = System.currentTimeMillis()-startTime;
-        System.out.println("[" + dictPath + "] dict init word-list finish, cost time : " + costTime + " ms!");
+        System.out.println("[Segment] dict init word-list finish, cost time : " + costTime + " ms!");
     }
 
 }

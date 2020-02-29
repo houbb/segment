@@ -33,4 +33,13 @@ public final class SegmentDatas {
         return Instances.singleton(SegmentDefineData.class);
     }
 
+    /**
+     * 获取混合模式分词数据
+     * @return 系统自定义数据
+     * @since 0.1.3
+     */
+    public static ISegmentData mixed() {
+        return Instances.singleton(SegmentMixedData.class);
+    }
+
 }

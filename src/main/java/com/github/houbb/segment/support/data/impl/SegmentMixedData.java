@@ -11,24 +11,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 分词数据实现
- * （1）惰性加载
+ * 混合模式分词数据实现
  * @author binbin.hou
- * @since 0.0.3
+ * @since 0.1.3
  */
 @ThreadSafe
-public class SegmentSystemData extends AbstractSegmentData {
+public class SegmentMixedData extends AbstractSegmentData {
 
     /**
      * 默认的内置行
      *
-     * @since 0.0.3
+     * @since 0.1.3
      */
     private static volatile List<WordEntry> wordEntryList = Guavas.newArrayList();
 
     /**
      * 词对应的 map
-     * @since 0.0.2
+     * @since 0.1.3
      */
     private static volatile Map<String, WordProperty> wordMap = Guavas.newHashMap();
 
@@ -44,7 +43,11 @@ public class SegmentSystemData extends AbstractSegmentData {
 
     @Override
     protected List<String> readDictLines() {
-        return StreamUtil.readAllLines(SegmentConst.SEGMENT_DICT_PATH);
+        List<String> systemLines = StreamUtil.readAllLines(SegmentConst.SEGMENT_DICT_PATH);
+        List<String> defineLines = StreamUtil.readAllLines(SegmentConst.SEGMENT_DEFINE_DICT_PATH);
+
+        systemLines.addAll(defineLines);
+        return systemLines;
     }
 
 }

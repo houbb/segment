@@ -35,10 +35,10 @@ public final class SegmentBs {
 
     /**
      * 分词数据来源
-     * 1. 默认使用系统的字典
+     * 1. 默认使用混合模式的字典(v1.0.3)
      * @since 0.0.3
      */
-    private ISegmentData data = SegmentDatas.system();
+    private ISegmentData data = SegmentDatas.mixed();
 
     /**
      * 分词模式

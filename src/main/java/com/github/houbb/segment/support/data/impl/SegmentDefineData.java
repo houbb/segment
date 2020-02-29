@@ -2,6 +2,7 @@ package com.github.houbb.segment.support.data.impl;
 
 import com.github.houbb.heaven.annotation.ThreadSafe;
 import com.github.houbb.heaven.util.guava.Guavas;
+import com.github.houbb.heaven.util.io.StreamUtil;
 import com.github.houbb.segment.constant.SegmentConst;
 import com.github.houbb.segment.model.WordEntry;
 import com.github.houbb.segment.model.WordProperty;
@@ -44,8 +45,8 @@ public class SegmentDefineData extends AbstractSegmentData {
     }
 
     @Override
-    protected String getDictPath() {
-        return SegmentConst.SEGMENT_DEFINE_DICT_PATH;
+    protected List<String> readDictLines() {
+        return StreamUtil.readAllLines(SegmentConst.SEGMENT_DEFINE_DICT_PATH);
     }
 
 }
