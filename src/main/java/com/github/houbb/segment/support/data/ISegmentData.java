@@ -1,11 +1,7 @@
 package com.github.houbb.segment.support.data;
 
-import com.github.houbb.segment.model.WordEntry;
-import com.github.houbb.segment.model.WordProperty;
 import com.github.houbb.segment.support.normalization.NormalizationResult;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -21,16 +17,6 @@ public interface ISegmentData {
      * @since 0.1.0
      */
     Set<String> getWordSet();
-
-    /**
-     * 获取词性的 map
-     *
-     * （1）此处使用惰性加载，如果未开启，则不用加载对应的信息。
-     *
-     * @return 词性对应的 map
-     * @since 0.0.2
-     */
-    Map<String, WordProperty> getWordTypeMap();
 
     /**
      * 获取频率

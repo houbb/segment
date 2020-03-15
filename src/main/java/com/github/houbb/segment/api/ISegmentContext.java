@@ -3,7 +3,8 @@ package com.github.houbb.segment.api;
 import com.github.houbb.segment.support.data.ISegmentData;
 import com.github.houbb.segment.support.format.ISegmentFormat;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
-import com.github.houbb.segment.support.type.ISegmentWordType;
+import com.github.houbb.segment.support.tagging.pos.data.ISegmentPosData;
+import com.github.houbb.segment.support.tagging.pos.tag.ISegmentPosTagging;
 
 /**
  * 分词接口上下文
@@ -24,19 +25,18 @@ import com.github.houbb.segment.support.type.ISegmentWordType;
 public interface ISegmentContext {
 
     /**
-     * 是否启用词性
-     * @return 词性
-     * @since 0.0.7
+     * 词性标注
+     * @return 词性标注实现
+     * @since 0.1.4
      */
-    ISegmentWordType wordType();
+    ISegmentPosTagging posTagging();
 
     /**
-     * 是否启用词性
-     * @param wordType 是否启用词性
-     * @return 词性
-     * @since 0.0.2
+     * 词性标注数据
+     * @return 数据
+     * @since 0.1.4
      */
-    ISegmentContext wordType(final ISegmentWordType wordType);
+    ISegmentPosData posData();
 
     /**
      * 获取分词字典实现

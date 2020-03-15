@@ -4,7 +4,8 @@ import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.support.data.ISegmentData;
 import com.github.houbb.segment.support.format.ISegmentFormat;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
-import com.github.houbb.segment.support.type.ISegmentWordType;
+import com.github.houbb.segment.support.tagging.pos.data.ISegmentPosData;
+import com.github.houbb.segment.support.tagging.pos.tag.ISegmentPosTagging;
 
 /**
  * 分词上下文
@@ -14,10 +15,16 @@ import com.github.houbb.segment.support.type.ISegmentWordType;
 public class SegmentContext implements ISegmentContext {
 
     /**
-     * 词性
-     * @since 0.0.2
+     * 词性标注
+     * @since 0.1.4
      */
-    private ISegmentWordType wordType;
+    private ISegmentPosTagging posTagging;
+
+    /**
+     * 词性标注数据
+     * @since 0.1.4
+     */
+    private ISegmentPosData posData;
 
     /**
      * 分词字典
@@ -47,13 +54,22 @@ public class SegmentContext implements ISegmentContext {
     }
 
     @Override
-    public ISegmentWordType wordType() {
-        return wordType;
+    public ISegmentPosTagging posTagging() {
+        return posTagging;
+    }
+
+    public SegmentContext posTagging(ISegmentPosTagging posTagging) {
+        this.posTagging = posTagging;
+        return this;
     }
 
     @Override
-    public SegmentContext wordType(ISegmentWordType wordType) {
-        this.wordType = wordType;
+    public ISegmentPosData posData() {
+        return posData;
+    }
+
+    public SegmentContext posData(ISegmentPosData posData) {
+        this.posData = posData;
         return this;
     }
 

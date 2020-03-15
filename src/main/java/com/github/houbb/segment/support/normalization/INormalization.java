@@ -1,6 +1,6 @@
 package com.github.houbb.segment.support.normalization;
 
-import com.github.houbb.segment.model.WordEntry;
+import com.github.houbb.segment.model.SegmentWordEntry;
 
 import java.util.List;
 
@@ -17,6 +17,6 @@ public interface INormalization {
      * @return 标准化的结果
      * @since 0.0.7
      */
-    NormalizationResult normalization(final List<WordEntry> wordEntries);
+    NormalizationResult normalization(final List<SegmentWordEntry> wordEntries);
 
 }

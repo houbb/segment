@@ -6,8 +6,7 @@ import com.github.houbb.segment.api.ISegment;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
-import com.github.houbb.segment.support.type.ISegmentWordType;
-import com.github.houbb.segment.support.type.impl.NoneSegmentWordType;
+import com.github.houbb.segment.support.tagging.pos.tag.ISegmentPosTagging;
 
 import java.util.List;
 
@@ -34,7 +33,8 @@ public class Segment implements ISegment {
         segmentList = segment.segment(string, context);
 
         // 结果的词性处理
-        fillWordType(segmentList, context);
+        final ISegmentPosTagging posTagging = context.posTagging();
+        posTagging.posTagging(segmentList, context);
 
         return segmentList;
     }
@@ -54,28 +54,6 @@ public class Segment implements ISegment {
         }
 
         return Segments.precise();
-    }
-
-    /**
-     * 填充结果信息
-     *
-     * @param selectList 分词结果列表
-     * @param context    上下文
-     * @since 0.0.2
-     */
-    private void fillWordType(List<ISegmentResult> selectList, final ISegmentContext context) {
-        final ISegmentWordType wordType = context.wordType();
-
-        // 如果是 none，直接返回
-        if(NoneSegmentWordType.class.equals(wordType.getClass())) {
-            return;
-        }
-
-        for (ISegmentResult segmentResult : selectList) {
-            String word = segmentResult.word();
-            String type = wordType.getWordType(word, context);
-            segmentResult.type(type);
-        }
     }
 
 }

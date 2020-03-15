@@ -2,14 +2,11 @@ package com.github.houbb.segment.support.data.impl;
 
 import com.github.houbb.heaven.annotation.ThreadSafe;
 import com.github.houbb.heaven.support.instance.impl.Instances;
-import com.github.houbb.heaven.util.io.StreamUtil;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.heaven.util.util.CollectionUtil;
-import com.github.houbb.heaven.util.util.MapUtil;
 import com.github.houbb.segment.constant.SegmentConst;
-import com.github.houbb.segment.model.WordEntry;
-import com.github.houbb.segment.model.WordProperty;
+import com.github.houbb.segment.model.SegmentWordEntry;
 import com.github.houbb.segment.support.data.ISegmentData;
 import com.github.houbb.segment.support.normalization.INormalization;
 import com.github.houbb.segment.support.normalization.NormalizationResult;
@@ -40,14 +37,7 @@ public abstract class AbstractSegmentData implements ISegmentData {
      * @return 词列表
      * @since 0.0.3
      */
-    protected abstract List<WordEntry> getStaticVolatileWordEntryList();
-
-    /**
-     * 获取静态词属性 map
-     * @return 词属性 map
-     * @since 0.0.3
-     */
-    protected abstract Map<String, WordProperty> getStaticVolatileWordTypeMap();
+    protected abstract List<SegmentWordEntry> getStaticVolatileWordEntryList();
 
     /**
      * 获取行内容
@@ -65,8 +55,8 @@ public abstract class AbstractSegmentData implements ISegmentData {
      * @return 词信息列表
      * @since 0.0.1
      */
-    private List<WordEntry> getWordEntryList() {
-        List<WordEntry> wordEntries = getStaticVolatileWordEntryList();
+    private List<SegmentWordEntry> getWordEntryList() {
+        List<SegmentWordEntry> wordEntries = getStaticVolatileWordEntryList();
         if(CollectionUtil.isNotEmpty(wordEntries)) {
             return wordEntries;
         }
@@ -84,23 +74,6 @@ public abstract class AbstractSegmentData implements ISegmentData {
     @Override
     public Set<String> getWordSet() {
         return getFreqMap().keySet();
-    }
-
-    @Override
-    public Map<String, WordProperty> getWordTypeMap() {
-        Map<String, WordProperty> wordMap = getStaticVolatileWordTypeMap();
-        if(MapUtil.isNotEmpty(wordMap)) {
-            return wordMap;
-        }
-
-        // 首先加载一次字典列表
-        synchronized (AbstractSegmentData.class) {
-            if(MapUtil.isEmpty(wordMap)) {
-                initWordTypeMap(wordMap);
-            }
-        }
-
-        return wordMap;
     }
 
     @Override
@@ -160,7 +133,7 @@ public abstract class AbstractSegmentData implements ISegmentData {
     private void initNormalizationResult() {
         final long startTime = System.currentTimeMillis();
 
-        List<WordEntry> wordEntries = getWordEntryList();
+        List<SegmentWordEntry> wordEntries = getWordEntryList();
         INormalization normalization = Instances.singleton(LogNormalization.class);
         normalizationResult = normalization.normalization(wordEntries);
 
@@ -169,26 +142,6 @@ public abstract class AbstractSegmentData implements ISegmentData {
 
         final long costTime = System.currentTimeMillis()-startTime;
         System.out.println("Normalization init finished, cost time : " + costTime + " ms!");
-    }
-
-    /**
-     * 初始化词性 map
-     * @param wordMap 单词属性
-     * @since 0.0.3
-     */
-    private void initWordTypeMap(final Map<String, WordProperty> wordMap) {
-        final long startTime = System.currentTimeMillis();
-
-        List<WordEntry> wordEntryList = getWordEntryList();
-
-        for(WordEntry wordEntry : wordEntryList) {
-            // 这里是为了后期的词频处理
-            WordProperty property = WordProperty.of(wordEntry.count(), wordEntry.type());
-            wordMap.put(wordEntry.word(), property);
-        }
-
-        final long costTime = System.currentTimeMillis()-startTime;
-        System.out.println("[Segment] dict init word-type-map finish, cost time : " + costTime + " ms!");
     }
 
     @Override
@@ -205,10 +158,10 @@ public abstract class AbstractSegmentData implements ISegmentData {
      * （2）允许 2-3 列的内容为空，用默认值填充
      * （3）允许整体文件为空
      *
-     * @param wordEntryList 单词明细列表
+     * @param segmentWordEntryList 单词明细列表
      * @since 0.0.3
      */
-    private void initWordEntryList(final List<WordEntry> wordEntryList) {
+    private void initWordEntryList(final List<SegmentWordEntry> segmentWordEntryList) {
         final long startTime = System.currentTimeMillis();
         final List<String> allLines = this.readDictLines();
 
@@ -230,10 +183,10 @@ public abstract class AbstractSegmentData implements ISegmentData {
                 type = splitList.get(2);
             }
 
-            WordEntry wordEntry = WordEntry.newInstance().word(word)
+            SegmentWordEntry segmentWordEntry = SegmentWordEntry.newInstance().word(word)
                     .count(count)
                     .type(type);
-            wordEntryList.add(wordEntry);
+            segmentWordEntryList.add(segmentWordEntry);
         }
 
         final long costTime = System.currentTimeMillis()-startTime;

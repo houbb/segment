@@ -30,22 +30,11 @@ public class SegmentResult implements ISegmentResult {
      */
     private int endIndex;
 
-    @Override
-    public String type() {
-        return type;
-    }
-
-    @Override
-    public SegmentResult type(String type) {
-        this.type = type;
-        return this;
-    }
-
     /**
      * 词性
-     * @since 0.0.2
+     * @since 0.1.4
      */
-    private String type;
+    private String pos;
 
     /**
      * 新建对象实例
@@ -89,6 +78,17 @@ public class SegmentResult implements ISegmentResult {
         return this;
     }
 
+    @Override
+    public String pos() {
+        return pos;
+    }
+
+    @Override
+    public SegmentResult pos(String pos) {
+        this.pos = pos;
+        return this;
+    }
+
     /**
      * 对于特定句子的分词而言，开始+结束就可以唯一确定对应的信息
      * @param o 元素
@@ -115,11 +115,11 @@ public class SegmentResult implements ISegmentResult {
 
     @Override
     public String toString() {
-        if(StringUtil.isEmpty(type)) {
+        if(StringUtil.isEmpty(pos)) {
             return word+"["+startIndex+","+endIndex+")";
         }
 
-        return word+"["+startIndex+","+endIndex+")/"+type;
+        return word+"["+startIndex+","+endIndex+")/"+pos;
     }
 
 }

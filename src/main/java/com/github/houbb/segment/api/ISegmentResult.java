@@ -57,7 +57,7 @@ public interface ISegmentResult {
      * @return 词性
      * @since 0.0.2
      */
-    String type();
+    String pos();
 
     /**
      * 设置词性
@@ -65,6 +65,6 @@ public interface ISegmentResult {
      * @return this
      * @since 0.0.2
      */
-    ISegmentResult type(final String type);
+    ISegmentResult pos(final String type);
 
 }

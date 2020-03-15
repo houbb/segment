@@ -47,9 +47,9 @@
 
 - 允许用户自定义词库
 
-### v-0.1.3 最新变更
+### v-0.1.4 最新变更
 
-- 支持混合模式词库
+- 支持词性标注的简单实现
 
 # 快速入门
 
@@ -65,7 +65,7 @@ maven 3.x+
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>0.1.3</version>
+    <version>0.1.4</version>
 </dependency>
 ```
 
@@ -253,6 +253,24 @@ List<String> defaultWords = SegmentBs.newInstance()
                 SegmentFormats.chineseSimple()))
         .segment(text, SegmentResultHandlers.word());
 Assert.assertEquals("[阿Ｑ, ，, 這是, 一個, 伸手不見五指, 的, 黑夜]", defaultWords.toString());
+```
+
+# 词性标注
+
+## 说明
+
+目前支持最简单版本的词性标注，暂定为 alpha 版本，后续引入基于 HMM 实现的词性标注。
+
+## 使用例子
+
+```java
+final String string = "这是一个伸手不见五指的黑夜。";
+
+List<ISegmentResult> resultList = SegmentBs.newInstance()
+        .posTagging(SegmentPosTaggings.simple())
+        .segment(string);
+
+Assert.assertEquals("[这是[0,2)/un, 一个[2,4)/mq, 伸手不见五指[4,10)/i, 的[10,11)/ude1, 黑夜[11,13)/n, 。[13,14)/w]", resultList.toString());
 ```
 
 # Benchmark 性能对比

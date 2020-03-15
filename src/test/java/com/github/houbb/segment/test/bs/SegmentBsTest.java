@@ -2,7 +2,7 @@ package com.github.houbb.segment.test.bs;
 
 import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.bs.SegmentBs;
-import com.github.houbb.segment.support.type.impl.WordTypes;
+import com.github.houbb.segment.support.tagging.pos.tag.impl.SegmentPosTaggings;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,18 +29,20 @@ public class SegmentBsTest {
 
     /**
      * 分词类型测试
-     * @since 0.0.2
+     *
+     * TODO: 词性拓展
+     * @since 0.1.4
      */
     @Test
-    public void segmentWordTypeTest() {
-        final String string = "我爱学习";
+    public void segmentPosTaggingTest() {
+        final String string = "这是一个伸手不见五指的黑夜。";
 
         List<ISegmentResult> resultList = SegmentBs
                 .newInstance()
-                .segmentWordType(WordTypes.first())
+                .posTagging(SegmentPosTaggings.simple())
                 .segment(string);
 
-        Assert.assertEquals("[我爱[0,2)/un, 学习[2,4)/v]",
+        Assert.assertEquals("[这是[0,2)/un, 一个[2,4)/mq, 伸手不见五指[4,10)/i, 的[10,11)/ude1, 黑夜[11,13)/n, 。[13,14)/w]",
                 resultList.toString());
     }
 

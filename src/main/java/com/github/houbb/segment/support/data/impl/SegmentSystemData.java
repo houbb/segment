@@ -4,11 +4,9 @@ import com.github.houbb.heaven.annotation.ThreadSafe;
 import com.github.houbb.heaven.util.guava.Guavas;
 import com.github.houbb.heaven.util.io.StreamUtil;
 import com.github.houbb.segment.constant.SegmentConst;
-import com.github.houbb.segment.model.WordEntry;
-import com.github.houbb.segment.model.WordProperty;
+import com.github.houbb.segment.model.SegmentWordEntry;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 分词数据实现
@@ -24,22 +22,11 @@ public class SegmentSystemData extends AbstractSegmentData {
      *
      * @since 0.0.3
      */
-    private static volatile List<WordEntry> wordEntryList = Guavas.newArrayList();
-
-    /**
-     * 词对应的 map
-     * @since 0.0.2
-     */
-    private static volatile Map<String, WordProperty> wordMap = Guavas.newHashMap();
+    private static volatile List<SegmentWordEntry> segmentWordEntryList = Guavas.newArrayList();
 
     @Override
-    protected List<WordEntry> getStaticVolatileWordEntryList() {
-        return wordEntryList;
-    }
-
-    @Override
-    protected Map<String, WordProperty> getStaticVolatileWordTypeMap() {
-        return wordMap;
+    protected List<SegmentWordEntry> getStaticVolatileWordEntryList() {
+        return segmentWordEntryList;
     }
 
     @Override

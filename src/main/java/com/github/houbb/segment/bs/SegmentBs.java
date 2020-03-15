@@ -14,8 +14,10 @@ import com.github.houbb.segment.support.segment.mode.ISegmentMode;
 import com.github.houbb.segment.support.segment.mode.impl.SegmentModes;
 import com.github.houbb.segment.support.segment.result.ISegmentResultHandler;
 import com.github.houbb.segment.support.segment.result.impl.SegmentResultHandlers;
-import com.github.houbb.segment.support.type.ISegmentWordType;
-import com.github.houbb.segment.support.type.impl.WordTypes;
+import com.github.houbb.segment.support.tagging.pos.data.ISegmentPosData;
+import com.github.houbb.segment.support.tagging.pos.data.impl.SegmentPosDatas;
+import com.github.houbb.segment.support.tagging.pos.tag.ISegmentPosTagging;
+import com.github.houbb.segment.support.tagging.pos.tag.impl.SegmentPosTaggings;
 
 import java.util.List;
 
@@ -50,16 +52,22 @@ public final class SegmentBs {
     private ISegmentMode mode = SegmentModes.search();
 
     /**
-     * 词性信息实现
-     * @since 0.0.7
-     */
-    private ISegmentWordType wordType = WordTypes.none();
-
-    /**
      * 格式化信息
      * @since 0.0.9
      */
     private ISegmentFormat format = SegmentFormats.defaults();
+
+    /**
+     * 词性信息实现
+     * @since 0.1.4
+     */
+    private ISegmentPosTagging posTagging = SegmentPosTaggings.none();
+
+    /**
+     * 词性数据实现
+     * @since 0.1.4
+     */
+    private ISegmentPosData posData = SegmentPosDatas.mixed();
 
     /**
      * 引导类
@@ -76,17 +84,7 @@ public final class SegmentBs {
         return new SegmentBs();
     }
 
-    /**
-     * 指定启用词性
-     * @param segmentWordType 指定词性实现方式
-     * @return this
-     * @since 0.0.7
-     */
-    public SegmentBs segmentWordType(final ISegmentWordType segmentWordType) {
-        ArgUtil.notNull(segmentWordType, "segmentWordType");
-        this.wordType = segmentWordType;
-        return this;
-    }
+
 
     /**
      * 指定分词的数据实现
@@ -112,9 +110,36 @@ public final class SegmentBs {
         return this;
     }
 
+    /**
+     * 设置数据格式化
+     * @param segmentFormat 格式化
+     * @return this
+     */
     public SegmentBs segmentFormat(final ISegmentFormat segmentFormat) {
         ArgUtil.notNull(segmentFormat, "segmentFormat");
         this.format = segmentFormat;
+        return this;
+    }
+
+    /**
+     * 设置词性标注实现
+     * @param posTagging 实现
+     * @return this
+     * @since 0.1.4
+     */
+    public SegmentBs posTagging(ISegmentPosTagging posTagging) {
+        this.posTagging = posTagging;
+        return this;
+    }
+
+    /**
+     * 设置词性标注数据
+     * @param posData 实现
+     * @return this
+     * @since 0.1.4
+     */
+    public SegmentBs posData(ISegmentPosData posData) {
+        this.posData = posData;
         return this;
     }
 
@@ -149,10 +174,12 @@ public final class SegmentBs {
      */
     private ISegmentContext buildContext() {
         return SegmentContext.newInstance()
-                .wordType(wordType)
                 .data(data)
                 .mode(mode)
-                .format(format);
+                .format(format)
+                .posTagging(posTagging)
+                .posData(posData)
+                ;
     }
 
 }

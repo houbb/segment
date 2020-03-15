@@ -3,7 +3,7 @@ package com.github.houbb.segment.support.normalization.impl;
 import com.github.houbb.heaven.annotation.ThreadSafe;
 import com.github.houbb.heaven.util.guava.Guavas;
 import com.github.houbb.heaven.util.util.CollectionUtil;
-import com.github.houbb.segment.model.WordEntry;
+import com.github.houbb.segment.model.SegmentWordEntry;
 import com.github.houbb.segment.support.normalization.INormalization;
 import com.github.houbb.segment.support.normalization.NormalizationResult;
 
@@ -28,7 +28,7 @@ public class LogNormalization implements INormalization {
      * @since 0.0.7
      */
     @Override
-    public NormalizationResult normalization(final List<WordEntry> wordEntries) {
+    public NormalizationResult normalization(final List<SegmentWordEntry> wordEntries) {
         // fail-fast
         NormalizationResult result = new NormalizationResult();
         if(CollectionUtil.isEmpty(wordEntries)) {
@@ -42,8 +42,8 @@ public class LogNormalization implements INormalization {
         double maxFreq = Double.MIN_VALUE;
 
         // 遍历计算
-        for(WordEntry wordEntry : wordEntries) {
-            long count = wordEntry.count();
+        for(SegmentWordEntry segmentWordEntry : wordEntries) {
+            long count = segmentWordEntry.count();
             if(minCount > count) {
                 minCount = count;
             }
@@ -54,9 +54,9 @@ public class LogNormalization implements INormalization {
 
         // 计算频率
         Map<String, Double> freqMap = Guavas.newHashMap(wordEntries.size());
-        for(WordEntry wordEntry : wordEntries) {
+        for(SegmentWordEntry segmentWordEntry : wordEntries) {
             // 标准化 [0,1]
-            double freq = Math.log(wordEntry.count()*1.0)/Math.log(maxCount*1.0);
+            double freq = Math.log(segmentWordEntry.count()*1.0)/Math.log(maxCount*1.0);
             if(minFreq > freq) {
                 minFreq = freq;
             }
@@ -64,7 +64,7 @@ public class LogNormalization implements INormalization {
                 maxFreq = freq;
             }
 
-            freqMap.put(wordEntry.word(), freq);
+            freqMap.put(segmentWordEntry.word(), freq);
         }
 
         return result.minCount(minCount)
