@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 分词工具类测试
@@ -86,6 +87,19 @@ public class SegmentHelperTest {
         System.out.println(segmentResults.toString());
 
         Assert.assertEquals("[iT's[0,4),  [4,5), time[5,9),  [9,10), to[10,12),  [12,13), sleep[13,18), .[18,19)]", segmentResults.toString());
+    }
+
+    /**
+     * 单词个数统计处理
+     * @since 0.1.5
+     */
+    @Test
+    public void wordCountTest() {
+        final String string = "这是一个伸手不见五指的黑夜。我叫孙悟空，我爱北京，我爱学习。";
+
+        Map<String, Integer> wordCount = SegmentHelper.segment(string, SegmentResultHandlers.wordCount());
+        Assert.assertEquals(2, wordCount.get("我爱").intValue());
+        Assert.assertEquals(1, wordCount.get("黑夜").intValue());
     }
 
 }

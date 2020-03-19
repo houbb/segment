@@ -15,7 +15,7 @@ import java.util.List;
  * @since 0.0.4
  */
 @ThreadSafe
-public class SegmentResultWordHandler implements ISegmentResultHandler<List<String>> {
+public class SegmentResultHandlerWord implements ISegmentResultHandler<List<String>> {
 
     @Override
     public List<String> handler(List<ISegmentResult> resultList) {

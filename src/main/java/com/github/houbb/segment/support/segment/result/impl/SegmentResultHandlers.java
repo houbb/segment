@@ -5,6 +5,7 @@ import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.support.segment.result.ISegmentResultHandler;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 分词结果处理工具类
@@ -31,7 +32,16 @@ public final class SegmentResultHandlers {
      * @since 0.0.4
      */
     public static ISegmentResultHandler<List<String>> word() {
-        return Instances.singleton(SegmentResultWordHandler.class);
+        return Instances.singleton(SegmentResultHandlerWord.class);
+    }
+
+    /**
+     * 相同的词进行归类
+     * @return 处理类
+     * @since 0.1.5
+     */
+    public static ISegmentResultHandler<Map<String, Integer>> wordCount() {
+        return Instances.singleton(SegmentResultHandlerWordCount.class);
     }
 
 }

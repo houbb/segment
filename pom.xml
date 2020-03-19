@@ -6,7 +6,7 @@
 
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>0.1.5-SNAPSHOT</version>
+    <version>0.1.5</version>
 
     <properties>
         <!--============================== All PLUGINS START ==============================-->
@@ -28,7 +28,7 @@
 
         <!--============================== JAR START ==============================-->
         <!--inter-->
-        <heaven.version>0.1.92</heaven.version>
+        <heaven.version>0.1.94</heaven.version>
 
         <!--other-->
         <junit.version>4.12</junit.version>
