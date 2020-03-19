@@ -47,9 +47,11 @@
 
 - 允许用户自定义词库
 
-### v-0.1.4 最新变更
+- 简单的词性标注实现
 
-- 支持词性标注的简单实现
+### v-0.1.5 最新变更
+
+- 新增 `SegmentResultHandlers.wordCount()` 结果处理
 
 # 快速入门
 
@@ -65,7 +67,7 @@ maven 3.x+
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>0.1.4</version>
+    <version>0.1.5</version>
 </dependency>
 ```
 
