@@ -49,9 +49,9 @@
 
 - 简单的词性标注实现
 
-### v-0.1.5 最新变更
+### v-0.1.6 最新变更
 
-- 新增 `SegmentResultHandlers.wordCount()` 结果处理
+- 新增 `ISegmentBs` 接口类
 
 # 快速入门
 
@@ -67,7 +67,7 @@ maven 3.x+
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>0.1.5</version>
+    <version>0.1.6</version>
 </dependency>
 ```
 

@@ -27,7 +27,7 @@ import java.util.List;
  * @author binbin.hou
  * @since 0.0.1
  */
-public final class SegmentBs {
+public final class SegmentBs implements ISegmentBs {
 
     /**
      * 分词实现
@@ -149,6 +149,7 @@ public final class SegmentBs {
      * @return 结果
      * @since 0.0.1
      */
+    @Override
     public List<ISegmentResult> segment(final String string) {
         return segment(string, SegmentResultHandlers.common());
     }
