@@ -13,7 +13,7 @@ import java.util.List;
  * <p> project: segment-SegmentDefineData </p>
  * <p> create on 2020/1/18 20:05 </p>
  *
- * @author Administrator
+ * @author binbin.hou
  * @since 0.0.3
  */
 @ThreadSafe

@@ -6,7 +6,7 @@
 
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>0.1.7-SNAPSHOT</version>
+    <version>0.1.7</version>
 
     <properties>
         <!--============================== All PLUGINS START ==============================-->
@@ -28,7 +28,8 @@
 
         <!--============================== JAR START ==============================-->
         <!--inter-->
-        <heaven.version>0.1.94</heaven.version>
+        <heaven.version>0.1.101</heaven.version>
+        <segment-data-pos.version>0.0.1</segment-data-pos.version>
 
         <!--other-->
         <junit.version>4.12</junit.version>
@@ -40,6 +41,11 @@
             <groupId>com.github.houbb</groupId>
             <artifactId>heaven</artifactId>
             <version>${heaven.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>segment-data-pos-core</artifactId>
+            <version>${segment-data-pos.version}</version>
         </dependency>
 
         <!--============================== OTHER ==============================-->

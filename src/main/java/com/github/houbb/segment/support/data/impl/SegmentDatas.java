@@ -8,7 +8,7 @@ import com.github.houbb.segment.support.data.ISegmentData;
  * <p> project: segment-SegmentDefineData </p>
  * <p> create on 2020/1/18 20:05 </p>
  *
- * @author Administrator
+ * @author binbin.hou
  * @since 0.0.3
  */
 public final class SegmentDatas {

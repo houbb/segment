@@ -4,6 +4,8 @@ import com.github.houbb.heaven.util.common.ArgUtil;
 import com.github.houbb.segment.api.ISegment;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
+import com.github.houbb.segment.data.pos.api.ISegmentPosData;
+import com.github.houbb.segment.data.pos.core.data.SegmentPosDatas;
 import com.github.houbb.segment.support.data.ISegmentData;
 import com.github.houbb.segment.support.data.impl.SegmentDatas;
 import com.github.houbb.segment.support.format.ISegmentFormat;
@@ -14,8 +16,6 @@ import com.github.houbb.segment.support.segment.mode.ISegmentMode;
 import com.github.houbb.segment.support.segment.mode.impl.SegmentModes;
 import com.github.houbb.segment.support.segment.result.ISegmentResultHandler;
 import com.github.houbb.segment.support.segment.result.impl.SegmentResultHandlers;
-import com.github.houbb.segment.support.tagging.pos.data.ISegmentPosData;
-import com.github.houbb.segment.support.tagging.pos.data.impl.SegmentPosDatas;
 import com.github.houbb.segment.support.tagging.pos.tag.ISegmentPosTagging;
 import com.github.houbb.segment.support.tagging.pos.tag.impl.SegmentPosTaggings;
 

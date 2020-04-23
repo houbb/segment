@@ -1,9 +1,9 @@
 package com.github.houbb.segment.api;
 
+import com.github.houbb.segment.data.pos.api.ISegmentPosData;
 import com.github.houbb.segment.support.data.ISegmentData;
 import com.github.houbb.segment.support.format.ISegmentFormat;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
-import com.github.houbb.segment.support.tagging.pos.data.ISegmentPosData;
 import com.github.houbb.segment.support.tagging.pos.tag.ISegmentPosTagging;
 
 /**

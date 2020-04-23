@@ -10,7 +10,7 @@ import com.github.houbb.segment.support.segment.mode.impl.precise.SearchSegmentM
  * <p> project: segment-SegmentModes </p>
  * <p> create on 2020/1/19 23:37 </p>
  *
- * @author Administrator
+ * @author binbin.hou
  * @since 0.0.5
  */
 public final class SegmentModes {
