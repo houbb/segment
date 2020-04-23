@@ -5,7 +5,7 @@ import com.github.houbb.heaven.util.guava.Guavas;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.constant.SegmentConst;
-import com.github.houbb.segment.support.data.ISegmentData;
+import com.github.houbb.segment.data.phrase.api.ISegmentPhraseData;
 import com.github.houbb.segment.support.trie.ISegmentTrieTree;
 
 import java.util.HashMap;
@@ -34,7 +34,7 @@ public class SegmentTrieTree implements ISegmentTrieTree {
         }
 
         synchronized(SegmentTrieTree.class) {
-            final ISegmentData segmentData = context.data();
+            final ISegmentPhraseData segmentData = context.data();
             initInnerWordMap(segmentData);
         }
 
@@ -47,12 +47,12 @@ public class SegmentTrieTree implements ISegmentTrieTree {
      * @since 0.0.1
      */
     @SuppressWarnings("unchecked")
-    private void initInnerWordMap(final ISegmentData segmentData) {
+    private void initInnerWordMap(final ISegmentPhraseData segmentData) {
         // 创建 map
         innerWordMap = Guavas.newHashMap();
 
         // 加载字典
-        Set<String> wordSet = segmentData.getWordSet();
+        Set<String> wordSet = segmentData.getPhraseSet();
 
         for (String key : wordSet) {
             // 用来按照相应的格式保存敏感词库数据

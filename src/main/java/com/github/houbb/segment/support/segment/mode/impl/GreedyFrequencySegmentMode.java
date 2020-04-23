@@ -2,7 +2,7 @@ package com.github.houbb.segment.support.segment.mode.impl;
 
 import com.github.houbb.heaven.annotation.ThreadSafe;
 import com.github.houbb.segment.api.ISegmentResult;
-import com.github.houbb.segment.support.data.ISegmentData;
+import com.github.houbb.segment.data.phrase.api.ISegmentPhraseData;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
 import com.github.houbb.segment.support.segment.mode.SegmentModeContext;
 
@@ -22,7 +22,7 @@ public class GreedyFrequencySegmentMode extends AbstractSegmentMode {
 
     @Override
     protected List<ISegmentResult> doSelect(final SegmentModeContext context) {
-        final ISegmentData segmentData = context.segmentContext().data();
+        final ISegmentPhraseData segmentData = context.segmentContext().data();
 
         ISegmentMode allSegmentMode = SegmentModes.index();
         final List<ISegmentResult> resultList = allSegmentMode.select(context);

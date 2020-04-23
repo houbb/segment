@@ -6,7 +6,7 @@ import com.github.houbb.heaven.util.guava.Guavas;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
-import com.github.houbb.segment.support.data.ISegmentData;
+import com.github.houbb.segment.data.phrase.api.ISegmentPhraseData;
 import com.github.houbb.segment.support.segment.impl.SegmentResult;
 import com.github.houbb.segment.support.segment.mode.SegmentModeContext;
 import com.github.houbb.segment.support.segment.strategy.ISegmentStrategy;
@@ -145,7 +145,7 @@ public class DictSegmentMode extends AbstractPreciseSegmentMode {
      */
     protected boolean dictContainsWord(final String bufferWord,
                                        final ISegmentContext segmentContext) {
-        final ISegmentData segmentData = segmentContext.data();
+        final ISegmentPhraseData segmentData = segmentContext.data();
         return segmentData.contains(bufferWord);
     }
 
@@ -213,7 +213,7 @@ public class DictSegmentMode extends AbstractPreciseSegmentMode {
      */
     private Map<Integer, Pair<Integer, Double>> calcRouteMap(final Map<Integer, List<ISegmentResult>> segmentMap, final ISegmentContext context) {
         // 基本信息
-        final ISegmentData segmentData = context.data();
+        final ISegmentPhraseData segmentData = context.data();
         final double minFreq = segmentData.getMinFreq();
 
         // 初始化

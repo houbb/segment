@@ -6,7 +6,7 @@
 
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>0.1.7</version>
+    <version>0.1.8</version>
 
     <properties>
         <!--============================== All PLUGINS START ==============================-->
@@ -30,6 +30,7 @@
         <!--inter-->
         <heaven.version>0.1.101</heaven.version>
         <segment-data-pos.version>0.0.1</segment-data-pos.version>
+        <segment-data-phrase.version>0.0.1</segment-data-phrase.version>
 
         <!--other-->
         <junit.version>4.12</junit.version>
@@ -46,6 +47,11 @@
             <groupId>com.github.houbb</groupId>
             <artifactId>segment-data-pos-core</artifactId>
             <version>${segment-data-pos.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>segment-data-phrase-core</artifactId>
+            <version>${segment-data-phrase.version}</version>
         </dependency>
 
         <!--============================== OTHER ==============================-->

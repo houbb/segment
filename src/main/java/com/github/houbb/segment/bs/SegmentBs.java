@@ -4,10 +4,10 @@ import com.github.houbb.heaven.util.common.ArgUtil;
 import com.github.houbb.segment.api.ISegment;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
+import com.github.houbb.segment.data.phrase.api.ISegmentPhraseData;
+import com.github.houbb.segment.data.phrase.core.data.SegmentPhraseDatas;
 import com.github.houbb.segment.data.pos.api.ISegmentPosData;
 import com.github.houbb.segment.data.pos.core.data.SegmentPosDatas;
-import com.github.houbb.segment.support.data.ISegmentData;
-import com.github.houbb.segment.support.data.impl.SegmentDatas;
 import com.github.houbb.segment.support.format.ISegmentFormat;
 import com.github.houbb.segment.support.format.impl.SegmentFormats;
 import com.github.houbb.segment.support.segment.impl.SegmentContext;
@@ -40,7 +40,7 @@ public final class SegmentBs implements ISegmentBs {
      * 1. 默认使用混合模式的字典(v1.0.3)
      * @since 0.0.3
      */
-    private ISegmentData data = SegmentDatas.mixed();
+    private ISegmentPhraseData data = SegmentPhraseDatas.mixed();
 
     /**
      * 分词模式
@@ -92,7 +92,7 @@ public final class SegmentBs implements ISegmentBs {
      * @return this
      * @since 0.0.3
      */
-    public SegmentBs segmentData(final ISegmentData segmentData) {
+    public SegmentBs segmentData(final ISegmentPhraseData segmentData) {
         ArgUtil.notNull(segmentData, "segmentData");
         this.data = segmentData;
         return this;

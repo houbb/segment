@@ -1,7 +1,7 @@
 package com.github.houbb.segment.api;
 
+import com.github.houbb.segment.data.phrase.api.ISegmentPhraseData;
 import com.github.houbb.segment.data.pos.api.ISegmentPosData;
-import com.github.houbb.segment.support.data.ISegmentData;
 import com.github.houbb.segment.support.format.ISegmentFormat;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
 import com.github.houbb.segment.support.tagging.pos.tag.ISegmentPosTagging;
@@ -43,7 +43,7 @@ public interface ISegmentContext {
      * @return 分词字典数据
      * @since 0.0.3
      */
-    ISegmentData data();
+    ISegmentPhraseData data();
 
     /**
      * 获取分词模式

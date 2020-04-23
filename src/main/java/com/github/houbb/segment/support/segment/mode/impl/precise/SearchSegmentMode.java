@@ -1,19 +1,12 @@
 package com.github.houbb.segment.support.segment.mode.impl.precise;
 
 import com.github.houbb.heaven.annotation.ThreadSafe;
-import com.github.houbb.heaven.support.tuple.impl.Pair;
-import com.github.houbb.heaven.util.guava.Guavas;
-import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
-import com.github.houbb.segment.support.data.ISegmentData;
-import com.github.houbb.segment.support.segment.impl.SegmentResult;
-import com.github.houbb.segment.support.segment.mode.SegmentModeContext;
 import com.github.houbb.segment.support.segment.strategy.ISegmentStrategy;
 import com.github.houbb.segment.support.segment.strategy.impl.SegmentStrategies;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 动态规划-最大概率匹配

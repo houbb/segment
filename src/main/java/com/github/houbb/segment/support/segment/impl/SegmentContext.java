@@ -1,8 +1,8 @@
 package com.github.houbb.segment.support.segment.impl;
 
 import com.github.houbb.segment.api.ISegmentContext;
+import com.github.houbb.segment.data.phrase.api.ISegmentPhraseData;
 import com.github.houbb.segment.data.pos.api.ISegmentPosData;
-import com.github.houbb.segment.support.data.ISegmentData;
 import com.github.houbb.segment.support.format.ISegmentFormat;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
 import com.github.houbb.segment.support.tagging.pos.tag.ISegmentPosTagging;
@@ -30,7 +30,7 @@ public class SegmentContext implements ISegmentContext {
      * 分词字典
      * @since 0.0.3
      */
-    private ISegmentData data;
+    private ISegmentPhraseData data;
 
     /**
      * 分词模式
@@ -74,11 +74,11 @@ public class SegmentContext implements ISegmentContext {
     }
 
     @Override
-    public ISegmentData data() {
+    public ISegmentPhraseData data() {
         return data;
     }
 
-    public SegmentContext data(ISegmentData data) {
+    public SegmentContext data(ISegmentPhraseData data) {
         this.data = data;
         return this;
     }
