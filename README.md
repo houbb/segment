@@ -257,6 +257,34 @@ List<String> defaultWords = SegmentBs.newInstance()
 Assert.assertEquals("[阿Ｑ, ，, 這是, 一個, 伸手不見五指, 的, 黑夜]", defaultWords.toString());
 ```
 
+# 自定义词库
+
+为了适应更多的应用场景，segment 支持自定义词典。
+
+## 定义方式
+
+`resources` 或者项目根目录新建文件 `segment_phrase_dict_define.txt`
+
+要求编码：UTF-8
+
+内容格式如下：
+
+```
+彩霞 78 n
+```
+
+第一个词是我们自定义的词，必填。
+
+第二个为这个词出现的词频，选填，默认为 3。
+
+第三个为词性，选填，默认为 un。（未知）
+
+三者用英文空格（` `）隔开。
+
+## 优先级
+
+用户自定义的词优先级更高，会覆盖系统原有的相同词。
+
 # 词性标注
 
 ## 说明
