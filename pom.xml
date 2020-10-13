@@ -33,7 +33,7 @@
         <segment-data-phrase.version>0.0.1</segment-data-phrase.version>
 
         <!--other-->
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
     </properties>
 
     <dependencies>
