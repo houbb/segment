@@ -348,3 +348,19 @@ Assert.assertEquals("[这是[0,2)/un, 一个[2,4)/mq, 伸手不见五指[4,10)/i
 # 创作感谢
 
 感谢 [jieba](https://github.com/fxsjy/jieba) 分词提供的词库，以及 [jieba-analysis](https://github.com/huaban/jieba-analysis) 的相关实现。
+
+# NLP 开源矩阵
+
+[pinyin 汉字转拼音](https://github.com/houbb/pinyin)
+
+[pinyin2hanzi 拼音转汉字](https://github.com/houbb/pinyin2hanzi)
+
+[segment 高性能中文分词](https://github.com/houbb/segment)
+
+[opencc4j 中文繁简体转换](https://github.com/houbb/opencc4j)
+
+[nlp-hanzi-similar 汉字相似度](https://github.com/houbb/nlp-hanzi-similar)
+
+[word-checker 拼写检测](https://github.com/houbb/word-checker)
+
+[sensitive-word 敏感词](https://github.com/houbb/sensitive-word)
