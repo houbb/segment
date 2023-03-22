@@ -3,6 +3,8 @@ package com.github.houbb.segment.support.trie.impl;
 import com.github.houbb.heaven.annotation.ThreadSafe;
 import com.github.houbb.heaven.util.guava.Guavas;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
+import com.github.houbb.heaven.util.util.CollectionUtil;
+import com.github.houbb.heaven.util.util.MapUtil;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.constant.SegmentConst;
 import com.github.houbb.segment.data.phrase.api.ISegmentPhraseData;
@@ -18,27 +20,36 @@ import java.util.Set;
  * @since 0.0.1
  */
 @ThreadSafe
-public class SegmentTrieTree implements ISegmentTrieTree {
+public class SegmentTrieTree extends AbstractSegmentTrieTree {
 
     /**
      * 内部单词 map
      *
      * @since 0.0.1
      */
-    private static volatile Map innerWordMap;
+    private static volatile Map innerWordMap = Guavas.newHashMap();
 
     @Override
     public Map getTrieTree(final ISegmentContext context) {
-        if(ObjectUtil.isNotNull(innerWordMap)) {
+        if(ObjectUtil.isNotEmpty(innerWordMap)) {
             return innerWordMap;
         }
 
         synchronized(SegmentTrieTree.class) {
-            final ISegmentPhraseData segmentData = context.data();
-            initInnerWordMap(segmentData);
+            if(MapUtil.isEmpty(innerWordMap)) {
+                final ISegmentPhraseData segmentData = context.data();
+                initInnerWordMap(segmentData);
+            }
         }
 
         return innerWordMap;
+    }
+
+    @Override
+    public void free() {
+        synchronized (innerWordMap) {
+            innerWordMap.clear();
+        }
     }
 
     /**
@@ -48,9 +59,6 @@ public class SegmentTrieTree implements ISegmentTrieTree {
      */
     @SuppressWarnings("unchecked")
     private void initInnerWordMap(final ISegmentPhraseData segmentData) {
-        // 创建 map
-        innerWordMap = Guavas.newHashMap();
-
         // 加载字典
         Set<String> wordSet = segmentData.getPhraseSet();
 

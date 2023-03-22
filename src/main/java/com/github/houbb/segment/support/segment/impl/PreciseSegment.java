@@ -19,7 +19,7 @@ import java.util.List;
  * @since 0.0.7
  */
 @ThreadSafe
-public class PreciseSegment implements ISegment {
+public class PreciseSegment extends AbstractSegment {
 
     /**
      * 精确分词模式

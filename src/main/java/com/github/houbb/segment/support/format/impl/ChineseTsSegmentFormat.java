@@ -5,6 +5,7 @@ import com.github.houbb.heaven.util.guava.Guavas;
 import com.github.houbb.heaven.util.io.StreamUtil;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.heaven.util.lang.StringUtil;
+import com.github.houbb.heaven.util.util.MapUtil;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.constant.SegmentConst;
 import com.github.houbb.segment.support.format.ISegmentFormat;
@@ -23,31 +24,42 @@ import java.util.Map;
  * @since 0.1.2
  */
 @ThreadSafe
-public class ChineseTsSegmentFormat implements ISegmentFormat {
+public class ChineseTsSegmentFormat extends AbstractSegmentFormat {
 
     /**
      * 繁体=》简体
      *
      * @since 0.1.2
      */
-    private static final Map<Character, Character> TS_CHAR_MAP = Guavas.newHashMap();
+    private static volatile Map<Character, Character> TS_CHAR_MAP = Guavas.newHashMap();
 
-    static {
-        final long startTime = System.currentTimeMillis();
-        List<String> lines = StreamUtil.readAllLines(SegmentConst.SEGMENT_CHINESE_TS_CHAR_PATH);
-        for (String line : lines) {
-            String[] entries = line.split(StringUtil.BLANK);
-            char tChar = entries[0].charAt(0);
-            char sChar = entries[1].charAt(0);
-            TS_CHAR_MAP.put(tChar, sChar);
+    /**
+     * DLC 初始化
+     */
+    private synchronized void initDataMap() {
+        if(MapUtil.isNotEmpty(TS_CHAR_MAP)) {
+            return;
         }
-        final long costTime = System.currentTimeMillis() - startTime;
-        System.out.println("[Segment Format] chinese traditional-simple load finished, cost "
-                + costTime + " ms");
+        synchronized (TS_CHAR_MAP) {
+            if(MapUtil.isEmpty(TS_CHAR_MAP)) {
+                List<String> lines = StreamUtil.readAllLines(SegmentConst.SEGMENT_CHINESE_TS_CHAR_PATH);
+                for (String line : lines) {
+                    String[] entries = line.split(StringUtil.BLANK);
+                    char tChar = entries[0].charAt(0);
+                    char sChar = entries[1].charAt(0);
+                    TS_CHAR_MAP.put(tChar, sChar);
+                }
+            }
+        }
     }
 
     @Override
     public char format(char ch, ISegmentContext context) {
+        // map 初始化
+        if(MapUtil.isEmpty(TS_CHAR_MAP)) {
+            this.initDataMap();
+        }
+
         Character simple = TS_CHAR_MAP.get(ch);
         if (ObjectUtil.isNull(simple)) {
             // 返回本身
@@ -56,6 +68,13 @@ public class ChineseTsSegmentFormat implements ISegmentFormat {
 
         // 返回简体
         return simple;
+    }
+
+    @Override
+    public void free() {
+        synchronized (TS_CHAR_MAP) {
+            TS_CHAR_MAP.clear();
+        }
     }
 
 }

@@ -10,7 +10,7 @@ import com.github.houbb.segment.support.format.ISegmentFormat;
  * @since 0.0.9
  */
 @ThreadSafe
-public class LowerCaseSegmentFormat implements ISegmentFormat {
+public class LowerCaseSegmentFormat extends AbstractSegmentFormat {
 
     @Override
     public char format(char ch, ISegmentContext context) {

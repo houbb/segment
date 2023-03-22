@@ -16,7 +16,7 @@ import java.util.List;
  * @author binbin.hou
  * @since 0.0.1
  */
-public class Segment implements ISegment {
+public class Segment extends AbstractSegment {
 
     @Override
     public List<ISegmentResult> segment(String string, ISegmentContext context) {

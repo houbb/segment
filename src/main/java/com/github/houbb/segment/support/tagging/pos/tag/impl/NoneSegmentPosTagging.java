@@ -13,7 +13,7 @@ import java.util.List;
  * @since 0.1.4
  */
 @ThreadSafe
-public class NoneSegmentPosTagging implements ISegmentPosTagging {
+public class NoneSegmentPosTagging extends AbstractSegmentPosTagging {
 
     @Override
     public void posTagging(List<ISegmentResult> selectList, ISegmentContext context) {

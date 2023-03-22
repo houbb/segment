@@ -7,7 +7,6 @@ import com.github.houbb.segment.api.ISegmentResult;
 import com.github.houbb.segment.constant.enums.SegmentPosEnum;
 import com.github.houbb.segment.data.pos.api.ISegmentPos;
 import com.github.houbb.segment.data.pos.api.ISegmentPosData;
-import com.github.houbb.segment.support.tagging.pos.tag.ISegmentPosTagging;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ import java.util.List;
  * @since 0.1.4
  */
 @ThreadSafe
-public class SimpleSegmentPosTagging implements ISegmentPosTagging {
+public class SimpleSegmentPosTagging extends AbstractSegmentPosTagging {
 
     @Override
     public void posTagging(List<ISegmentResult> selectList, ISegmentContext context) {

@@ -154,6 +154,11 @@ public final class SegmentBs implements ISegmentBs {
         return segment(string, SegmentResultHandlers.common());
     }
 
+    @Override
+    public void free() {
+
+    }
+
     /**
      * 分词处理
      * @param string 原始字符串

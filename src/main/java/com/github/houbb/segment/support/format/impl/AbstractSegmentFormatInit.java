@@ -14,7 +14,7 @@ import java.util.List;
  * @since 0.1.2
  */
 @ThreadSafe
-public abstract class AbstractSegmentFormatInit implements ISegmentFormat {
+public abstract class AbstractSegmentFormatInit extends AbstractSegmentFormat {
 
     @Override
     public char format(char ch, ISegmentContext context) {

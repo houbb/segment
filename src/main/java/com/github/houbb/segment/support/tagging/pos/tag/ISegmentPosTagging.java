@@ -1,5 +1,6 @@
 package com.github.houbb.segment.support.tagging.pos.tag;
 
+import com.github.houbb.segment.api.IFreeAble;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.api.ISegmentResult;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * @author binbin.hou
  * @since 0.1.4
  */
-public interface ISegmentPosTagging {
+public interface ISegmentPosTagging extends IFreeAble {
 
     /**
      * 设置获取对应的词性

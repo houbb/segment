@@ -11,7 +11,7 @@ import com.github.houbb.segment.support.format.ISegmentFormat;
  * @since 0.0.9
  */
 @ThreadSafe
-public class HalfWidthSegmentFormat implements ISegmentFormat {
+public class HalfWidthSegmentFormat extends AbstractSegmentFormat {
 
     @Override
     public char format(char ch, ISegmentContext context) {

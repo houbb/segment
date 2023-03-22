@@ -18,7 +18,7 @@ import java.util.List;
  * @since 0.0.7
  */
 @ThreadSafe
-public class FastSegment implements ISegment {
+public class FastSegment extends AbstractSegment {
 
     /**
      * 快速分词模式

@@ -1,5 +1,6 @@
 package com.github.houbb.segment.support.trie;
 
+import com.github.houbb.segment.api.IFreeAble;
 import com.github.houbb.segment.api.ISegmentContext;
 
 import java.util.Map;
@@ -9,7 +10,7 @@ import java.util.Map;
  * @author binbin.hou
  * @since 0.0.1
  */
-public interface ISegmentTrieTree {
+public interface ISegmentTrieTree extends IFreeAble {
 
     /**
      * 获取对应的词信息
