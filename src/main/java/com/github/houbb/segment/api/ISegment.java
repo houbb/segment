@@ -7,7 +7,7 @@ import java.util.List;
  * @author binbin.hou
  * @since 0.0.1
  */
-public interface ISegment extends IFreeAble {
+public interface ISegment {
 
     /**
      * 执行分词的最后结果

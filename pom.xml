@@ -6,7 +6,7 @@
 
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.2.0</version>
 
     <properties>
         <!--============================== All PLUGINS START ==============================-->
@@ -29,8 +29,9 @@
         <!--============================== JAR START ==============================-->
         <!--inter-->
         <heaven.version>0.2.0</heaven.version>
-        <segment-data-pos.version>0.0.1</segment-data-pos.version>
-        <segment-data-phrase.version>0.0.1</segment-data-phrase.version>
+        <segment-data-pos.version>0.1.0</segment-data-pos.version>
+        <segment-data-phrase.version>0.1.0</segment-data-phrase.version>
+        <log-integration.version>1.1.8</log-integration.version>
 
         <!--other-->
         <junit.version>4.13.1</junit.version>
@@ -52,6 +53,11 @@
             <groupId>com.github.houbb</groupId>
             <artifactId>segment-data-phrase-core</artifactId>
             <version>${segment-data-phrase.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>log-integration</artifactId>
+            <version>${log-integration.version}</version>
         </dependency>
 
         <!--============================== OTHER ==============================-->

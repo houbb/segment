@@ -7,10 +7,4 @@ import com.github.houbb.segment.support.tagging.pos.tag.ISegmentPosTagging;
  * @since 0.2.0
  */
 public abstract class AbstractSegmentPosTagging implements ISegmentPosTagging {
-
-    @Override
-    public void free() {
-
-    }
-
 }

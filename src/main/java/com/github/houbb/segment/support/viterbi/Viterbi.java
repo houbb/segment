@@ -1,9 +1,12 @@
-package com.github.houbb.segment.support.segment.strategy.impl.hmm;
+package com.github.houbb.segment.support.viterbi;
 
 import com.github.houbb.heaven.util.guava.Guavas;
 import com.github.houbb.heaven.util.io.StreamUtil;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.heaven.util.lang.StringUtil;
+import com.github.houbb.heaven.util.util.MapUtil;
+import com.github.houbb.log.integration.core.Log;
+import com.github.houbb.log.integration.core.LogFactory;
 import com.github.houbb.segment.constant.SegmentConst;
 import com.github.houbb.segment.constant.enums.HmmStateEnum;
 
@@ -16,7 +19,11 @@ import java.util.Map;
  * @author binbin.hou
  * @since 0.1.0
  */
-public final class Viterbi {
+public class Viterbi implements IViterbi {
+
+    public Viterbi(){}
+
+    private static final Log LOG = LogFactory.getLog(Viterbi.class);
 
     /**
      * 最小值
@@ -80,9 +87,6 @@ public final class Viterbi {
      */
     private static volatile Map<Integer, Map<Character, Double>> emitPropMap;
 
-    private Viterbi() {
-    }
-
     /**
      * 执行分词
      * @param text 文本
@@ -136,12 +140,13 @@ public final class Viterbi {
      * @since 0.1.0
      */
     private static Map<Integer, Map<Character, Double>> getEmitPropMap() {
-        if(ObjectUtil.isNotNull(emitPropMap)) {
+        if(MapUtil.isNotEmpty(emitPropMap)) {
             return emitPropMap;
         }
 
+        LOG.debug("[Segment]-[data veterbi] init start");
         synchronized (Viterbi.class) {
-            if(ObjectUtil.isNull(emitPropMap)) {
+            if(MapUtil.isEmpty(emitPropMap)) {
                 // 初始化
                 emitPropMap = Guavas.newHashMap(4);
                 emitPropMap.put(0, Guavas.<Character, Double>newHashMap());
@@ -162,7 +167,7 @@ public final class Viterbi {
                 }
             }
         }
-
+        LOG.debug("[Segment]-[data veterbi] init end");
         return emitPropMap;
     }
 
@@ -259,6 +264,22 @@ public final class Viterbi {
         }
 
         return MIN_FLOAT;
+    }
+
+    @Override
+    public List<String> viterbi(String text, String format) {
+        return segment(text, format);
+    }
+
+    @Override
+    public void destroy() {
+        LOG.debug("[Segment]-[data veterbi] destroy start");
+
+        synchronized (emitPropMap) {
+            emitPropMap = Guavas.newHashMap();
+        }
+
+        LOG.debug("[Segment]-[data veterbi] destroy start");
     }
 
 }

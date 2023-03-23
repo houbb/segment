@@ -9,8 +9,8 @@ import com.github.houbb.segment.support.format.ISegmentFormat;
 public abstract class AbstractSegmentFormat implements ISegmentFormat {
 
     @Override
-    public void free() {
+    public void destroy() {
 
     }
-
+    
 }

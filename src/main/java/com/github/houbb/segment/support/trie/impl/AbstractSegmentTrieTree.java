@@ -8,7 +8,7 @@ import com.github.houbb.segment.support.trie.ISegmentTrieTree;
 public abstract class AbstractSegmentTrieTree implements ISegmentTrieTree {
 
     @Override
-    public void free() {
+    public void destroy() {
 
     }
 

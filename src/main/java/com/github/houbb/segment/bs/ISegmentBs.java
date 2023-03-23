@@ -1,6 +1,6 @@
 package com.github.houbb.segment.bs;
 
-import com.github.houbb.segment.api.IFreeAble;
+import com.github.houbb.common.lifecycle.api.IDestroyAble;
 import com.github.houbb.segment.api.ISegmentResult;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author binbin.hou
  * @since 0.1.6
  */
-public interface ISegmentBs extends IFreeAble {
+public interface ISegmentBs extends IDestroyAble {
 
     /**
      * 直接执行分词

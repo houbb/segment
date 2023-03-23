@@ -19,7 +19,7 @@ public class HmmSegmentStrategy extends SimpleSegmentStrategy {
     @Override
     protected List<String> getChineseSegments(String text, final ISegmentContext context) {
         final String formatText = formatText(text, context);
-        return Viterbi.segment(text, formatText);
+        return context.viterbi().viterbi(text, formatText);
     }
 
     /**

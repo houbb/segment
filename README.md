@@ -49,9 +49,13 @@
 
 - 简单的词性标注实现
 
-### v-0.1.8 最新变更
+- 支持字典等资源的主动释放
 
-- 分词词组词库独立
+### v-0.2.0 最新变更
+
+- 支持字典等资源的主动释放（适用于安卓等客户端）
+
+> [变更日志](https://github.com/houbb/segment/blob/master/CHANGELOG.md)
 
 # 快速入门
 
@@ -67,7 +71,7 @@ maven 3.x+
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>0.1.8</version>
+    <version>0.2.0</version>
 </dependency>
 ```
 
@@ -301,6 +305,66 @@ List<ISegmentResult> resultList = SegmentBs.newInstance()
         .segment(string);
 
 Assert.assertEquals("[这是[0,2)/un, 一个[2,4)/mq, 伸手不见五指[4,10)/i, 的[10,11)/ude1, 黑夜[11,13)/n, 。[13,14)/w]", resultList.toString());
+```
+
+# 主动释放资源 
+
+## 说明
+
+分词是基于字典实现的，为了提升性能，字典初始化之后会缓存到内存中。 这对于 java web 服务端是没有太大问题的。
+
+有安卓客户端小伙伴反应，希望分词使用一次之后，可以主动释放资源。
+
+此功能为此而实现。
+
+## 使用
+
+方法在引导类中可以使用，如下：
+
+```java
+// 初始化引导类
+final SegmentBs segmentBs = SegmentBs.newInstance();
+
+// 主动释放资源
+segmentBs.destroy();
+```
+
+### 例子
+
+实际例子：
+
+```java
+// 基本特性
+final SegmentBs segmentBs = SegmentBs.newInstance();
+
+final String string = "这是一个伸手不见五指的黑夜。我叫孙悟空，我爱北京，我爱学习。";
+List<ISegmentResult> resultList = SegmentBs.newInstance().segment(string);
+Assert.assertEquals("[这是[0,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14), 我[14,15), 叫[15,16), 孙悟空[16,19), ，[19,20), 我爱[20,22), 北京[22,24), ，[24,25), 我爱[25,27), 学习[27,29), 。[29,30)]", resultList.toString());
+
+// 资源释放
+segmentBs.destroy();
+
+// 重新处理
+List<ISegmentResult> resultList2 = SegmentBs.newInstance().segment(string);
+Assert.assertEquals("[这是[0,2), 一个[2,4), 伸手不见五指[4,10), 的[10,11), 黑夜[11,13), 。[13,14), 我[14,15), 叫[15,16), 孙悟空[16,19), ，[19,20), 我爱[20,22), 北京[22,24), ，[24,25), 我爱[25,27), 学习[27,29), 。[29,30)]", resultList2.toString());
+```
+
+为了便于使用，**资源释放之后，如果再次分词，会重新初始化相关资源**。
+
+### 日志
+
+为了便于研发观察，自适应日志输出对应的字典加载和销毁信息。
+
+格式如下：
+
+```
+[DEBUG] [2023-03-23 11:16:53.010] [main] [c.g.h.s.s.t.i.SegmentTrieTree.getTrieTree] - [Segment]-[data-trie] init start
+[DEBUG] [2023-03-23 11:16:53.480] [main] [c.g.h.s.s.t.i.SegmentTrieTree.getTrieTree] - [Segment]-[data-trie] init end
+...
+
+[DEBUG] [2023-03-23 11:16:53.543] [main] [c.g.h.s.s.t.i.SegmentTrieTree.destroy] - [Segment]-[data-trie] destroy start
+[DEBUG] [2023-03-23 11:16:53.543] [main] [c.g.h.s.s.t.i.SegmentTrieTree.destroy] - [Segment]-[data-trie] destroy end
+...
 ```
 
 # Benchmark 性能对比

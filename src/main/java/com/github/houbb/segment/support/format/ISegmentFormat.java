@@ -1,6 +1,6 @@
 package com.github.houbb.segment.support.format;
 
-import com.github.houbb.segment.api.IFreeAble;
+import com.github.houbb.common.lifecycle.api.IDestroyAble;
 import com.github.houbb.segment.api.ISegmentContext;
 
 /**
@@ -16,7 +16,7 @@ import com.github.houbb.segment.api.ISegmentContext;
  * @author binbin.hou
  * @since 0.0.9
  */
-public interface ISegmentFormat extends IFreeAble {
+public interface ISegmentFormat extends IDestroyAble {
 
     /**
      * 格式化

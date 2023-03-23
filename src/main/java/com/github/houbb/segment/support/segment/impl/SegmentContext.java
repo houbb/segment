@@ -6,6 +6,8 @@ import com.github.houbb.segment.data.pos.api.ISegmentPosData;
 import com.github.houbb.segment.support.format.ISegmentFormat;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
 import com.github.houbb.segment.support.tagging.pos.tag.ISegmentPosTagging;
+import com.github.houbb.segment.support.trie.ISegmentTrieTree;
+import com.github.houbb.segment.support.viterbi.IViterbi;
 
 /**
  * 分词上下文
@@ -43,6 +45,18 @@ public class SegmentContext implements ISegmentContext {
      * @since 0.0.9
      */
     private ISegmentFormat format;
+
+    /**
+     * 分词前缀树
+     * @since 0.2.0
+     */
+    private ISegmentTrieTree segmentTrieTree;
+
+    /**
+     * 维特比算法
+     * @since 0.2.0
+     */
+    private IViterbi viterbi;
 
     /**
      * 创建对象实例
@@ -100,6 +114,26 @@ public class SegmentContext implements ISegmentContext {
 
     public SegmentContext format(ISegmentFormat format) {
         this.format = format;
+        return this;
+    }
+
+    @Override
+    public ISegmentTrieTree segmentTrieTree() {
+        return segmentTrieTree;
+    }
+
+    public SegmentContext segmentTrieTree(ISegmentTrieTree segmentTrieTree) {
+        this.segmentTrieTree = segmentTrieTree;
+        return this;
+    }
+
+    @Override
+    public IViterbi viterbi() {
+        return viterbi;
+    }
+
+    public SegmentContext viterbi(IViterbi viterbi) {
+        this.viterbi = viterbi;
         return this;
     }
 }

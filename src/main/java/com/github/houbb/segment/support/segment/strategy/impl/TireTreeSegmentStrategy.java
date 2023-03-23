@@ -1,12 +1,11 @@
 package com.github.houbb.segment.support.segment.strategy.impl;
 
 import com.github.houbb.heaven.annotation.ThreadSafe;
-import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.heaven.util.guava.Guavas;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.constant.SegmentConst;
-import com.github.houbb.segment.support.trie.impl.SegmentTrieTree;
+import com.github.houbb.segment.support.trie.impl.SegmentTrieTrees;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,7 @@ public class TireTreeSegmentStrategy extends AbstractSegmentStrategy {
 
     @Override
     public List<Integer> doSegment(String string, int startIndex, ISegmentContext context) {
-        Map nowMap = Instances.singleton(SegmentTrieTree.class).getTrieTree(context);
+        Map nowMap = SegmentTrieTrees.defaults().getTrieTree(context);
 
         List<Integer> resultList = Guavas.newArrayList();
 

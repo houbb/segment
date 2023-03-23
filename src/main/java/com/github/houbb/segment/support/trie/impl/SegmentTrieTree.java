@@ -3,12 +3,12 @@ package com.github.houbb.segment.support.trie.impl;
 import com.github.houbb.heaven.annotation.ThreadSafe;
 import com.github.houbb.heaven.util.guava.Guavas;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
-import com.github.houbb.heaven.util.util.CollectionUtil;
 import com.github.houbb.heaven.util.util.MapUtil;
+import com.github.houbb.log.integration.core.Log;
+import com.github.houbb.log.integration.core.LogFactory;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.constant.SegmentConst;
 import com.github.houbb.segment.data.phrase.api.ISegmentPhraseData;
-import com.github.houbb.segment.support.trie.ISegmentTrieTree;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +21,8 @@ import java.util.Set;
  */
 @ThreadSafe
 public class SegmentTrieTree extends AbstractSegmentTrieTree {
+
+    private static final Log LOG = LogFactory.getLog(SegmentTrieTree.class);
 
     /**
      * 内部单词 map
@@ -35,6 +37,7 @@ public class SegmentTrieTree extends AbstractSegmentTrieTree {
             return innerWordMap;
         }
 
+        LOG.debug("[Segment]-[data-trie] init start");
         synchronized(SegmentTrieTree.class) {
             if(MapUtil.isEmpty(innerWordMap)) {
                 final ISegmentPhraseData segmentData = context.data();
@@ -42,14 +45,17 @@ public class SegmentTrieTree extends AbstractSegmentTrieTree {
             }
         }
 
+        LOG.debug("[Segment]-[data-trie] init end");
         return innerWordMap;
     }
 
     @Override
-    public void free() {
+    public void destroy() {
+        LOG.debug("[Segment]-[data-trie] destroy start");
         synchronized (innerWordMap) {
             innerWordMap.clear();
         }
+        LOG.debug("[Segment]-[data-trie] destroy end");
     }
 
     /**

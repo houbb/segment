@@ -6,8 +6,11 @@ import com.github.houbb.heaven.util.io.StreamUtil;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.heaven.util.util.MapUtil;
+import com.github.houbb.log.integration.core.Log;
+import com.github.houbb.log.integration.core.LogFactory;
 import com.github.houbb.segment.api.ISegmentContext;
 import com.github.houbb.segment.constant.SegmentConst;
+import com.github.houbb.segment.data.phrase.core.data.AbstractSegmentPhraseData;
 import com.github.houbb.segment.support.format.ISegmentFormat;
 
 import java.util.List;
@@ -26,6 +29,8 @@ import java.util.Map;
 @ThreadSafe
 public class ChineseTsSegmentFormat extends AbstractSegmentFormat {
 
+    private static final Log LOG = LogFactory.getLog(ChineseTsSegmentFormat.class);
+
     /**
      * 繁体=》简体
      *
@@ -40,6 +45,8 @@ public class ChineseTsSegmentFormat extends AbstractSegmentFormat {
         if(MapUtil.isNotEmpty(TS_CHAR_MAP)) {
             return;
         }
+
+        LOG.debug("[Segment]-[data-format] init start");
         synchronized (TS_CHAR_MAP) {
             if(MapUtil.isEmpty(TS_CHAR_MAP)) {
                 List<String> lines = StreamUtil.readAllLines(SegmentConst.SEGMENT_CHINESE_TS_CHAR_PATH);
@@ -51,6 +58,7 @@ public class ChineseTsSegmentFormat extends AbstractSegmentFormat {
                 }
             }
         }
+        LOG.debug("[Segment]-[data-format] init end");
     }
 
     @Override
@@ -71,10 +79,12 @@ public class ChineseTsSegmentFormat extends AbstractSegmentFormat {
     }
 
     @Override
-    public void free() {
+    public void destroy() {
+        LOG.debug("[Segment]-[data-format] destroy start");
         synchronized (TS_CHAR_MAP) {
             TS_CHAR_MAP.clear();
         }
+        LOG.debug("[Segment]-[data-format] destroy end");
     }
 
 }

@@ -18,6 +18,10 @@ import com.github.houbb.segment.support.segment.result.ISegmentResultHandler;
 import com.github.houbb.segment.support.segment.result.impl.SegmentResultHandlers;
 import com.github.houbb.segment.support.tagging.pos.tag.ISegmentPosTagging;
 import com.github.houbb.segment.support.tagging.pos.tag.impl.SegmentPosTaggings;
+import com.github.houbb.segment.support.trie.ISegmentTrieTree;
+import com.github.houbb.segment.support.trie.impl.SegmentTrieTrees;
+import com.github.houbb.segment.support.viterbi.IViterbi;
+import com.github.houbb.segment.support.viterbi.Viterbis;
 
 import java.util.List;
 
@@ -68,6 +72,18 @@ public final class SegmentBs implements ISegmentBs {
      * @since 0.1.4
      */
     private ISegmentPosData posData = SegmentPosDatas.mixed();
+
+    /**
+     * 分词前缀树
+     * @since 0.2.0
+     */
+    private final ISegmentTrieTree segmentTrieTree = SegmentTrieTrees.defaults();
+
+    /**
+     * 维特比算法
+     * @since 0.2.0
+     */
+    private final IViterbi viterbi = Viterbis.defaults();
 
     /**
      * 引导类
@@ -154,11 +170,6 @@ public final class SegmentBs implements ISegmentBs {
         return segment(string, SegmentResultHandlers.common());
     }
 
-    @Override
-    public void free() {
-
-    }
-
     /**
      * 分词处理
      * @param string 原始字符串
@@ -185,7 +196,18 @@ public final class SegmentBs implements ISegmentBs {
                 .format(format)
                 .posTagging(posTagging)
                 .posData(posData)
+                .segmentTrieTree(segmentTrieTree)
+                .viterbi(viterbi)
                 ;
+    }
+
+    @Override
+    public synchronized void destroy() {
+        this.data.destroy();
+        this.format.destroy();
+        this.posData.destroy();
+        this.segmentTrieTree.destroy();
+        this.viterbi.destroy();
     }
 
 }

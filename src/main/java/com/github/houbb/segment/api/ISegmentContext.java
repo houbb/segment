@@ -5,6 +5,8 @@ import com.github.houbb.segment.data.pos.api.ISegmentPosData;
 import com.github.houbb.segment.support.format.ISegmentFormat;
 import com.github.houbb.segment.support.segment.mode.ISegmentMode;
 import com.github.houbb.segment.support.tagging.pos.tag.ISegmentPosTagging;
+import com.github.houbb.segment.support.trie.ISegmentTrieTree;
+import com.github.houbb.segment.support.viterbi.IViterbi;
 
 /**
  * 分词接口上下文
@@ -58,5 +60,19 @@ public interface ISegmentContext {
      * @since 0.0.9
      */
     ISegmentFormat format();
+
+    /**
+     * 分词前缀树
+     * @return 前缀树
+     * @since 0.2.0
+     */
+    ISegmentTrieTree segmentTrieTree();
+
+    /**
+     * 维特比算法
+     * @return 算法
+     * @since 0.2.0
+     */
+    IViterbi viterbi();
 
 }
