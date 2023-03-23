@@ -71,7 +71,7 @@ maven 3.x+
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>segment</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
 </dependency>
 ```
 
@@ -94,10 +94,11 @@ Assert.assertEquals("[这是[0,2), 一个[2,4), 伸手不见五指[4,10), 的[10
 
 `SegmentResultHandlers` 用来指定对于分词结果的处理实现，便于保证 api 的统一性。
 
-| 方法 | 实现 | 说明 |
-|:---|:---|:---|
-| `common()` | SegmentResultHandler | 默认实现，返回 ISegmentResult 列表 |
-| `word()` | SegmentResultWordHandler | 只返回分词字符串列表 |
+| 方法 | 实现 | 说明                         |
+|:---|:---|:---------------------------|
+| `common()` | SegmentResultHandler | 默认实现，返回 ISegmentResult 列表  |
+| `word()` | SegmentResultWordHandler | 只返回分词字符串列表                 |
+| `wordCount()` | SegmentResultWordHandler | key: 分词字符串; value: 分词出现的次数 |
 
 ### 默认模式
 
@@ -114,6 +115,26 @@ final String string = "这是一个伸手不见五指的黑夜。我叫孙悟空
 
 List<String> resultList = SegmentHelper.segment(string, SegmentResultHandlers.word());
 Assert.assertEquals("[这是, 一个, 伸手不见五指, 的, 黑夜, 。, 我, 叫, 孙悟空, ，, 我爱, 北京, ，, 我爱, 学习, 。]", resultList.toString());
+```
+
+### 统计分词出现的次数
+
+我们通过 `SegmentResultHandlers.wordCount()` 指定统计出现次数的方法。
+
+```java
+final String string = "这是一个伸手不见五指的黑夜。我叫孙悟空，我爱北京，我爱学习。";
+
+Map<String, Integer> wordCount = SegmentHelper.segment(string, SegmentResultHandlers.wordCount());
+Assert.assertEquals(2, wordCount.get("我爱").intValue());
+Assert.assertEquals(1, wordCount.get("黑夜").intValue());
+```
+
+当然，这个在相似度等计算中出现频率较高。
+
+因此提供工具方法 `SegmentHelper.wordCount()`，上面的方法等价于：
+
+```java
+Map<String, Integer> wordCount = SegmentHelper.wordCount(string);
 ```
 
 # 分词模式

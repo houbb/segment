@@ -102,4 +102,16 @@ public class SegmentHelperTest {
         Assert.assertEquals(1, wordCount.get("黑夜").intValue());
     }
 
+    /**
+     * 单词个数统计处理
+     * @since 0.3.0
+     */
+    @Test
+    public void wordCount2Test() {
+        final String string = "这是一个伸手不见五指的黑夜。我叫孙悟空，我爱北京，我爱学习。";
+        Map<String, Integer> wordCount = SegmentHelper.wordCount(string);
+        Assert.assertEquals(2, wordCount.get("我爱").intValue());
+        Assert.assertEquals(1, wordCount.get("黑夜").intValue());
+    }
+
 }

@@ -8,6 +8,7 @@ import com.github.houbb.segment.support.segment.result.ISegmentResultHandler;
 import com.github.houbb.segment.support.segment.result.impl.SegmentResultHandlers;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 分词工具类
@@ -67,6 +68,28 @@ public final class SegmentHelper {
         return SegmentBs.newInstance()
                 .segmentMode(segmentMode)
                 .segment(string, handler);
+    }
+
+    /**
+     * 单词词频统计结果
+     * @param string 字符串
+     * @param segmentMode 分词类别
+     * @return 结果
+     * @since 0.3.0
+     */
+    public static Map<String, Integer> wordCount(final String string,
+                                                 final ISegmentMode segmentMode) {
+        return segment(string, segmentMode, SegmentResultHandlers.wordCount());
+    }
+
+    /**
+     * 单词词频统计结果
+     * @param string 字符串
+     * @return 结果
+     * @since 0.3.0
+     */
+    public static Map<String, Integer> wordCount(final String string) {
+        return wordCount(string, SegmentModes.search());
     }
 
 }
