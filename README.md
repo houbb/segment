@@ -51,9 +51,9 @@
 
 - 支持字典等资源的主动释放
 
-### v-0.2.0 最新变更
+### v-0.3.0 最新变更
 
-- 支持字典等资源的主动释放（适用于安卓等客户端）
+- 新增 wordCount 工具方法
 
 > [变更日志](https://github.com/houbb/segment/blob/master/CHANGELOG.md)
 
