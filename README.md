@@ -51,9 +51,10 @@
 
 - 支持字典等资源的主动释放
 
-### v-0.3.0 最新变更
+### v-0.3.1 最新变更
 
-- 新增 wordCount 工具方法
+- 升级 heaven 依赖
+- 更新文档
 
 > [变更日志](https://github.com/houbb/segment/blob/master/CHANGELOG.md)
 
