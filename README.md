@@ -137,6 +137,37 @@ Assert.assertEquals(1, wordCount.get("黑夜").intValue());
 Map<String, Integer> wordCount = SegmentHelper.wordCount(string);
 ```
 
+# 引导类
+
+## 说明
+
+针对灵活的配置，引入了 `SegmentBs` 作为引导类，解决工具类方法配置参数过多的问题。
+
+## 示例如下
+
+```java
+final String text = "自定义一个很长的分词，开心！";
+
+List<ISegmentResult> resultList = SegmentBs.newInstance()
+        // 分词实现策略
+        .segment(Segments.defaults())
+        // 分词词组数据
+        .segmentData(SegmentPhraseDatas.mixed())
+        // 分词模式
+        .segmentMode(SegmentModes.dict())
+        // 格式化处理
+        .segmentFormat(SegmentFormats.defaults())
+        // 词性标注实现
+        .posTagging(SegmentPosTaggings.simple())
+        // 词性标注数据
+        .posData(SegmentPosDatas.mixed())
+        // 对文本进行分词处理
+        .segment(text, SegmentResultHandlers.common());
+Assert.assertEquals("[自定义一个很长的分词[0,10)/un, ，[10,11)/un, 开心[11,13)/a, ！[13,14)/un]", resultList.toString());
+```
+
+所有的内置方法都是基于接口，可以自行定义实现。
+
 # 分词模式
 
 ## 分词模式简介

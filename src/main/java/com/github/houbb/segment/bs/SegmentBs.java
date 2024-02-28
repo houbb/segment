@@ -44,7 +44,7 @@ public final class SegmentBs implements ISegmentBs {
      * 1. 默认使用混合模式的字典(v1.0.3)
      * @since 0.0.3
      */
-    private ISegmentPhraseData data = SegmentPhraseDatas.mixed();
+    private ISegmentPhraseData segmentData = SegmentPhraseDatas.mixed();
 
     /**
      * 分词模式
@@ -53,13 +53,13 @@ public final class SegmentBs implements ISegmentBs {
      *
      * @since 0.0.5
      */
-    private ISegmentMode mode = SegmentModes.search();
+    private ISegmentMode segmentMode = SegmentModes.search();
 
     /**
      * 格式化信息
      * @since 0.0.9
      */
-    private ISegmentFormat format = SegmentFormats.defaults();
+    private ISegmentFormat segmentFormat = SegmentFormats.defaults();
 
     /**
      * 词性信息实现
@@ -100,7 +100,18 @@ public final class SegmentBs implements ISegmentBs {
         return new SegmentBs();
     }
 
+    /**
+     * 设置分词实现
+     * @since 0.4.0
+     * @param segment 分词实现
+     * @return this
+     */
+    public SegmentBs segment(ISegment segment) {
+        ArgUtil.notNull(segment, "segment");
 
+        this.segment = segment;
+        return this;
+    }
 
     /**
      * 指定分词的数据实现
@@ -110,7 +121,7 @@ public final class SegmentBs implements ISegmentBs {
      */
     public SegmentBs segmentData(final ISegmentPhraseData segmentData) {
         ArgUtil.notNull(segmentData, "segmentData");
-        this.data = segmentData;
+        this.segmentData = segmentData;
         return this;
     }
 
@@ -122,7 +133,7 @@ public final class SegmentBs implements ISegmentBs {
      */
     public SegmentBs segmentMode(ISegmentMode segmentMode) {
         ArgUtil.notNull(segmentMode, "segmentMode");
-        this.mode = segmentMode;
+        this.segmentMode = segmentMode;
         return this;
     }
 
@@ -133,7 +144,7 @@ public final class SegmentBs implements ISegmentBs {
      */
     public SegmentBs segmentFormat(final ISegmentFormat segmentFormat) {
         ArgUtil.notNull(segmentFormat, "segmentFormat");
-        this.format = segmentFormat;
+        this.segmentFormat = segmentFormat;
         return this;
     }
 
@@ -191,9 +202,9 @@ public final class SegmentBs implements ISegmentBs {
      */
     private ISegmentContext buildContext() {
         return SegmentContext.newInstance()
-                .data(data)
-                .mode(mode)
-                .format(format)
+                .data(segmentData)
+                .mode(segmentMode)
+                .format(segmentFormat)
                 .posTagging(posTagging)
                 .posData(posData)
                 .segmentTrieTree(segmentTrieTree)
@@ -203,8 +214,8 @@ public final class SegmentBs implements ISegmentBs {
 
     @Override
     public synchronized void destroy() {
-        this.data.destroy();
-        this.format.destroy();
+        this.segmentData.destroy();
+        this.segmentFormat.destroy();
         this.posData.destroy();
         this.segmentTrieTree.destroy();
         this.viterbi.destroy();
